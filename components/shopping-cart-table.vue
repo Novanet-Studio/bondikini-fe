@@ -1,0 +1,124 @@
+<script lang="ts" setup>
+import mapper from 'smapper';
+import { GetProductById } from '~/graphql/queries';
+
+const graphql = useStrapiGraphQL();
+const cart = useCartStore();
+const productStore = useProductStore();
+const products = productStore.cartProducts;
+
+const loadCartProducts = async () => {
+  const itemsId = cart.cartItems.map((item) => item.id);
+
+  if (!cart.cartItems.length) {
+    productStore.cartProducts = null;
+    return;
+  }
+
+  const productPromises = itemsId.map((id: string) =>
+    graphql<ProductRequest>(GetProductById, { id })
+  );
+
+  const [response] = await Promise.all(productPromises);
+
+  productStore.cartProducts = mapper(response.data.products.data);
+};
+
+const handleRemoveProductFromCart = (product?: Product) => {
+  const cartItem = cart.cartItems.find((item) => item.id === product!.id);
+
+  cart.removeProductFromCart(cartItem as any);
+  // loadCartProducts();
+};
+</script>
+
+<template>
+  <table-wrapper>
+    <table class="table">
+      <thead class="table__thead">
+        <tr class="!rounded-t-3xl">
+          <th scope="col" class="table__th">Producto</th>
+          <th scope="col" class="table__th">Precio</th>
+          <th scope="col" class="table__th">Cantidad</th>
+          <th scope="col" class="table__th">Talla</th>
+          <th scope="col" class="table__th">Total</th>
+          <th scope="col" class="table__th">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table__tr" v-for="product in products" :key="product!.id">
+          <td class="product-td">
+            <nuxt-img
+              v-if="product?.images.length"
+              :src="product?.images[0].url"
+              :alt="product?.name"
+              :placeholder="[100, 50, 10]"
+              sizes="sm:100vw md:50vw lg:200px"
+              fit="outside"
+              class="h-full w-full object-contain rounded-sm bg-transparent ring ring-offset-5 ring-color-4 ring-offset-color-6 md:w-20"
+            />
+          </td>
+          <td class="base-td">${{ product!.price }}</td>
+          <td class="quantity-td">
+            <quantity class="group-hover:bg-white" :id="product!.id" />
+          </td>
+          <td class="base-td !font-bold">
+            {{
+              product?.size_stock?.[0].talla
+                .toLocaleLowerCase()
+                .includes('no_aplica')
+                ? 'N/A'
+                : cleanupSize(product?.size_stock?.[0].talla)
+            }}
+          </td>
+          <td class="base-td">
+            <total-quantity
+              class="!border-none"
+              :id="product!.id"
+              :price="product!.price"
+            />
+          </td>
+          <td class="base-td">
+            <a
+              href="#"
+              class="cart-table__link"
+              @click.prevent="handleRemoveProductFromCart(product)"
+            >
+              <div class="i-ph-x-light"></div>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </table-wrapper>
+</template>
+
+<style scoped>
+.table {
+  @apply min-w-full;
+}
+
+.table__thead {
+  @apply border-b bg-color-3 !rounded-t-3xl;
+}
+
+.table__th {
+  @apply text-sm font-bold text-white px-6 py-4 text-left lg:text-base;
+}
+
+.table__tr {
+  @apply border-b transition duration-300 bg-color-6 even:bg-color-5 ease-in-out hover:bg-color-8 group;
+}
+
+.product-td {
+  @apply px-6 py-4 whitespace-nowrap text-sm font-bold text-black p-2 lg:text-base;
+}
+
+.base-td {
+  @apply text-sm text-black font-light px-6 py-4 whitespace-nowrap lg:text-base;
+}
+
+.quantity-td {
+  @apply text-sm text-color-2 font-light px-6 py-4 whitespace-nowrap lg:text-base;
+}
+</style>
