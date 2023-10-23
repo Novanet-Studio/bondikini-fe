@@ -1,0 +1,11 @@
+dist/
+.nuxt
+.vscode
+node_modules
+public
+yarn.lock
+tsconfig.json
+README.md
+package.json
+.gitignore
+.editorconfig

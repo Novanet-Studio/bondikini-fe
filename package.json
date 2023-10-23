@@ -1,0 +1,45 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "clean": "nuxt cleanup && rimraf node_modules",
+    "postinstall": "nuxt prepare",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@iconify-json/ph": "^1.1.6",
+    "@nuxt/devtools": "latest",
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.2",
+    "@rollup/plugin-graphql": "^2.0.4",
+    "@sidebase/nuxt-pdf": "^0.1.1",
+    "@vueuse/core": "^10.5.0",
+    "@vueuse/nuxt": "^10.5.0",
+    "add": "^2.0.6",
+    "graphql": "^16.8.1",
+    "nuxt": "^3.8.0",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "vue": "^3.3.6",
+    "vue-router": "^4.2.5",
+    "yarn": "^1.22.19"
+  },
+  "dependencies": {
+    "@kevinmarrec/nuxt-pwa": "^0.17.0",
+    "@nuxt/image": "^1.0.0",
+    "@nuxt/ui": "^2.9.0",
+    "@nuxtjs/strapi": "^1.9.3",
+    "@paypal/paypal-js": "^7.0.3",
+    "@pinia/nuxt": "^0.5.1",
+    "@vee-validate/valibot": "^4.11.8",
+    "smapper": "^0.0.9",
+    "square": "^32.0.0",
+    "swiper": "^10.3.1",
+    "valibot": "^0.19.0",
+    "vee-validate": "^4.11.8"
+  }
+}
