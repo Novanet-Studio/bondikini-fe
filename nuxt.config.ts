@@ -4,6 +4,7 @@ import gql from '@rollup/plugin-graphql';
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
+  extends: ['github:Novanet-Studio/tem-core'],
   modules: [
     '@nuxt/ui',
     '@pinia/nuxt',
