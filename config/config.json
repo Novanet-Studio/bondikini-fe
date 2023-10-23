@@ -1,0 +1,11 @@
+{
+  "store": {
+    "auth": "bondikini-auth",
+    "cart": "bondikini-cart",
+    "checkout": "bondikini-checkout",
+    "global": "bondikini-global",
+    "invoice": "bondikini-invoice",
+    "product": "bondikini-product",
+    "wishlist": "bondikini-wishlist"
+  }
+}

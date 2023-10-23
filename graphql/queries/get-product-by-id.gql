@@ -1,0 +1,36 @@
+query GetProductById($id: ID!) {
+  products(filters: { id: { eq: $id } }) {
+    data {
+      id
+      attributes {
+        name
+        description
+        price
+        images {
+          data {
+            attributes {
+              name
+              url
+              alternativeText
+              caption
+              formats
+            }
+          }
+        }
+        size_stock {
+          id
+          talla
+          inventario
+        }
+        category {
+          data {
+            id
+            attributes {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

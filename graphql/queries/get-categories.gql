@@ -1,0 +1,24 @@
+query getCategories {
+  categories {
+    data {
+      id
+      attributes {
+        name
+        products {
+          data {
+            id
+            attributes {
+              images {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
