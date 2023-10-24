@@ -12,20 +12,20 @@ const {
 </script>
 
 <template>
-  <div>
+  <div class="w-full">
     <app-banner />
-    <section class="contenedor">
-      <app-message
+    <section class="mx-24">
+      <!-- <app-message
         title="¿Quieres conocer nuestra colección?"
         subtitle="Tenemos artículos para todos"
-      />
+      /> -->
       <product-loader v-if="isLoading" />
       <template v-else>
         <div class="flex items-center justify-between mt-8">
           <h3 class="ml-5 text-color-2 font-900 text-2xl">Categorías</h3>
           <transition name="slide-fade">
             <button
-              class="block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:(px-4 py-2 rounded-full) lg:(transition ease hover:(bg-color-3/10))"
+              class="block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:px-4 md:py-2 md:rounded-full lg:transition lg:ease-linear lg:hover:bg-color-3/10"
               @click="removeFilters"
               v-if="!!categoryActive"
             >
@@ -34,7 +34,7 @@ const {
           </transition>
         </div>
         <div
-          class="grid grid-cols-3 place-items-center content-center mt-4 md:(max-w-3xl mx-auto grid-cols-5) lg:(mx-none grid-cols-6)"
+          class="grid grid-cols-3 place-items-center content-center mt-4 md:max-w-3xl md:mx-auto md:grid-cols-5 lg:mx-none lg:grid-cols-6"
         >
           <button
             v-for="category in categories"
@@ -42,7 +42,7 @@ const {
             @click="filterByCategory(category.id)"
           >
             <nuxt-img
-              class="w-20 h-20 rounded-full object-cover border-3 md:(w-30 h-30)"
+              class="w-20 h-20 rounded-full object-cover border-3 md:w-30 md:h-30"
               :class="
                 category.id === categoryActive
                   ? 'border-color-3'
@@ -51,7 +51,7 @@ const {
               :src="category.products[0].images[0].url"
             />
             <span
-              class="text-xs font-bold md:text-sm lg:(text-base block mt-4)"
+              class="text-xs font-bold md:text-sm lg:text-base lg:block lg:mt-4"
               >{{ category.name }}</span
             >
           </button>

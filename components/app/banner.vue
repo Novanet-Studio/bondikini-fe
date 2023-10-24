@@ -1,5 +1,5 @@
 <script setup>
-  const appConfig = useAppConfig();
+const appConfig = useAppConfig();
 </script>
 
 <template>
@@ -13,51 +13,47 @@
 </template>
 
 <style scoped>
-  /* Set color for swiper arrows */
-  :global(.swiper-button-next),
-  :global(.swiper-button-prev) {
-    --swiper-navigation-size: 2rem;
-    --swiper-navigation-color: #161824;
-    @apply transition;
-  }
+/* Set color for swiper arrows */
+:global(.swiper-button-next),
+:global(.swiper-button-prev) {
+  --swiper-navigation-size: 2rem;
+  --swiper-navigation-color: #161824;
+  @apply transition;
+}
 
-  :global(.swiper-button-next:hover),
-  :global(.swiper-button-prev:hover) {
-    --swiper-navigation-color: #e36d65;
-  }
+:global(.swiper-button-next:hover),
+:global(.swiper-button-prev:hover) {
+  --swiper-navigation-color: #e36d65;
+}
 
-  :deep(.swiper-button-next),
-  :deep(.swiper-button-prev) {
-    --swiper-navigation-sides-offset: 0;
-    @apply p-8 transition hover:bg-primary;
-  }
+:deep(.swiper-button-next),
+:deep(.swiper-button-prev) {
+  --swiper-navigation-sides-offset: 0;
+  @apply p-8 transition hover:bg-primary;
+}
 
-  :deep(.swiper-button-next:hover),
-  :deep(.swiper-button-prev:hover) {
-    --swiper-navigation-color: #161824;
-  }
+:deep(.swiper-button-next:hover),
+:deep(.swiper-button-prev:hover) {
+  --swiper-navigation-color: #161824;
+}
 
-  .banner {
-    @apply mb-8;
-  }
+.banner {
+  @apply mb-8;
+}
 
-  .banner__wrapper {
-    @apply flex flex-col flex-nowrap lg:flex-row;
-  }
+.banner__wrapper {
+  @apply flex flex-col flex-nowrap lg:flex-row;
+}
 
-  .banner__left {
-    @apply w-[340px] min-h-[200px] h-full mb-4 md:w-full lg:max-w-[calc(100%-390px)] lg:w-full;
-  }
+.banner__left {
+  @apply w-[340px] min-h-[200px] h-full mb-4 md:w-full lg:max-w-[calc(100%-390px)] lg:w-full;
+}
 
-  .banner__slider {
-    @apply h-full w-full relative;
-  }
+.banner__slider {
+  @apply w-full relative;
+}
 
-  .banner__slider-image {
-    @apply block w-full h-full bg-center bg-cover md:h-96 lg:w-full lg:h-96 h-80;
-  }
-
-  .banner__right {
-    @apply w-full flex justify-between gap-4 text-white lg:max-w-[390px] lg:ml-8 lg:flex-col gap-8;
-  }
+.banner__slider-image {
+  @apply block w-full h-full bg-center bg-cover md:h-96 lg:w-full lg:h-96;
+}
 </style>

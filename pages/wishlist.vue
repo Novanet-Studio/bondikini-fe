@@ -23,6 +23,6 @@ onMounted(() => {
     >
       No tienes articulos en tu lista de deseos
     </h5>
-    <wishlist-table @reload="wishlist.load" v-else />
+    <!-- <wishlist-table @reload="wishlist.load" v-else /> -->
   </wishlist-wrapper>
 </template>

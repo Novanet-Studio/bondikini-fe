@@ -41,16 +41,18 @@ watchEffect(() => {
     :centered-slides="centeredSlides"
     :breakpoints="breakpoints"
     loop
-    navigation="true"
+    :navigation="true"
     :modules="[Navigation]"
   >
     <template v-if="renderImages">
       <swiper-slide v-for="(image, index) in images" :key="index">
-        <nuxt-img
-          class="slider__image"
-          :src="image"
-          alt="Products of the brand"
-        />
+        <div>
+          <nuxt-img
+            class="slider__image"
+            :src="image"
+            alt="Products of the brand"
+          />
+        </div>
       </swiper-slide>
     </template>
     <template v-else>
@@ -67,7 +69,7 @@ watchEffect(() => {
 
 <style scoped>
 .slider__image {
-  @apply w-full;
+  @apply w-full h-[30rem] object-center object-cover;
 }
 
 :global(:root) {

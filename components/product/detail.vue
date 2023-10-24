@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { injectKeys } from '~/config/constants';
-const product = inject(injectKeys.productDetail);
+  import { injectKeys } from '~/config/constants';
+  const product = inject(injectKeys.productDetail);
 
-const showLightbox = ref(false);
+  const showLightbox = ref(false);
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const showLightbox = ref(false);
         </h5>
         <thumbnail-default @show-lightbox="showLightbox = true" />
         <product-information-default />
-        <lightbox v-model="showLightbox" :images="product!.images" />
+        <!-- <lightbox v-model="showLightbox" :images="product!.images" /> -->
       </div>
     </div>
   </section>

@@ -29,6 +29,6 @@ export default defineAppConfig({
     ],
   },
   home: {
-    slider: ['/img/home/1.jpg'],
+    slider: ['/img/home/1.jpg', '/img/home/2.jpg'],
   },
 });

@@ -2,6 +2,28 @@ import type { Config } from 'tailwindcss';
 
 export default <Partial<Config>>{
   theme: {
+    screens: {
+      xs: '340px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1366px',
+    },
+    container: {
+      center: true,
+      screens: {
+        xs: '330px',
+        sm: '520px',
+        md: '920px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1690px',
+      },
+      padding: {
+        DEFAULT: '1rem',
+      },
+    },
     extend: {
       colors: {
         // color-1 always be the primary color
