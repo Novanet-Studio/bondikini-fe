@@ -1,12 +1,13 @@
-<script setup>
+<script setup lang="ts">
 const appConfig = useAppConfig();
 const widgets = appConfig.footer.widgets;
 
-const icons = {
-  instagram: 'i-ph-instagram-logo-fill',
-  whatsapp: 'i-ph-whatsapp-logo-fill',
+const icons: { [key: string]: string } = {
+  instagram: 'i-ph-instagram-logo-duotone',
+  whatsapp: 'i-ph-whatsapp-logo-duotone',
   email: 'i-ph-envelope-duotone',
-  facebook: 'i-ph-facebook-logo-fill',
+  facebook: 'i-ph-facebook-logo-duotone',
+  phone: 'i-ph-device-mobile-duotone',
 };
 </script>
 
