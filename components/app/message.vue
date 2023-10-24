@@ -1,20 +1,39 @@
-<script setup>
-defineProps({
-  title: String,
-  subtitle: String,
-  class: String,
+<script setup lang="ts">
+interface Props {
+  class?: string;
+  variant?: 'primary' | 'secondary';
+  mode?: 'normal' | 'small';
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'primary',
+  mode: 'normal',
+});
+
+const classes = computed(() => {
+  const variant = props.variant === 'primary' ? 'bg-color-1' : 'bg-color-2';
+  return `${props.class} ${variant}`;
+});
+
+const mode = computed<string>(() => {
+  return props.mode === 'normal' ? 'py-25' : 'py-15';
 });
 </script>
 
 <template>
   <div
-    class="w-full rounded-xl p-6 bg-gradient-linear bg-gradient-to-[#E6E7E8] bg-gradient-from-[#FFFFFF] flex flex-col justify-center items-center shadow lg:py-24"
-    :class="class"
+    class="w-full text-white relative flex justify-between items-center shadow overflow-hidden px-28 rounded-lg"
+    :class="classes"
   >
-    <h3 class="-mb-2 md:(text-xl -mb-1 font-700) lg:(mb-0 text-3xl)">
-      {{ title }}
+    <h3 class="font-300 md:text-xl md:-mb-1 lg:mb-0 lg:text-3xl" :class="mode">
+      <slot />
     </h3>
-    <h4 class="font-900 md:text-xl lg:(text-3xl mb-1)">{{ subtitle }}</h4>
-    <logo-dots />
+    <div class="relative w-60 h-60 block">
+      <img
+        class="lg:h-60 absolute top-0 right-0"
+        src="/palm.svg"
+        alt="Palm Tree"
+      />
+    </div>
   </div>
 </template>

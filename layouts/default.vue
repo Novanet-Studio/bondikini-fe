@@ -19,7 +19,7 @@
             <NuxtPage />
           </main>
           <AppFooter />
-          <AppNotify />
+          <!-- <AppNotify /> -->
         </div>
       </div>
     </div>
@@ -27,20 +27,20 @@
 </template>
 
 <style scoped>
-  .default {
-    @apply flex relative;
-  }
-  .default__container {
-    @apply transition ease-[cubic-bezier(0.4,0,0.2,1)];
-  }
+.default {
+  @apply flex relative;
+}
+.default__container {
+  @apply transition ease-[cubic-bezier(0.4,0,0.2,1)];
+}
 
-  .default__wrapper {
-    @apply flex-auto flex flex-col min-h-screen max-w-full;
-  }
-  .default__content {
-    @apply flex-auto transition ease-linear;
-  }
-  .default__main {
-    @apply transition ease-linear w-full mx-auto md:px-0;
-  }
+.default__wrapper {
+  @apply flex-auto flex flex-col min-h-screen max-w-full;
+}
+.default__content {
+  @apply flex-auto transition ease-linear;
+}
+.default__main {
+  @apply transition ease-linear w-full mx-auto md:px-0;
+}
 </style>

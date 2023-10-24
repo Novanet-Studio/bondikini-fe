@@ -13,17 +13,17 @@ const {
 
 <template>
   <div class="w-full">
-    <app-banner />
+    <AppBanner />
     <section class="mx-24">
-      <!-- <app-message
-        title="¿Quieres conocer nuestra colección?"
-        subtitle="Tenemos artículos para todos"
-      /> -->
+      <AppMessage class="mt-10">
+        Discover our diverse collection of bikinis, one pieces, and swimwear
+        sets that come with matching cover ups.
+      </AppMessage>
       <product-loader v-if="isLoading" />
       <template v-else>
         <div class="flex items-center justify-between mt-8">
-          <h3 class="ml-5 text-color-2 font-900 text-2xl">Categorías</h3>
-          <transition name="slide-fade">
+          <h3 class="ml-5 text-color-6 font-bold text-3xl">Categorías</h3>
+          <Transition name="slide-fade">
             <button
               class="block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:px-4 md:py-2 md:rounded-full lg:transition lg:ease-linear lg:hover:bg-color-3/10"
               @click="removeFilters"
@@ -31,18 +31,18 @@ const {
             >
               Remover filtro
             </button>
-          </transition>
+          </Transition>
         </div>
         <div
-          class="grid grid-cols-3 place-items-center content-center mt-4 md:max-w-3xl md:mx-auto md:grid-cols-5 lg:mx-none lg:grid-cols-6"
+          class="grid place-items-center place-content-center mt-4 md:max-w-3xl md:mx-auto lg:mx-none lg:grid-cols-4"
         >
           <button
             v-for="category in categories"
             :key="category.id"
             @click="filterByCategory(category.id)"
           >
-            <nuxt-img
-              class="w-20 h-20 rounded-full object-cover border-3 md:w-30 md:h-30"
+            <NuxtImg
+              class="w-20 h-20 rounded-full object-cover border-3 md:w-30 md:h-30 lg:w-36 lg:h-36"
               :class="
                 category.id === categoryActive
                   ? 'border-color-3'
@@ -56,14 +56,14 @@ const {
             >
           </button>
         </div>
-        <transition-group name="list" tag="div">
+        <TransitionGroup name="list" tag="div">
           <product-landing
             v-for="category in categoriesResult"
             :key="category.id"
             :category="category"
             :filtered="!!categoryActive"
           />
-        </transition-group>
+        </TransitionGroup>
       </template>
     </section>
   </div>
