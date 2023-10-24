@@ -1,54 +1,46 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
-import { object, string, minLength } from 'valibot';
-import { toTypedSchema } from '@vee-validate/valibot';
-
-type Form = {
-  user: string;
-  password: string;
-  rememberMe: boolean;
-};
+import { object, string, minLength, type Output } from 'valibot';
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 
 const REDIRECT_DELAY = 500;
-
-const { $notify } = useNuxtApp();
 
 const router = useRouter();
 const auth = useAuthStore();
 const showPassword = ref(false);
+
+const isLoading = ref(false);
+const isDisabled = ref(false);
+
 const state = reactive({
-  isLoading: false,
-  isDisabled: false,
+  email: '',
+  password: '',
 });
 
-const schema = toTypedSchema(
-  object({
-    user: string([minLength(1, 'Este campo es requerido')]),
-    password: string([minLength(1, 'Este campo es requerido')]),
-  })
-);
-
-const { handleSubmit } = useForm<Form>({
-  validationSchema: schema,
+const formSchema = object({
+  email: string([minLength(1, 'Este campo es requerido')]),
+  password: string([minLength(1, 'Este campo es requerido')]),
 });
+
+type FormData = Output<typeof formSchema>;
 
 const resetState = () => {
-  state.isLoading = false;
-  state.isDisabled = false;
+  isLoading.value = false;
+  isDisabled.value = false;
 };
 
-const submit = handleSubmit(async (data, { resetForm }) => {
+const submit = async (event: FormSubmitEvent<FormData>) => {
   try {
-    state.isLoading = true;
-    state.isDisabled = true;
+    isLoading.value = true;
+    isDisabled.value = true;
 
-    const success = await auth.login(data.user, data.password);
+    const success = await auth.login(event.data.email, event.data.password);
 
     if (!success) {
-      $notify({
-        group: 'all',
+      useToast().add({
+        icon: 'i-ph-x-circle-duotone',
         title: 'Error',
-        text: 'Un error ha occurrido, intente ingresar de nuevo',
+        description: 'An error has occurred, please try again',
+        color: 'red',
       });
       return;
     }
@@ -57,66 +49,77 @@ const submit = handleSubmit(async (data, { resetForm }) => {
       router.push('/');
     }, REDIRECT_DELAY);
   } catch (error) {
-    $notify({
-      group: 'all',
-      title: 'Error!',
-      text: 'Hubo un problema al iniciar sesión',
+    useToast().add({
+      icon: 'i-ph-x-circle-duotone',
+      title: 'Error',
+      description: 'An error occurred while logging in, please try again',
+      color: 'red',
     });
   } finally {
     resetState();
-    resetForm();
   }
-});
+};
 </script>
 
 <template>
-  <form class="auth-form">
-    <div class="auth-form__wrapper">
-      <h5 class="auth-form__title">Inicia sesión en tu cuenta</h5>
-      <app-input name="user" placeholder="Usuario">
-        <template #left>
-          <div class="i-ph-bag-light text-[20px] text-gray-400" />
-        </template>
-      </app-input>
-      <app-input
-        name="password"
-        placeholder="Ingrese su contraseña"
-        :type="showPassword ? 'text' : 'password'"
-      >
-        <template #left>
-          <div class="i-ph-lock-light text-[20px] text-gray-400" />
-        </template>
-        <template #right>
-          <div
-            @click="showPassword = !showPassword"
-            class="hover:cursor-pointer group"
-          >
-            <div
-              class="i-ph-eye-light text-[20px] transition text-gray-400 group-hover:text-gray-500"
-              v-if="!showPassword"
-            />
-            <div
-              class="i-ph-eye-slash-light text-[20px] transition text-gray-400 group-hover:text-gray-500"
-              v-else
-            />
-          </div>
-        </template>
-      </app-input>
-      <div class="auth-form__footer !mb-0">
-        <app-button
-          @click="submit"
-          :loading="state.isLoading"
-          :disabled="state.isDisabled"
-        >
-          Entrar
-        </app-button>
-      </div>
+  <UContainer>
+    <UCard
+      class="max-w-md mx-auto bg-color-4 shadow-xl border-none ring-0 ring-transparent px-4"
+    >
+      <UForm :schema="formSchema" :state="state" @submit="submit">
+        <header class="flex justify-center mb-6">
+          <h5 class="font-bold text-lg">Sign in to your account</h5>
+        </header>
 
-      <div class="flex mt-4 justify-center">
-        <nuxt-link class="text-xs underline text-color-2" to="/forgot-password"
-          >¿Has olvidado tu contraseña?</nuxt-link
-        >
-      </div>
-    </div>
-  </form>
+        <UFormGroup class="mb-4" label="Email" name="email">
+          <UInput
+            icon="i-ph-envelope-duotone"
+            size="lg"
+            v-model="state.email"
+          />
+        </UFormGroup>
+
+        <UFormGroup label="Password" name="password">
+          <UInput
+            icon="i-ph-lock-duotone"
+            :type="showPassword ? 'text' : 'password'"
+            size="lg"
+            v-model="state.password"
+            :ui="{
+              icon: {
+                trailing: {
+                  pointer: '',
+                },
+              },
+            }"
+          >
+            <template #trailing>
+              <UButton
+                :icon="
+                  !showPassword ? 'i-ph-eye-duotone' : 'i-ph-eye-slash-duotone'
+                "
+                :padded="false"
+                variant="link"
+                color="gray"
+                @click="showPassword = !showPassword"
+              />
+            </template>
+          </UInput>
+        </UFormGroup>
+
+        <div class="mt-8 flex justify-center">
+          <UButton
+            type="submit"
+            size="lg"
+            color="color-3"
+            :disabled="isDisabled || isLoading"
+            >Send
+            <template #leading>
+              <AppLoader v-if="isLoading" />
+            </template>
+          </UButton>
+        </div>
+      </UForm>
+    </UCard>
+  </UContainer>
 </template>

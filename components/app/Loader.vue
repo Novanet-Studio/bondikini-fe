@@ -1,6 +1,8 @@
+<script setup></script>
+
 <template>
   <div
-    class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] md:h-6 md:w-6 md:border-4 lg:h-8 lg:w-8"
+    class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] md:h-6 md:w-6 md:border-[3px]"
     role="status"
   >
     <span

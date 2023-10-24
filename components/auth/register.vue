@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
 import {
   object,
   string,
@@ -8,16 +7,10 @@ import {
   email,
   regex,
   nonNullable,
+  type Output,
 } from 'valibot';
-import { toTypedSchema } from '@vee-validate/valibot';
 import { PASSWORD_REGEX } from '~/config/constants';
-
-type Form = {
-  email: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
-};
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 
 definePageMeta({
   pageTransition: {
@@ -27,132 +20,185 @@ definePageMeta({
 
 const REDIRECT_DELAY = 500;
 
-const router = useRouter();
-const { $notify } = useNuxtApp();
-const auth = useAuthStore();
-const state = reactive({
-  isLoading: false,
-  isDisabled: false,
-});
+const isLoading = ref(false);
+const isDisabled = ref(false);
 const showPasswords = ref(false);
 
-const schema = toTypedSchema(
-  object({
-    email: string([
-      minLength(1, 'Ingrese su email'),
-      email('Formato de email inválido'),
-    ]),
-    username: nonNullable(
-      string([
-        minLength(1, 'Este campo es requerido'),
-        minLength(2, 'El nombre es muy corto'),
-        maxLength(10, 'El nombre es muy largo'),
-      ])
-    ),
-    password: string([
-      minLength(1, 'Este campo es requerido'),
-      regex(
-        PASSWORD_REGEX,
-        'Debe ser igual o mayor a 8 carácteres, una letra mayúscula, una minúscula, un número y un carácter especial'
-      ),
-    ]),
-    confirmPassword: string([minLength(1, 'Este campo es requerido')]),
-  })
-);
-
-const resetState = () => {
-  state.isLoading = false;
-  state.isDisabled = false;
-};
-
-const { handleSubmit, defineInputBinds, setFieldError } = useForm<Form>({
-  validationSchema: schema,
+const state = reactive({
+  email: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
 });
 
-const password = defineInputBinds('password');
-const confirmPassword = defineInputBinds('confirmPassword');
+const router = useRouter();
+const auth = useAuthStore();
 
-const submit = handleSubmit(async (data, { resetForm }) => {
+const formRef = ref();
+
+const formSchema = object({
+  email: string([minLength(1, 'Field is required'), email('Email is invalid')]),
+  username: nonNullable(
+    string([
+      minLength(1, 'Field is required'),
+      minLength(2, 'Username is too short'),
+      maxLength(10, 'Username is too long'),
+    ])
+  ),
+  password: string([
+    minLength(1, 'Field is required'),
+    regex(PASSWORD_REGEX, 'Password not meet requirements'),
+  ]),
+  confirmPassword: string([minLength(1, 'Field is required')]),
+});
+
+type FormData = Output<typeof formSchema>;
+
+const resetState = () => {
+  isLoading.value = false;
+  isDisabled.value = false;
+};
+
+const submit = async (event: FormSubmitEvent<FormData>) => {
   try {
-    state.isLoading = true;
-    state.isDisabled = true;
+    isLoading.value = true;
+    isDisabled.value = true;
 
-    const response = await auth.createCustomer(data.username, data.email);
+    console.log(event.data);
 
-    if (!response.value?.data?.id) {
-      $notify({
-        group: 'all',
-        title: 'Error!',
-        text: 'Hubo un error al intentar registrarte',
-      });
-      resetState();
-      return;
-    }
+    // const response = (await auth.createCustomer(
+    //   event.data.username,
+    //   event.data.email
+    // )) as Ref<Record<any, any>>;
 
-    const customerId = response.value.data.id;
-    const { confirmPassword: _, ...body } = data;
+    // if (!response.value?.data?.id) {
+    //   useToast().add({
+    //     icon: 'i-ph-x-circle-duotone',
+    //     title: 'Error',
+    //     description:
+    //       'An error has occurred while registering, please try again',
+    //     color: 'red',
+    //   });
+    //   resetState();
+    //   return;
+    // }
 
-    await auth.register({
-      customerId,
-      ...body,
-    });
+    // const customerId = response.value.data.id;
+    // const { confirmPassword: _, ...body } = event.data;
 
-    setTimeout(() => {
-      router.push('/');
-    }, REDIRECT_DELAY);
+    // await auth.register({
+    //   customerId,
+    //   ...body,
+    // });
+
+    // setTimeout(() => {
+    //   router.push('/');
+    // }, REDIRECT_DELAY);
   } catch (error) {
     console.log(error);
-    $notify({
-      group: 'all',
-      title: 'Oops',
-      text: 'Hubo un problema al registrarte, intente de nuevo',
+    useToast().add({
+      icon: 'i-ph-x-circle-duotone',
+      title: 'Error',
+      description: 'An error occurred while registering, please try again',
+      color: 'red',
     });
   } finally {
     resetState();
-    resetForm();
   }
-});
+};
 
 watchEffect(() => {
   if (
-    confirmPassword.value.value &&
-    password.value.value &&
-    confirmPassword.value.value?.length >= 8 &&
-    password.value.value !== confirmPassword.value.value
+    state.password &&
+    state.confirmPassword &&
+    state.confirmPassword.length >= 8 &&
+    state.password !== state.confirmPassword
   ) {
-    setFieldError('confirmPassword', 'Las contraseñas no coinciden');
+    formRef.value.setErrors(
+      formRef.value.getErrors().concat({
+        message: 'Passwords do not match',
+        path: 'confirmPassword',
+      })
+    );
   }
 });
 </script>
 
 <template>
-  <form class="auth-form">
-    <div class="auth-form__wrapper">
-      <h5 class="auth-form__title">Crear una cuenta</h5>
-      <app-input name="username" placeholder="Usuario" icon-left="i-ph-user" />
-      <app-input
-        name="email"
-        placeholder="correo@mail.com"
-        icon-left="i-ph-envelope"
-      />
-      <app-input
-        name="password"
-        placeholder="Ingresa tu contraseña"
-        :type="showPasswords ? 'text' : 'password'"
-        :icon-left="showPasswords ? 'i-ph-lock-open' : 'i-ph-lock'"
-      />
-      <app-input
-        name="confirmPassword"
-        placeholder="Confirma contraseña"
-        :type="showPasswords ? 'text' : 'password'"
-        :icon-left="showPasswords ? 'i-ph-lock-open' : 'i-ph-lock'"
-      />
-      <app-checkbox label="Mostrar contraseñas" v-model="showPasswords" />
-      <div class="auth-form__footer !mb-0">
-        <app-button @click="submit" :loading="state.isLoading">
-          Registrar cuenta
-        </app-button>
-      </div>
-    </div>
-  </form>
+  <UContainer>
+    <UCard
+      class="max-w-md mx-auto bg-color-4 shadow-xl border-none ring-0 ring-transparent px-4"
+    >
+      <UForm ref="formRef" :schema="formSchema" :state="state" @submit="submit">
+        <header class="flex justify-center mb-6">
+          <h5 class="font-bold text-lg">Sign in to your account</h5>
+        </header>
+
+        <UFormGroup class="mb-4" label="User" name="user">
+          <UInput icon="i-ph-user-duotone" size="lg" v-model="state.username" />
+        </UFormGroup>
+
+        <UFormGroup class="mb-4" label="Email" name="email">
+          <UInput
+            icon="i-ph-envelope-duotone"
+            size="lg"
+            v-model="state.email"
+          />
+        </UFormGroup>
+
+        <UFormGroup class="mb-4" label="Password" name="password">
+          <UInput
+            icon="i-ph-lock-duotone"
+            :type="showPasswords ? 'text' : 'password'"
+            size="lg"
+            v-model="state.password"
+          />
+          <template #hint>
+            <UPopover :ui="{ width: 'w-40', base: 'p-4' }">
+              <UButton
+                color="gray"
+                icon="i-ph-question-duotone"
+                variant="link"
+              />
+              <template #panel>
+                <span class="max-w-xs p-2">
+                  Password must be equal or greater than 8 characters, contain
+                  at least one uppercase letter, one lowercase letter, one
+                  number and one special character
+                </span>
+              </template>
+            </UPopover>
+          </template>
+        </UFormGroup>
+
+        <UFormGroup
+          class="mb-4"
+          label="Confirm password"
+          name="confirmPassword"
+        >
+          <UInput
+            icon="i-ph-lock-duotone"
+            :type="showPasswords ? 'text' : 'password'"
+            size="lg"
+            v-model="state.confirmPassword"
+          />
+        </UFormGroup>
+
+        <UCheckbox label="Show passwords" v-model="showPasswords" />
+
+        <div class="mt-8 flex justify-center">
+          <UButton
+            type="submit"
+            size="lg"
+            color="color-3"
+            :disabled="isDisabled || isLoading"
+            >Send
+            <template #leading>
+              <AppLoader v-if="isLoading" />
+            </template>
+          </UButton>
+        </div>
+      </UForm>
+    </UCard>
+  </UContainer>
 </template>
