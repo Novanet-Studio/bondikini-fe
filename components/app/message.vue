@@ -11,7 +11,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const classes = computed(() => {
-  const variant = props.variant === 'primary' ? 'bg-color-1' : 'bg-color-2';
+  const variant =
+    props.variant === 'primary'
+      ? 'bg-color-1 text-white'
+      : 'bg-color-2 text-color-5';
   return `${props.class} ${variant}`;
 });
 
@@ -22,18 +25,21 @@ const mode = computed<string>(() => {
 
 <template>
   <div
-    class="w-full text-white relative flex justify-between items-center shadow overflow-hidden px-28 rounded-lg"
+    class="w-full relative flex justify-between items-center shadow overflow-hidden rounded-lg"
     :class="classes"
   >
-    <h3 class="font-300 md:text-xl md:-mb-1 lg:mb-0 lg:text-3xl" :class="mode">
-      <slot />
-    </h3>
-    <div class="relative w-60 h-60 block">
-      <img
-        class="lg:h-60 absolute top-0 right-0"
-        src="/palm.svg"
-        alt="Palm Tree"
-      />
+    <div>
+      <h3
+        class="font-300 md:text-xl md:-mb-1 lg:mb-0 lg:text-4xl lg:max-w-[75%] lg:pl-20 lg:py-24"
+        :class="mode"
+      >
+        <slot />
+      </h3>
     </div>
+    <PalmTree
+      :height="220"
+      class="absolute bottom-0 right-24"
+      :class="variant === 'primary' ? 'fill-white' : 'fill-color-5'"
+    />
   </div>
 </template>

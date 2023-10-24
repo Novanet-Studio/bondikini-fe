@@ -62,6 +62,12 @@ const {
             :filtered="!!categoryActive"
           />
         </TransitionGroup>
+
+        <AppMessage class="mt-10" variant="secondary">
+          Bondikini was made with the woman in mind who is comfortable in her
+          own skin who wants quality pieces providing the latest styles with a
+          touch of elegance.
+        </AppMessage>
       </template>
     </section>
   </div>
