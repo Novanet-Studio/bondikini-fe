@@ -1,5 +1,5 @@
 <template>
-  <section class="container mt-24">
+  <section class="container mt-14 md:mt-24">
     <AppMessage variant="secondary">
       Our collections offer a diverse selection of sizes and styles to suit the
       sophisticated yet fun woman who is always in style.
@@ -16,7 +16,7 @@
       <ContactInfo />
     </div>
 
-    <AppMessage variant="secondary" class="mt-24">
+    <AppMessage class="my-16 lg:mt-24" variant="secondary">
       Whether you're looking for something elegant or playful, we have the
       swimwear for you. For a limited time only the same price for any swimsuit
       in its category!

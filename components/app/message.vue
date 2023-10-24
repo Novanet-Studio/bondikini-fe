@@ -30,7 +30,7 @@ const mode = computed<string>(() => {
   >
     <div>
       <h3
-        class="font-300 md:text-xl md:-mb-1 lg:mb-0 lg:text-4xl lg:max-w-[75%] lg:pl-20 lg:py-24"
+        class="font-300 py-6 px-6 md:text-xl md:-mb-1 lg:mb-0 lg:text-4xl lg:max-w-[75%] lg:pl-20 lg:py-24"
         :class="mode"
       >
         <slot />
@@ -38,7 +38,7 @@ const mode = computed<string>(() => {
     </div>
     <PalmTree
       :height="220"
-      class="absolute bottom-0 right-24"
+      class="hidden absolute bottom-0 right-24 md:block"
       :class="variant === 'primary' ? 'fill-white' : 'fill-color-5'"
     />
   </div>

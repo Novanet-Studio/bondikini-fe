@@ -47,7 +47,7 @@ const submit = (event: FormSubmitEvent<FormData>) => {
 </script>
 
 <template>
-  <div class="w-full bg-color-4 p-16 mt-12 px-24 shadow-md">
+  <div class="w-full bg-color-4 px-14 p-16 mt-12 md:px-24 shadow-md">
     <UForm
       :schema="formSchema"
       :state="state"

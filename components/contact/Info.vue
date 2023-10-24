@@ -12,7 +12,7 @@ const icons: { [key: string]: string } = {
 </script>
 
 <template>
-  <div class="mt-12 flex flex-col gap-3">
+  <div class="hidden mt-12 flex-col gap-3 md:flex">
     <div
       class="flex items-center gap-4"
       v-for="(item, index) in widgets"

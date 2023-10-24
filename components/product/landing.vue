@@ -71,7 +71,7 @@ onMounted(async () => {
 }
 
 .landing__title {
-  @apply mb-0 inline-block text-3xl font-extrabold text-color-6;
+  @apply mb-0 text-xl inline-block lg:text-3xl font-extrabold text-color-6;
 }
 
 .landing__content {

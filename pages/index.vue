@@ -22,7 +22,9 @@ const {
       <product-loader v-if="isLoading" />
       <template v-else>
         <div class="flex items-center justify-between mt-8">
-          <h3 class="ml-5 text-color-6 font-bold text-3xl">Categorías</h3>
+          <h3 class="text-xl ml-5 text-color-6 font-bold lg:text-3xl">
+            Categorías
+          </h3>
           <Transition name="slide-fade">
             <button
               class="block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:px-4 md:py-2 md:rounded-full lg:transition lg:ease-linear lg:hover:bg-color-3/10"
@@ -34,7 +36,7 @@ const {
           </Transition>
         </div>
         <div
-          class="grid place-items-center place-content-center mt-4 md:max-w-3xl md:mx-auto lg:mx-none lg:grid-cols-4"
+          class="grid place-items-center place-content-center gap-4 mt-4 grid-cols-2 md:max-w-3xl md:mx-auto lg:mx-none lg:grid-cols-4"
         >
           <button
             v-for="category in categories"
@@ -63,7 +65,7 @@ const {
           />
         </TransitionGroup>
 
-        <AppMessage class="mt-24" variant="secondary">
+        <AppMessage class="my-16 lg:mt-24" variant="secondary">
           Bondikini was made with the woman in mind who is comfortable in her
           own skin who wants quality pieces providing the latest styles with a
           touch of elegance.

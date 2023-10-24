@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Tabs as VueTabs, Tab as VueTab } from 'vue3-tabs-component';
+// import { Tabs as VueTabs, Tab as VueTab } from 'vue3-tabs-component';
 import PagoMovil from './pago-movil.vue';
 import Paypal from './paypal.vue';
 import TransBofa from './trans-bofa.vue';
@@ -37,11 +37,11 @@ const tabs = [
 
 <template>
   <div class="whitespace-nowrap md:w-full">
-    <vue-tabs :options="{ useUrlFragmet: false }">
+    <!-- <vue-tabs :options="{ useUrlFragmet: false }">
       <vue-tab v-for="(tab, i) in tabs" :key="i" :name="tab.name">
         <component :is="tab.component" />
       </vue-tab>
-    </vue-tabs>
+    </vue-tabs> -->
   </div>
 </template>
 

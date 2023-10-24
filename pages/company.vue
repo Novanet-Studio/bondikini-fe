@@ -16,15 +16,17 @@ definePageMeta({
         today.
       </AppMessage>
 
-      <div class="w-full grid grid-cols-2 mt-16 divide-x divide-color-2">
-        <p class="p-8 text-color-[#5A5A5A] text-2xl">
+      <div
+        class="w-full grid gap-4 my-8 md:grid-cols-2 md:mt-16 md:divide-x md:divide-color-2"
+      >
+        <p class="text-lg md:p-8 text-color-[#5A5A5A] md:text-2xl">
           Welcome to Bondikini where you can bask in the warm rays of
           confidence, chic vibes and fun in the sun! Our company is dedicated to
           providing high-quality, fashionable swimwear that empowers women by
           the beach or by the pool or on a yacht in the middle of the clear blue
           waters.
         </p>
-        <p class="p-8 text-color-[#5A5A5A] text-2xl">
+        <p class="text-lg md:p-8 text-color-[#5A5A5A] md:text-2xl">
           Whether you're looking for subtle sophistication in black and white or
           splashing fun with colors, textures and pearl appliques Bondikini has
           what you're looking for. <br />
