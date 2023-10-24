@@ -1,17 +1,13 @@
 <script setup>
-const appConfig = useAppConfig();
-const widgets = appConfig.footer.widgets;
+  const appConfig = useAppConfig();
+  const widgets = appConfig.footer.widgets;
 
-const icons = {
-  instagram: 'i-ph-instagram-logo',
-  whatsapp: 'i-ph-whatsapp-logo',
-  email: 'i-ph-envelope',
-  facebook: 'i-ph-facebook-logo',
-};
-
-// Phone -> 584241548330
-// Instagram -> https://www.instagram.com/ccsmultisport
-// Facebook -> https://www.facebook.com/CcsMultiSport
+  const icons = {
+    instagram: 'i-ph-instagram-logo',
+    whatsapp: 'i-ph-whatsapp-logo',
+    email: 'i-ph-envelope',
+    facebook: 'i-ph-facebook-logo',
+  };
 </script>
 
 <template>
@@ -31,23 +27,23 @@ const icons = {
 </template>
 
 <style scoped>
-.widgets {
-  @apply pb-4 lg:(mx-4 mx-auto);
-}
+  .widgets {
+    @apply pb-4 lg:mx-4 lg:mx-auto;
+  }
 
-.widgets__wrapper {
-  @apply max-w-full w-full relative pb-5 mb-5 flex flex-col items-center;
-}
+  .widgets__wrapper {
+    @apply max-w-full w-full relative pb-5 mb-5 flex flex-col items-center;
+  }
 
-.widgets__title {
-  @apply text-2xl pb-2 font-bold text-black font-900 lg:(text-3xl pb-4);
-}
+  .widgets__title {
+    @apply text-2xl pb-2 font-bold text-black font-black lg:text-3xl lg:pb-4;
+  }
 
-.widgets__list {
-  @apply w-full flex justify-center gap-4 mt-2 md:(mt-4 gap-6);
-}
+  .widgets__list {
+    @apply w-full flex justify-center gap-4 mt-2 md:mt-4 md:gap-6;
+  }
 
-.widgets__link {
-  @apply flex flex-col text-lg items-center gap-2 md:(flex-row text-xl);
-}
+  .widgets__link {
+    @apply flex flex-col text-lg items-center gap-2 md:flex-row md:text-xl;
+  }
 </style>

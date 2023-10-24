@@ -1,5 +1,5 @@
 <script setup>
-const isOpen = ref(false);
+  const isOpen = ref(false);
 </script>
 
 <template>
@@ -16,15 +16,15 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
-.navigation {
-  @apply relative flex flex-wrap items-center justify-between px-4 py-2 bg-color-2 md:py-4 lg:(px-0 py-0);
-}
+  .navigation {
+    @apply relative flex flex-wrap items-center justify-between px-4 py-2 bg-color-1 md:py-4 lg:px-0 lg:py-0;
+  }
 
-.navigation__wrapper {
-  @apply flex flex-col items-center justify-between w-full lg:(mx-auto px-34);
-}
+  .navigation__wrapper {
+    @apply flex flex-col items-center justify-between w-full lg:mx-auto lg:px-36;
+  }
 
-.navigation__content {
-  @apply w-full text-center justify-center mt-4 flex-[1_0_100%] lg:(flex justify-start mt-0);
-}
+  .navigation__content {
+    @apply w-full text-center justify-center mt-4 flex-[1_0_100%] lg:flex lg:justify-start lg:mt-0;
+  }
 </style>

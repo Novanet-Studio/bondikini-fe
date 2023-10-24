@@ -7,7 +7,7 @@
 </template>
 
 <style scoped>
-.header-actions {
-  @apply flex items-center justify-between;
-}
+  .header-actions {
+    @apply flex items-center justify-between;
+  }
 </style>

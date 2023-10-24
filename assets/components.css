@@ -1,0 +1,47 @@
+@tailwind components;
+
+@layer components {
+  .header-actions__link {
+    @apply flex relative transition ease-linear;
+  }
+
+  .header-actions__icon {
+    @apply text-4xl md:text-[2.45rem] text-color-3;
+  }
+
+  .header-actions__indicator-wrapper {
+    @apply absolute bottom-0 -right-[3px] flex justify-center items-center w-[20px] h-[20px] text-white bg-color-3 rounded-full;
+  }
+
+  .header-actions__indicator {
+    @apply text-xs leading-4 font-medium not-italic;
+  }
+
+  .b-header {
+    @apply text-center pb-8 md:pb-14;
+  }
+
+  .b-title {
+    @apply text-sm font-bold text-black md:text-xl;
+  }
+
+  .b-content {
+    @apply flex flex-col-reverse gap-8 md:flex-row lg:gap-12;
+  }
+
+  .b-left {
+    @apply flex-[0_0_100%] md:flex-[0_0_60%];
+  }
+
+  .b-right {
+    @apply flex-[0_0_100%] md:flex-[0_0_35%];
+  }
+
+  .b-subtitle {
+    @apply text-sm text-color-2 mt-0 mb-6 font-bold md:mb-3 lg:text-base;
+  }
+
+  .b-link-wrapper {
+    @apply flex justify-between items-center;
+  }
+}

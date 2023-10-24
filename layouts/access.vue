@@ -19,11 +19,11 @@
 
 <style scoped>
   .access {
-    @apply flex flex-col bg-light-500 w-full min-h-screen overflow-hidden relative;
+    @apply flex flex-col bg-white/500 w-full min-h-screen overflow-hidden relative;
   }
 
   .access__wrapper {
-    @apply w-full mt-12 flex-1 md:max-w-xl md:mx-auto;
+    @apply w-full mt-12 flex-1 md:mx-auto;
   }
 
   .access__header {

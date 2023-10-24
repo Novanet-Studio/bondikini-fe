@@ -1,29 +1,33 @@
 <script lang="ts" setup>
-const cartStore = useCartStore();
-const productStore = useProductStore();
+  const cartStore = useCartStore();
+  const productStore = useProductStore();
 
-const isLoadingCart = ref(false);
-const total = computed(() => cartStore.total);
-const amount = computed(() => cartStore.amount);
-const cartProducts = computed(() => productStore.cartProducts);
+  const isLoadingCart = ref(false);
+  const total = computed(() => cartStore.total);
+  const amount = computed(() => cartStore.amount);
+  const cartProducts = computed(() => productStore.cartProducts);
 
-const isOpen = ref(false);
-const miniCartRef = ref(null);
+  const isOpen = ref(false);
+  const miniCartRef = ref(null);
 
-function toggleIsOpen() {
-  isOpen.value = !isOpen.value;
-}
+  function toggleIsOpen() {
+    isOpen.value = !isOpen.value;
+  }
 
-onClickOutside(miniCartRef, () => {
-  isOpen.value = false;
-});
+  onClickOutside(miniCartRef, () => {
+    isOpen.value = false;
+  });
 </script>
 
 <template>
-  <div class="relative mt-2">
-    <button class="cursor-pointer" @click.prevent="toggleIsOpen">
+  <div class="relative">
+    <button
+      class="cursor-pointer header-actions__link"
+      @click.prevent="toggleIsOpen"
+    >
       <div class="header-actions__link">
-        <div class="i-ph-bag-light header-actions__icon"></div>
+        <!-- <div class="i-ph-bag-light header-actions__icon"></div> -->
+        <UIcon name="i-ph-bag" class="header-actions__icon" />
         <span class="header-actions__indicator-wrapper">
           <i class="header-actions__indicator">{{ total }}</i>
         </span>
@@ -72,39 +76,39 @@ onClickOutside(miniCartRef, () => {
 </template>
 
 <style scoped>
-.mini-cart {
-  @apply absolute min-w-[300px] right-0 -left-[178px] z-30 pt-[10px] transition ease rounded-xl;
-}
+  .mini-cart {
+    @apply absolute min-w-[300px] right-0 -left-[178px] z-30 pt-[10px] transition ease-linear rounded-xl;
+  }
 
-.mini-cart__body {
-  @apply min-h-[150px] relative p-5 max-h-[300px] overflow-auto bg-white border border-white border-b-transparent;
-}
+  .mini-cart__body {
+    @apply min-h-[150px] relative p-5 max-h-[300px] overflow-auto bg-white border border-white border-b-transparent;
+  }
 
-.mini-cart__footer {
-  @apply p-[10px_20px_20px] border-t-0 bg-white;
-}
+  .mini-cart__footer {
+    @apply p-[10px_20px_20px] border-t-0 bg-white;
+  }
 
-.mini-cart__footer-title {
-  @apply block mb-5 text-base font-semibold flex justify-between;
-}
+  .mini-cart__footer-title {
+    @apply block mb-5 text-base font-semibold flex justify-between;
+  }
 
-.mini-cart__amount {
-  @apply text-red-600 font-bold;
-}
+  .mini-cart__amount {
+    @apply text-red-600 font-bold;
+  }
 
-.mini-cart__empty {
-  @apply min-h-[50px] relative p-5 max-h-[300px] overflow-auto bg-white border border-white border-b-transparent;
-}
+  .mini-cart__empty {
+    @apply min-h-[50px] relative p-5 max-h-[300px] overflow-auto bg-white border border-white border-b-transparent;
+  }
 
-.mini-cart__wrapper {
-  @apply flex flex-nowrap justify-between items-center;
-}
+  .mini-cart__wrapper {
+    @apply flex flex-nowrap justify-between items-center;
+  }
 
-.mini-cart__left {
-  @apply max-w-[50%] pr-1 flex basis-full;
-}
+  .mini-cart__left {
+    @apply max-w-[50%] pr-1 flex basis-full;
+  }
 
-.mini-cart__right {
-  @apply max-w-[50%] pl-1 basis-full;
-}
+  .mini-cart__right {
+    @apply max-w-[50%] pl-1 basis-full;
+  }
 </style>

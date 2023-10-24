@@ -1,55 +1,57 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
-import { object, string, email, minLength } from 'valibot';
-import { toTypedSchema } from '@vee-validate/valibot';
+  import { useForm } from 'vee-validate';
+  import { object, string, email, minLength } from 'valibot';
+  import { toTypedSchema } from '@vee-validate/valibot';
 
-type Form = {
-  fullname: string;
-  email: string;
-  subject: string;
-  message: string;
-};
+  type Form = {
+    fullname: string;
+    email: string;
+    subject: string;
+    message: string;
+  };
 
-const router = useRouter();
+  const router = useRouter();
 
-const schema = toTypedSchema(
-  object({
-    fullname: string([minLength(1, 'Este campo es requerido')]),
-    email: string([
-      minLength(1, 'Este campo es requerido'),
-      email('Formato de correo es invalido'),
-    ]),
-    subject: string([minLength(1, 'Este campo es requerido')]),
-    message: string([minLength(1, 'Este campo es requerido')]),
-  })
-);
+  const schema = toTypedSchema(
+    object({
+      fullname: string([minLength(1, 'Este campo es requerido')]),
+      email: string([
+        minLength(1, 'Este campo es requerido'),
+        email('Formato de correo es invalido'),
+      ]),
+      subject: string([minLength(1, 'Este campo es requerido')]),
+      message: string([minLength(1, 'Este campo es requerido')]),
+    })
+  );
 
-const { handleSubmit, defineInputBinds } = useForm<Form>({
-  validationSchema: schema,
-});
+  const { handleSubmit, defineInputBinds } = useForm<Form>({
+    validationSchema: schema,
+  });
 
-const message = defineInputBinds('message');
+  const message = defineInputBinds('message');
 
-const encode = (data: Record<string, string>) =>
-  Object.keys(data)
-    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-    .join('&');
+  const encode = (data: Record<string, string>) =>
+    Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])
+      )
+      .join('&');
 
-const submit = handleSubmit(async (data) => {
-  try {
-    await fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': 'contacto',
-        ...data,
-      }),
-    });
-    router.push('/gracias');
-  } catch (error) {
-    console.log(error);
-  }
-});
+  const submit = handleSubmit(async (data) => {
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({
+          'form-name': 'contacto',
+          ...data,
+        }),
+      });
+      router.push('/gracias');
+    } catch (error) {
+      console.log(error);
+    }
+  });
 </script>
 
 <template>
@@ -107,31 +109,31 @@ const submit = handleSubmit(async (data) => {
 </template>
 
 <style scoped>
-.title {
-  @apply font-bold mb-4 text-color-2  text-left md:(text-lg mb-8) lg:(text-2xl);
-}
+  .title {
+    @apply font-bold mb-4 text-color-2  text-left md:text-lg md:mb-8 lg:text-2xl;
+  }
 
-.form__title {
-  @apply font-semibold mb-8 text-color-2 text-2xl md:mb-3;
-}
+  .form__title {
+    @apply font-semibold mb-8 text-color-2 text-2xl md:mb-3;
+  }
 
-.form__group-alt {
-  @apply mb-4 lg:mb-6;
-}
+  .form__group-alt {
+    @apply mb-4 lg:mb-6;
+  }
 
-.form__container {
-  @apply flex flex-col justify-between md:flex-row;
-}
+  .form__container {
+    @apply flex flex-col justify-between md:flex-row;
+  }
 
-.form__grid {
-  @apply grid grid-cols-1 gap-4 md:grid-cols-2;
-}
+  .form__grid {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2;
+  }
 
-.form__left {
-  @apply flex-[0_0_100%] gap-4 md:flex-[0_0_calc(50%-1rem)];
-}
+  .form__left {
+    @apply flex-[0_0_100%] gap-4 md:flex-[0_0_calc(50%-1rem)];
+  }
 
-.form__right {
-  @apply flex-[0_0_100%] md:flex-[0_0_calc(50%-1rem)];
-}
+  .form__right {
+    @apply flex-[0_0_100%] md:flex-[0_0_calc(50%-1rem)];
+  }
 </style>

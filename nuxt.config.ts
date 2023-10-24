@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@sidebase/nuxt-pdf',
   ],
+
   app: {
     head: {
       titleTemplate: (title) => `${title} - TeM`,
@@ -31,6 +32,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'page' },
   },
+
   runtimeConfig: {
     public: {
       strapi: {
@@ -42,6 +44,9 @@ export default defineNuxtConfig({
       PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
     },
   },
+
+  css: ['~/assets/components.css'],
+
   pwa: {
     meta: {
       title: 'Bondikini - Store',
@@ -77,6 +82,12 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
   },
+
+  ui: {
+    global: true,
+    icons: ['ph'],
+  },
+
   colorMode: {
     preference: 'light',
     fallback: 'light',

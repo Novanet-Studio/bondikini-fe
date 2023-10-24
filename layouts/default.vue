@@ -31,16 +31,16 @@
     @apply flex relative;
   }
   .default__container {
-    @apply transition animate-ease-[cubic-bezier(0.4,0,0.2,1)];
+    @apply transition ease-[cubic-bezier(0.4,0,0.2,1)];
   }
 
   .default__wrapper {
-    @apply flex-auto backface-hidden flex flex-col min-h-screen max-w-full;
+    @apply flex-auto flex flex-col min-h-screen max-w-full;
   }
   .default__content {
-    @apply flex-auto transition ease;
+    @apply flex-auto transition ease-linear;
   }
   .default__main {
-    @apply transition ease w-full mx-auto md:px-0;
+    @apply transition ease-linear w-full mx-auto md:px-0;
   }
 </style>

@@ -1,59 +1,59 @@
 <script lang="ts" setup>
-import mapper from 'smapper';
-import { injectKeys } from '~/config/constants';
-import { GetProductById } from '~/graphql/queries';
+  import mapper from 'smapper';
+  import { injectKeys } from '~/config/constants';
+  import { GetProductById } from '~/graphql/queries';
 
-const props = defineProps<{ product: Product }>();
+  const props = defineProps<{ product: Product }>();
 
-const cart = useCartStore();
-const router = useRouter();
-const graphql = useStrapiGraphQL();
-const pruductStore = useProductStore();
-const { $notify } = useNuxtApp();
+  const cart = useCartStore();
+  const router = useRouter();
+  const graphql = useStrapiGraphQL();
+  const pruductStore = useProductStore();
+  const { $notify } = useNuxtApp();
 
-async function handleAddToCart() {
-  const newProduct = {
-    id: props.product.id,
-    quantity: 1,
-    price: props.product.price,
-  };
+  async function handleAddToCart() {
+    const newProduct = {
+      id: props.product.id,
+      quantity: 1,
+      price: props.product.price,
+    };
 
-  if (props.product.size_stock?.length) {
+    if (props.product.size_stock?.length) {
+      $notify({
+        group: 'all',
+        title: 'Advertencia',
+        text: `Seleccione una talla`,
+      });
+      router.push(`/product/${props.product.id}`);
+      return;
+    }
+
+    cart.addProductToCart(newProduct);
+
+    const itemsList = cart.cartItems.map((item) => {
+      return graphql<ProductRequest>(GetProductById, { id: item.id });
+    });
+
+    const itemsResult = await Promise.all(itemsList);
+
+    const temp: any[] = [];
+
+    mapper<any[]>(itemsResult).map((item) => {
+      temp.push(item.products[0]);
+    });
+
+    pruductStore.addCartProducts(temp);
+
     $notify({
       group: 'all',
-      title: 'Advertencia',
-      text: `Seleccione una talla`,
+      title: '¡Éxito!',
+      text: `Producto ${newProduct.id} ha sido agregado al carrito!`,
     });
-    router.push(`/product/${props.product.id}`);
-    return;
   }
 
-  cart.addProductToCart(newProduct);
+  provide(injectKeys.product, props.product);
 
-  const itemsList = cart.cartItems.map((item) => {
-    return graphql<ProductRequest>(GetProductById, { id: item.id });
-  });
-
-  const itemsResult = await Promise.all(itemsList);
-
-  const temp: any[] = [];
-
-  mapper<any[]>(itemsResult).map((item) => {
-    temp.push(item.products[0]);
-  });
-
-  pruductStore.addCartProducts(temp);
-
-  $notify({
-    group: 'all',
-    title: '¡Éxito!',
-    text: `Producto ${newProduct.id} ha sido agregado al carrito!`,
-  });
-}
-
-provide(injectKeys.product, props.product);
-
-// const handleQuickView = (open: boolean) => (state.quickView = open);
+  // const handleQuickView = (open: boolean) => (state.quickView = open);
 </script>
 
 <template>
@@ -73,7 +73,7 @@ provide(injectKeys.product, props.product);
         class="!absolute -bottom-5 lg:-bottom-8 left-0 w-full flex justify-center"
       >
         <product-price
-          class="!my-1 w-40px h-40px text-xs lg:(w-50px h-50px text-base) bg-color-3 flex justify-center items-center rounded-full !text-white font-bold"
+          class="!my-1 w-40px h-40px text-xs lg:w-50px lg:h-50px lg:text-base bg-color-3 flex justify-center items-center rounded-full !text-white font-bold"
           v-if="product.size_stock?.length"
           >{{ product.price }}</product-price
         >
@@ -96,15 +96,15 @@ provide(injectKeys.product, props.product);
 </template>
 
 <style scoped>
-.product {
-  @apply h-full box-border relative block box-border border rounded-xl transition ease hover:(border border-gray-300) w-[168px] max-w-[168px] lg:(w-250px max-w-[250px] p-[20px_20px_20px]);
-}
+  .product {
+    @apply h-full box-border relative block box-border border rounded-xl transition ease-linear hover:border hover:border-gray-300 w-[168px] max-w-[168px] lg:w-[250px] lg:max-w-[250px] lg:p-[20px_20px_20px];
+  }
 
-.product__thumbnail {
-  @apply relative overflow-hidden;
-}
+  .product__thumbnail {
+    @apply relative overflow-hidden;
+  }
 
-.product__thumbnail:hover > ul {
-  transform: translate(-50%, 0);
-}
+  .product__thumbnail:hover > ul {
+    transform: translate(-50%, 0);
+  }
 </style>
