@@ -2,6 +2,9 @@ import type { Config } from 'tailwindcss';
 
 export default <Partial<Config>>{
   theme: {
+    fontFamily: {
+      sans: ['Lora', 'sans-serif'],
+    },
     screens: {
       xs: '340px',
       sm: '640px',
