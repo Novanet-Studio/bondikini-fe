@@ -20,7 +20,7 @@ const imageUrl = computed(() => product?.images[0].url);
       :placeholder="[208, 232, 10]"
       sizes="sm:0.625em md:13.125em"
       fit="outside"
-      class="h-full w-full object-contain"
+      class="h-full w-full object-cover"
     />
   </nuxt-link>
 </template>

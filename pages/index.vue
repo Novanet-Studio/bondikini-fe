@@ -14,7 +14,7 @@ const {
 <template>
   <div class="w-full">
     <AppBanner />
-    <section class="mx-24">
+    <section class="container">
       <AppMessage class="mt-10">
         Discover our diverse collection of bikinis, one pieces, and swimwear
         sets that come with matching cover ups.
@@ -42,11 +42,9 @@ const {
             @click="filterByCategory(category.id)"
           >
             <NuxtImg
-              class="w-20 h-20 rounded-full object-cover border-3 md:w-30 md:h-30 lg:w-36 lg:h-36"
+              class="w-20 h-20 rounded-full object-cover ring-[3px] ring-offset-2 ring-offset-white md:w-30 md:h-30 lg:w-36 lg:h-36"
               :class="
-                category.id === categoryActive
-                  ? 'border-color-3'
-                  : 'border-color-5'
+                category.id === categoryActive ? 'ring-color-3' : 'ring-color-4'
               "
               :src="category.products[0].images[0].url"
             />
@@ -57,7 +55,7 @@ const {
           </button>
         </div>
         <TransitionGroup name="list" tag="div">
-          <product-landing
+          <ProductLanding
             v-for="category in categoriesResult"
             :key="category.id"
             :category="category"

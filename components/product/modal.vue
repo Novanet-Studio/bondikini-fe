@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 const emit = defineEmits<{ (e: 'update:modelValue', value: boolean): void }>();
 const props = defineProps<{ modelValue: boolean }>();
 
@@ -27,4 +27,4 @@ const active = computed({
 .product-modal__icon {
   @apply absolute top-3 right-4 cursor-pointer;
 }
-</style>
+</style> -->

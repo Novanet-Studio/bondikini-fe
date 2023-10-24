@@ -8,6 +8,7 @@ register();
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <UNotifications />
 </template>
 
 <style>

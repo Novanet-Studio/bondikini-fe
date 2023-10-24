@@ -18,19 +18,19 @@
 </template>
 
 <style scoped>
-  .access {
-    @apply flex flex-col bg-white/500 w-full min-h-screen overflow-hidden relative;
-  }
+.access {
+  @apply flex flex-col w-full min-h-screen overflow-hidden relative;
+}
 
-  .access__wrapper {
-    @apply w-full mt-12 flex-1 md:mx-auto;
-  }
+.access__wrapper {
+  @apply w-full mt-12 flex-1 md:mx-auto;
+}
 
-  .access__header {
-    @apply p-6 flex justify-center;
-  }
+.access__header {
+  @apply p-6 flex justify-center;
+}
 
-  .access__link {
-    @apply cursor-pointer;
-  }
+.access__link {
+  @apply cursor-pointer;
+}
 </style>

@@ -42,10 +42,10 @@ export default function useCategory(params?: Params): Result {
       categoriesResult.value = strapiMapper(response.data.categories.data);
     } catch (error) {
       console.log(error);
-      $notify({
-        group: '',
+      useToast().add({
+        icon: 'i-ph-x',
         title: 'Error',
-        text: 'Hubo un error al intentar cargar las categorias',
+        description: 'An error occurred while loading categories',
       });
       categories.value = [];
     } finally {
