@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { injectKeys } from '~/config/constants';
-  const product = inject(injectKeys.productDetail);
+import { injectKeys } from '~/config/constants';
+const product = inject(injectKeys.productDetail);
 
-  const showLightbox = ref(false);
+const showLightbox = ref(false);
 </script>
 
 <template>
@@ -11,7 +11,7 @@
       {{ product?.category.name }}
     </h4>
     <div class="app-gradient mb-8 p-4">
-      <div class="flex flex-col md:(flex-row gap-6)">
+      <div class="flex flex-col md:flex-row md:gap-6)">
         <h5 class="text-center mb-4 text-sm font-bold md:hidden">
           {{ product?.name }}
         </h5>

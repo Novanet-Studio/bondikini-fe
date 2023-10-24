@@ -97,7 +97,7 @@ const handleAddItemToWishlist = () => {
 
 <style scoped>
 .product-actions {
-  @apply absolute bottom-0 left-2/4 flex flex-nowrap justify-center items-center w-full py-[10px] bg-white transition duration-500 ease-in-out transform -translate-x-2/4 translate-y-100;
+  @apply absolute bottom-0 left-2/4 flex flex-nowrap justify-center items-center w-full py-[10px] bg-white transition duration-500 ease-in-out transform -translate-x-2/4 translate-y-2/4;
 }
 
 .product-actions__item {
@@ -105,6 +105,6 @@ const handleAddItemToWishlist = () => {
 }
 
 .product-actions__link {
-  @apply flex justify-center items-center w-9 h-9 rounded-full transition ease hover:(bg-color-1 text-white);
+  @apply flex justify-center items-center w-9 h-9 rounded-full transition ease-in hover:bg-color-1 hover:text-white;
 }
 </style>

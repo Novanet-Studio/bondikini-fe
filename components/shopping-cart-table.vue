@@ -107,7 +107,7 @@ const handleRemoveProductFromCart = (product?: Product) => {
 }
 
 .table__tr {
-  @apply border-b transition duration-300 bg-color-6 even:bg-color-5 ease-in-out hover:bg-color-8 group;
+  @apply border-b transition duration-300 bg-color-6 even:bg-color-5 ease-in-out hover:bg-color-7;
 }
 
 .product-td {

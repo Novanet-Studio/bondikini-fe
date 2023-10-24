@@ -106,7 +106,7 @@ const submit = handleSubmit(async (data) => {
 }
 
 .auth__link {
-  @apply text-base font-bold text-dark-50 first:mr-8 md:text-2xl;
+  @apply text-base font-bold first:mr-8 md:text-2xl;
 }
 
 .auth__link--active {

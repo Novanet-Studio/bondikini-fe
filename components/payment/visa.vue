@@ -255,7 +255,7 @@ onMounted(async () => {
 
 <style scoped>
 .visa__terms-wrapper {
-  @apply text-dark-200;
+  @apply text-black/20;
 }
 
 .visa__text {

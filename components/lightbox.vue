@@ -95,7 +95,7 @@ function close() {
 }
 
 .lightbox__icon {
-  @apply absolute top-3 right-4 cursor-pointer z9;
+  @apply absolute top-3 right-4 cursor-pointer z-10;
 }
 
 .lightbox-thumbs {
@@ -103,13 +103,13 @@ function close() {
 }
 
 .lightbox-thumbs .swiper-slide-visible {
-  @apply opacity-40 !border-2 !border-gray rounded-md;
+  @apply opacity-40 !border-2 !border-gray-50 rounded-md;
   /* width: 25%;
   @apply h-100px; */
 }
 
 .lightbox-thumbs .swiper-slide-thumb-active {
   /* opacity: 1; */
-  @apply !border-2 !border-red-9 opacity-100;
+  @apply !border-2 !border-red-500 opacity-100;
 }
 </style>

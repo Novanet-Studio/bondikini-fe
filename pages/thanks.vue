@@ -8,7 +8,7 @@ definePageMeta({
   <section class="section">
     <div class="wrapper">
       <figure>
-        <nuxt-img class="mb-10" src="/gracias.jpg" alt="Gracias image" />
+        <nuxt-img class="mb-10" src="/gracias.jpg" alt="Thanks image" />
         <h3 class="title">¡Gracias por contactarnos!</h3>
         <p class="text">
           Le responderemos a la brevedad posible.
@@ -33,6 +33,6 @@ definePageMeta({
 }
 
 .text {
-  @apply my-4 mb-30 text-xl;
+  @apply my-4 mb-32 text-xl;
 }
 </style>

@@ -7,6 +7,6 @@
 
 <style scoped>
 .product-quick-view {
-  @apply mb-0 flex flex-col flex-wrap justify-center items-start lg:(flex-nowrap flex-row);
+  @apply mb-0 flex flex-col flex-wrap justify-center items-start lg:flex-nowrap lg:flex-row;
 }
 </style>

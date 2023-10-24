@@ -1,14 +1,13 @@
 <script setup>
-  const auth = useAuthStore();
-  const global = useGlobalStore();
-  const isOpen = ref(false);
+const auth = useAuthStore();
+const global = useGlobalStore();
+const isOpen = ref(false);
 </script>
 
 <template>
   <div v-if="!auth.authenticated" class="user-area">
     <div class="user-area__icon-wrapper">
       <NuxtLink to="/auth/login">
-        <!-- <div class="i-ph-user-light user-area__icon" /> -->
         <UIcon name="i-ph-user" class="user-area__icon" />
       </NuxtLink>
     </div>
@@ -55,43 +54,43 @@
 </template>
 
 <style scoped>
-  .user-area {
-    @apply mx-2 flex flex-nowrap text-left cursor-pointer md:mx-5;
-  }
+.user-area {
+  @apply mx-2 flex flex-nowrap text-left cursor-pointer md:mx-5;
+}
 
-  .user-area__links-group {
-    @apply pl-[4px] md:pl-[10px];
-  }
+.user-area__links-group {
+  @apply pl-[4px] md:pl-[10px];
+}
 
-  .user-area__link {
-    @apply text-xs block font-bold md:text-sm;
-  }
+.user-area__link {
+  @apply text-xs block font-bold md:text-sm;
+}
 
-  .user-area__menu {
-    @apply mx-5 relative cursor-pointer;
-  }
+.user-area__menu {
+  @apply mx-5 relative cursor-pointer;
+}
 
-  .user-area__menu-container {
-    @apply absolute min-w-[240px] right-0 z-30 pt-[10px] opacity-100 bg-white px-4 py-2 rounded-sm transition ease-linear opacity-100 lg:p-4;
-  }
+.user-area__menu-container {
+  @apply absolute min-w-[240px] right-0 z-30 pt-[10px] opacity-100 bg-white px-4 py-2 rounded-sm transition ease-linear opacity-100 lg:p-4;
+}
 
-  .user-area__icon {
-    @apply text-4xl text-color-3;
-  }
+.user-area__icon {
+  @apply text-4xl text-color-3;
+}
 
-  .user-area__menu-list-item {
-    @apply mb-5 transition hover:text-yellow-400 hover:font-bold;
-  }
+.user-area__menu-list-item {
+  @apply mb-5 transition hover:text-yellow-400 hover:font-bold;
+}
 
-  .user-area__menu-link {
-    @apply pl-0 text-black/50 transition-colors ease-linear;
-  }
+.user-area__menu-link {
+  @apply pl-0 text-black/50 transition-colors ease-linear;
+}
 
-  .user-area__menu-logout {
-    @apply pt-[10px] mb-0 border-t border-t-gray-200;
-  }
+.user-area__menu-logout {
+  @apply pt-[10px] mb-0 border-t border-t-gray-200;
+}
 
-  .user-area__icon-wrapper {
-    @apply flex flex-nowrap items-center;
-  }
+.user-area__icon-wrapper {
+  @apply flex flex-nowrap items-center;
+}
 </style>

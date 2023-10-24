@@ -44,7 +44,7 @@ sectionTitle.value = 'Dirección';
 }
 
 .edit-address__header {
-  @apply mb-8 pb-3 border-b border-b-light-800;
+  @apply mb-8 pb-3 border-b border-b-white/80;
 }
 
 .edit-address__title {

@@ -151,12 +151,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.address-form {
-  @apply;
-}
-
 .address-form__header {
-  @apply mb-8 pb-3 md:(pb-0);
+  @apply mb-8 pb-3 md:pb-0;
 }
 
 .address-form__title {
@@ -168,7 +164,7 @@ onMounted(() => {
 }
 
 .address-form__label {
-  @apply mb-6 text-dark-800 text-xs font-bold;
+  @apply mb-6 text-black/80 text-xs font-bold;
 }
 
 .address-form__required {

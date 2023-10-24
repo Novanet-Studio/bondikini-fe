@@ -18,6 +18,6 @@ defineProps<{ description: string }>();
 }
 
 .detail-description__item {
-  @apply text-dark-200;
+  @apply text-black/20;
 }
 </style>

@@ -130,11 +130,11 @@ function handleRemoveItemFromWishlist(product: any, notify = true) {
 }
 
 .table-tr {
-  @apply border-b transition duration-300 ease-in-out bg-color-6 even:bg-color-5 hover:bg-color-8 group;
+  @apply border-b transition duration-300 ease-in-out bg-color-6 even:bg-color-5 hover:bg-color-7;
 }
 
 .product-td {
-  @apply px-6 py-4 text-sm font-bold text-black md:(pr-0) lg:(text-base);
+  @apply px-6 py-4 text-sm font-bold text-black md:pr-0 lg:text-base;
 }
 
 .price-td {

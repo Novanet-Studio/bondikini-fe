@@ -154,7 +154,7 @@ const handleAddToCart = (isBuyNow = false) => {
       <div class="text-sm font-bold lg:text-base">Tallas</div>
       <div class="mt-2 flex justify-evenly">
         <button
-          class="w-10 h-10 rounded-full bg-color-3 text-white text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow shadow-md lg:(w-12 h-12)"
+          class="w-10 h-10 rounded-full bg-color-3 text-white text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-12 lg:h-12"
           :class="
             selectedSize?.talla === size.talla
               ? 'ring-color-3'
@@ -171,7 +171,7 @@ const handleAddToCart = (isBuyNow = false) => {
 
     <div class="flex gap-2 mt-4 md:gap-4">
       <div
-        class="max-w-[6.25rem] flex items-center justify-between rounded-full shadow shadow-md lg:px-4 bg-white"
+        class="max-w-[6.25rem] flex items-center justify-between rounded-full shadow-md lg:px-4 bg-white"
       >
         <button
           class="px-2 disabled:opacity-50"
@@ -195,14 +195,14 @@ const handleAddToCart = (isBuyNow = false) => {
         </button>
       </div>
       <button
-        class="bg-white shadow shadow-md text-xs font-bold px-2.5 py-2 rounded-full flex items-center justify-center md:(px-4) lg:(px-8 text-sm)"
+        class="bg-white shadow-md text-xs font-bold px-2.5 py-2 rounded-full flex items-center justify-center md:px-4 lg:px-8 lg:text-sm"
         @click="handleAddToCart(false)"
       >
         Agregar al carrito
         <!-- <span class="i-ph-shopping-cart text-lg"></span> -->
       </button>
       <button
-        class="bg-white shadow shadow-md text-sm font-bold w-10 h-10 rounded-full flex items-center justify-center disabled:opacity-50"
+        class="bg-white shadow-md text-sm font-bold w-10 h-10 rounded-full flex items-center justify-center disabled:opacity-50"
         @click="handleAddItemToWishlist"
         :disabled="!productHasStock"
       >

@@ -128,7 +128,7 @@ const handleBuyNow = (isBuyNow: boolean) => {
 
 <style scoped>
 .info-quick-view {
-  @apply max-w-full lg:(max-w-[57%] pl-8);
+  @apply max-w-full lg:max-w-[57%] lg:pl-8;
 }
 
 .info-quick-view__title {
@@ -144,7 +144,7 @@ const handleBuyNow = (isBuyNow: boolean) => {
 }
 
 .info-quick-view__link {
-  @apply text-color-6 ml-2 text-capitalize;
+  @apply text-color-6 ml-2 capitalize;
 }
 
 .info-quick-view__price {
@@ -156,7 +156,7 @@ const handleBuyNow = (isBuyNow: boolean) => {
 }
 
 .info-quick-view__shopping {
-  @apply flex flex-col items-center mb-12 pb-8 border-b-2 border-b-gray-200 lg:(items-end flex-row flex-nowrap);
+  @apply flex flex-col items-center mb-12 pb-8 border-b-2 border-b-gray-200 lg:items-end lg:flex-row lg:flex-nowrap;
 }
 
 .info-quick-view__figure {
@@ -172,7 +172,7 @@ const handleBuyNow = (isBuyNow: boolean) => {
 }
 
 .info-quick-view__actions-btn {
-  @apply flex items-center justify-center pt-1 w-14 h-5 max-w-14 lg:(w-5 h-5 max-w-5);
+  @apply flex items-center justify-center pt-1 w-14 h-5 max-w-[14rem] lg:w-5 lg:h-5 lg:max-w-[5rem];
 }
 
 .info-quick-view__actions-input {
@@ -180,10 +180,10 @@ const handleBuyNow = (isBuyNow: boolean) => {
 }
 
 .info-quick-view__btn {
-  @apply w-full font-bold p-4 rounded-sm flex items-center justify-center max-h-12 text-white bg-color-2 mx-7 mb-4 border rounded-md transition ease md:w-full lg:(text-xs mb-0) hover:bg-yellow-500;
+  @apply w-full font-bold p-4 flex items-center justify-center max-h-12 text-white bg-color-2 mx-7 mb-4 border rounded-md transition ease-in md:w-full lg:text-xs lg:mb-0 hover:bg-yellow-500;
 }
 
 .info-quick-view__btn-alt {
-  @apply font-bold p-4 rounded-sm flex items-center justify-center max-h-12 w-full transition ease text-color-2 rounded-md bg-color-1 md:w-auto lg:(text-xs mr-7) hover:(text-white border-transparent bg-color-2);
+  @apply font-bold p-4 flex items-center justify-center max-h-12 w-full transition ease-linear text-color-2 rounded-md bg-color-1 md:w-auto lg:text-xs lg:mr-7 hover:text-white hover:border-transparent hover:bg-color-2;
 }
 </style>

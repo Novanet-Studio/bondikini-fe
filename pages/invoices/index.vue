@@ -14,7 +14,7 @@ const invoice = useInvoiceStore();
 <template>
   <section class="invoices">
     <h5
-      class="text-sm font-bold text-color-7 text-center mb-12 md:(mt-24 text-base)"
+      class="text-sm font-bold text-color-7 text-center mb-12 md:mt-24 md:text-base"
       v-if="!invoice.invoices.length"
     >
       No hay órdenes de compra
@@ -27,7 +27,7 @@ const invoice = useInvoiceStore();
 
 <style scoped>
 .invoices {
-  @apply lg:(ml-8 w-full);
+  @apply lg:ml-8 lg:w-full;
 }
 
 .invoices__content {

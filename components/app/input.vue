@@ -25,7 +25,7 @@ const { value, errorMessage } = useField(() => props.name);
     <div
       class="flex items-center border p-3 rounded-md bg-white lg:p-4"
       :class="[
-        errorMessage?.length && 'border-red-5',
+        errorMessage?.length && 'border-red-500',
         focus && 'border-color-2',
         disabled && 'opacity-70',
       ]"

@@ -28,30 +28,30 @@ const checkout = useCheckoutStore();
 
 <style scoped>
 .resume {
-  @apply mb-8 px-5 py-3 border border-light-800 rounded-3xl text-dark-200 lg:py-8;
+  @apply mb-8 px-5 py-3 border border-white/80 rounded-3xl text-black/50 lg:py-8;
 }
 
 .resume__content {
-  @apply mb-0 flex justify-between md:(items-center);
+  @apply mb-0 flex justify-between md:items-center;
 }
 
 .resume__wrapper {
-  @apply md:(w-full flex flex-row);
+  @apply md:w-full md:flex md:flex-row;
 }
 
 .resume__item-title {
-  @apply flex-basis-[100%] text-black font-bold text-sm max-w-40 md:(flex-0 max-w-18);
+  @apply basis-[100%] text-black font-bold text-sm max-w-[40rem] md:flex-initial md:max-w-[18rem];
 }
 
 .resume__contact {
-  @apply mt-0 mb-0 flex-basis-[100%] text-sm md:flex-1;
+  @apply mt-0 mb-0 basis-[100%] text-sm md:flex-1;
 }
 
 .resume__address {
-  @apply mt-0 mb-0 flex-basis-[100%] text-sm;
+  @apply mt-0 mb-0 basis-[100%] text-sm;
 }
 
 .resume__link {
-  @apply text-xs self-center text-color-2 font-bold underline max-w-40 text-right;
+  @apply text-xs self-center text-color-2 font-bold underline max-w-[40rem] text-right;
 }
 </style>

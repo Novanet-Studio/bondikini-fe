@@ -34,7 +34,7 @@ definePageMeta({
 }
 
 .checkout__content {
-  @apply flex flex-col-reverse gap-8 md:(flex-row gap-4) lg:gap-8;
+  @apply flex flex-col-reverse gap-8 md:flex-row md:gap-4 lg:gap-8;
 }
 
 .checkout__main {

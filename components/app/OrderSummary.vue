@@ -56,7 +56,7 @@ withDefaults(defineProps<Props>(), {
 }
 
 .order-summary__figure {
-  @apply mb-6 pb-6 border-b-2 border-b-light-600;
+  @apply mb-6 pb-6 border-b-2 border-b-white/60;
 }
 
 .order-summary__figcaption {
@@ -72,6 +72,6 @@ withDefaults(defineProps<Props>(), {
 }
 
 .order-summary__price {
-  @apply text-xs text-dark-100;
+  @apply text-xs text-black/10;
 }
 </style>

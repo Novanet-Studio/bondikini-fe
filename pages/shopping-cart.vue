@@ -126,7 +126,7 @@ onMounted(() => {
 }
 
 .shopping-cart__wrapper {
-  @apply mt-8 max-w-sm md:max-w-2xl lg:(px-4 mt-0 max-w-full);
+  @apply mt-8 max-w-sm md:max-w-2xl lg:px-4 lg:mt-0 lg:max-w-full;
 }
 
 .shopping-cart__container {
@@ -146,7 +146,7 @@ onMounted(() => {
 }
 
 .shopping-cart__link {
-  @apply inline-flex items-center px-5 py-2 text-white text-xs font-bold rounded-full bg-color-2 transition ease hover:bg-opacity-90 active:bg-opacity-90 cursor-pointer;
+  @apply inline-flex items-center px-5 py-2 text-white text-xs font-bold rounded-full bg-color-2 transition ease-in hover:bg-opacity-90 active:bg-opacity-90 cursor-pointer;
 }
 
 .shopping-cart__footer {
@@ -158,7 +158,7 @@ onMounted(() => {
 }
 
 .shopping-cart__figcaption {
-  @apply relative block text-xl text-dark-200 mb-9;
+  @apply relative block text-xl text-black/20 mb-9;
 }
 
 .shopping-cart__right-wrapper {
@@ -166,7 +166,7 @@ onMounted(() => {
 }
 
 .shopping-cart__text-wrapper {
-  @apply block mb-5 pb-5 border-b border-color-7 text-dark-100;
+  @apply block mb-5 pb-5 border-b border-color-7 text-black/10;
 }
 
 .shopping-cart__text {
@@ -178,7 +178,7 @@ onMounted(() => {
 }
 
 .shopping-cart__btn {
-  @apply !bg-transparent border border-color-2 mt-4 text-color-2 hover:( !bg-yellow-400 text-white);
+  @apply !bg-transparent border border-color-2 mt-4 text-color-2 hover:!bg-yellow-400 hover:text-white;
 }
 
 .cart-product__item {
