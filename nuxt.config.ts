@@ -44,6 +44,9 @@ export default defineNuxtConfig({
       strapi: {
         url: process.env.STRAPI_URL || 'http://localhost:1337',
       },
+      services: {
+        url: process.env.SERVICES_URL || 'http://localhost:3001',
+      },
       SQUARE_APPLICATION_ID: process.env.SQUARE_APPLICATION_ID,
       SQUARE_LOCATION_ID: process.env.SQUARE_LOCATION_ID,
       // SQUARE_ACCESS_TOKEN: process.env.SQUARE_ACCESS_TOKEN,

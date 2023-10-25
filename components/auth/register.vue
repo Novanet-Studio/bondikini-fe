@@ -154,7 +154,7 @@ watchEffect(() => {
             v-model="state.password"
           />
           <template #hint>
-            <UPopover :ui="{ width: 'w-40', base: 'p-4' }">
+            <UPopover :ui="{ width: 'w-64', base: 'p-4' }">
               <UButton
                 color="gray"
                 icon="i-ph-question-duotone"
