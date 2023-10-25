@@ -1,7 +1,40 @@
 <script setup>
 const auth = useAuthStore();
-const global = useGlobalStore();
-const isOpen = ref(false);
+const router = useRouter();
+
+const items = [
+  [
+    {
+      label: 'Orders',
+      icon: 'i-ph-receipt',
+      click: () => {
+        router.push('/invoices');
+      },
+    },
+    {
+      label: 'Directions',
+      icon: 'i-ph-road-horizon',
+      click: () => {
+        router.push('/addresses');
+      },
+    },
+    {
+      label: 'Shopping cart',
+      icon: 'i-ph-shopping-cart',
+      click: () => {
+        router.push('/shopping-cart');
+      },
+    },
+    {
+      label: 'Wishilist',
+      icon: 'i-ph-heart',
+      click: () => {
+        router.push('/wishlist');
+      },
+    },
+  ],
+  [{ label: 'Sign out', icon: 'i-ph-sign-out', click: () => auth.logout() }],
+];
 </script>
 
 <template>
@@ -17,49 +50,34 @@ const isOpen = ref(false);
       <NuxtLink to="/auth/register" class="user-area__link">Registro</NuxtLink>
     </div>
   </div>
-  <div
+  <UDropdown
+    :items="items"
+    :ui="{
+      rounded: 'ring-0 ring-transparent',
+      item: { disabled: 'cursor-text select-text' },
+    }"
+    :popper="{ placement: 'bottom-start' }"
     v-else
-    class="user-area__menu"
-    @mouseover="isOpen = true"
-    @mouseleave="isOpen = false"
   >
-    <button @click="isOpen = !isOpen">
-      <div class="i-ph-user-light user-area__icon" />
-      <transition name="slide-fade">
-        <div class="user-area__menu-container" v-if="isOpen">
-          <ul class="user-area__menu-list">
-            <li
-              v-for="link in global?.links"
-              :key="link.text"
-              class="user-area__menu-list-item"
-            >
-              <NuxtLink :to="link.url" class="user-area__menu-link">
-                {{ link.text }}
-              </NuxtLink>
-            </li>
-            <li class="user-area__menu-logout">
-              <a
-                href="#"
-                class="transition-colors ease-linear"
-                @click.prevent="auth.logout"
-              >
-                Cerrar Sesión
-              </a>
-            </li>
-          </ul>
-        </div>
-      </transition>
-    </button>
-  </div>
+    <UIcon name="i-ph-user" class="user-area__icon ml-2" />
+    <template #item="{ item }">
+      <span class="truncate">{{ item.label }}</span>
+      <UIcon
+        :name="item.icon"
+        class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
+      />
+    </template>
+  </UDropdown>
+  <!--  -->
 </template>
 
 <style scoped>
 .user-area {
-  @apply mx-2 flex flex-nowrap text-left cursor-pointer md:mx-5;
+  @apply ml-2 flex flex-nowrap text-left cursor-pointer md:mx-5;
 }
 
 .user-area__links-group {
-  @apply pl-[4px] md:pl-[10px];
+  @apply hidden pl-[4px] md:pl-[10px] lg:block;
 }
 
 .user-area__link {
@@ -70,27 +88,7 @@ const isOpen = ref(false);
   @apply mx-5 relative cursor-pointer;
 }
 
-.user-area__menu-container {
-  @apply absolute min-w-[240px] right-0 z-30 pt-[10px] opacity-100 bg-white px-4 py-2 rounded-sm transition ease-linear opacity-100 lg:p-4;
-}
-
 .user-area__icon {
   @apply text-4xl text-color-3;
-}
-
-.user-area__menu-list-item {
-  @apply mb-5 transition hover:text-yellow-400 hover:font-bold;
-}
-
-.user-area__menu-link {
-  @apply pl-0 text-black/50 transition-colors ease-linear;
-}
-
-.user-area__menu-logout {
-  @apply pt-[10px] mb-0 border-t border-t-gray-200;
-}
-
-.user-area__icon-wrapper {
-  @apply flex flex-nowrap items-center;
 }
 </style>
