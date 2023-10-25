@@ -5,7 +5,7 @@
         <div class="default__content">
           <AppHeader />
           <div
-            class="py-4 bg-color-6 px-16 text-xs text-color-7 font-bold flex justify-center md:text-sm lg:justify-initial lg:py-8"
+            class="py-4 bg-color-4 px-16 text-xs text-color-5 font-bold flex justify-center md:text-sm lg:justify-initial lg:py-8"
             v-if="$route.path.includes('product')"
           >
             <button

@@ -3,7 +3,6 @@ import mapper from 'smapper';
 import { injectKeys } from '~/config/constants';
 import { GetProductById } from '~/graphql/queries';
 
-const { $notify } = useNuxtApp();
 const graphql = useStrapiGraphQL();
 
 const cart = useCartStore();
@@ -66,10 +65,11 @@ const addItemToCart = async (payload: CartItem) => {
 
   productStore.addCartProducts(temp);
 
-  $notify({
-    group: 'all',
-    title: 'Exito!',
-    text: `${product.value.name} ha sido agregado al carrito!`,
+  useToast().add({
+    icon: 'i-ph-check',
+    title: 'Success!',
+    description: `${product.value.name} has been added to wishlist`,
+    color: 'green',
   });
 };
 
@@ -81,29 +81,32 @@ const handleAddItemToWishlist = () => {
   };
 
   if (isQuantityGreaterThanStock.value) {
-    $notify({
-      group: 'all',
-      title: 'Advertencia',
-      text: `No hay suficiente productos en el inventario`,
+    useToast().add({
+      icon: 'i-ph-warning',
+      title: 'Warning!',
+      description: 'There is not enough stock',
+      color: 'orange',
     });
     return;
   }
 
   if (isQuantityGreaterThanTen.value) {
-    $notify({
-      group: 'all',
-      title: 'Advertencia!',
-      text: `No puede añadir más de 10 elementos`,
+    useToast().add({
+      icon: 'i-ph-warning',
+      title: 'Warning!',
+      description: 'You cannot add more than 10 items',
+      color: 'orange',
     });
     return;
   }
 
   wishlist.addItem(item);
 
-  $notify({
-    group: 'all',
-    title: 'Exito!',
-    text: `${product.value.name} ha sido agregado a la lista de deseos!`,
+  useToast().add({
+    icon: 'i-ph-check',
+    title: 'Success!',
+    description: `${product.value.name} has been added to wishlist`,
+    color: 'green',
   });
 };
 
@@ -116,28 +119,31 @@ const handleAddToCart = (isBuyNow = false) => {
   };
 
   if (productHasSize.value && !selectedSize.value) {
-    $notify({
-      group: 'all',
-      title: 'Advertencia',
-      text: `Seleccione una talla`,
+    useToast().add({
+      icon: 'i-ph-warning',
+      title: 'Warning!',
+      description: 'Please select a size',
+      color: 'orange',
     });
     return;
   }
 
   if (isQuantityGreaterThanStock.value) {
-    $notify({
-      group: 'all',
-      title: 'Advertencia',
-      text: `No hay suficiente productos en el inventario`,
+    useToast().add({
+      icon: 'i-ph-warning',
+      title: 'Warning!',
+      description: 'There is not enough stock',
+      color: 'orange',
     });
     return;
   }
 
   if (isQuantityGreaterThanTen.value) {
-    $notify({
-      group: 'all',
-      title: 'Advertencia!',
-      text: `No puede añadir más de 10 elementos`,
+    useToast().add({
+      icon: 'i-ph-warning',
+      title: 'Warning!',
+      description: 'You cannot add more than 10 items',
+      color: 'orange',
     });
     return;
   }
@@ -149,12 +155,12 @@ const handleAddToCart = (isBuyNow = false) => {
 </script>
 
 <template>
-  <div>
+  <div class="mt-4">
     <div class="mt-2 lg:mt-4" v-if="productHasSize">
-      <div class="text-sm font-bold lg:text-base">Tallas</div>
-      <div class="mt-2 flex justify-evenly">
+      <div class="font-bold text-color-6">Sizes</div>
+      <div class="mt-2 flex gap-4">
         <button
-          class="w-10 h-10 rounded-full bg-color-3 text-white text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-12 lg:h-12"
+          class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-12 lg:h-12"
           :class="
             selectedSize?.talla === size.talla
               ? 'ring-color-3'
@@ -164,59 +170,52 @@ const handleAddToCart = (isBuyNow = false) => {
           :key="index"
           @click="selectedSize = size"
         >
-          {{ cleanupSize(size.talla) }}
+          {{ size.talla }}
         </button>
       </div>
     </div>
 
-    <div class="flex gap-2 mt-4 md:gap-4">
-      <div
-        class="max-w-[6.25rem] flex items-center justify-between rounded-full shadow-md lg:px-4 bg-white"
-      >
-        <button
-          class="px-2 disabled:opacity-50"
-          @click.prevent="handleDescreaseQuantity"
-          :disabled="!productHasStock"
-        >
-          <div class="i-ph-minus-light text-xs text-gray-5 lg:text-sm" />
-        </button>
-        <input
-          v-model="quantity"
-          class="h-3 w-4 text-center bg-transparent text-black text-xs lg:text-sm"
-          type="text"
-          disabled
-        />
-        <button
-          class="px-2 disabled:opacity-50"
-          @click.prevent="handleIncreaseQuantity"
-          :disabled="!productHasStock"
-        >
-          <div class="i-ph-plus-light text-xs text-gray-5 lg:text-sm" />
-        </button>
-      </div>
-      <button
-        class="bg-white shadow-md text-xs font-bold px-2.5 py-2 rounded-full flex items-center justify-center md:px-4 lg:px-8 lg:text-sm"
-        @click="handleAddToCart(false)"
-      >
-        Agregar al carrito
-        <!-- <span class="i-ph-shopping-cart text-lg"></span> -->
-      </button>
-      <button
-        class="bg-white shadow-md text-sm font-bold w-10 h-10 rounded-full flex items-center justify-center disabled:opacity-50"
-        @click="handleAddItemToWishlist"
+    <div class="flex gap-2 mt-8 md:gap-4">
+      <CustomQuantity
+        v-model="quantity"
+        @descrease="handleDescreaseQuantity"
+        @increase="handleIncreaseQuantity"
         :disabled="!productHasStock"
-      >
-        <span class="i-ph-heart text-lg"></span>
-      </button>
+      />
+      <UButton
+        icon="i-ph-bag"
+        color="white"
+        class="ring-0 ring-transparent shadow-xl"
+        size="lg"
+        label="Add to cart"
+        :ui="{
+          rounded: 'rounded-full',
+        }"
+        @click="handleAddToCart(false)"
+      />
+
+      <UButton
+        icon="i-ph-heart"
+        color="white"
+        class="ring-0 ring-transparent shadow-xl"
+        size="lg"
+        :ui="{
+          rounded: 'rounded-full',
+        }"
+        @click="handleAddItemToWishlist"
+      />
     </div>
     <div class="flex justify-center mt-8 md:justify-initial">
-      <button
-        class="px-6 py-2 text-sm bg-color-2 text-white font-bold rounded-full md:px-10 lg:px-12 disabled:opacity-50"
-        :disabled="!productHasStock"
+      <UButton
+        color="color-3"
+        label="Buy"
+        class="px-8"
+        size="lg"
+        :ui="{
+          rounded: 'rounded-full',
+        }"
         @click="handleAddToCart(true)"
-      >
-        Comprar
-      </button>
+      />
     </div>
   </div>
 </template>

@@ -7,17 +7,15 @@ const showLightbox = ref(false);
 
 <template>
   <section class="container lg:max-w-5xl">
-    <h4 class="font-800 text-lg py-8 md:text-2xl">
+    <h4
+      class="font-bold text-lg py-8 pb-2 md:text-2xl text-color-6 border-b-2 border-b-color-1"
+    >
       {{ product?.category.name }}
     </h4>
-    <div class="app-gradient mb-8 p-4">
-      <div class="flex flex-col md:flex-row md:gap-6)">
-        <h5 class="text-center mb-4 text-sm font-bold md:hidden">
-          {{ product?.name }}
-        </h5>
-        <thumbnail-default @show-lightbox="showLightbox = true" />
-        <product-information-default />
-        <!-- <lightbox v-model="showLightbox" :images="product!.images" /> -->
+    <div class="mb-8 py-4">
+      <div class="flex flex-col bg-color-4 shadow-xl md:flex-row md:gap-6">
+        <ThumbnailDefault @show-lightbox="showLightbox = true" />
+        <ProductInformationDefault />
       </div>
     </div>
   </section>
