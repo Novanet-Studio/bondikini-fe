@@ -205,7 +205,7 @@ const handleAddToCart = (isBuyNow = false) => {
         @click="handleAddItemToWishlist"
       />
     </div>
-    <div class="flex justify-center mt-8 md:justify-initial">
+    <div class="flex justify-center mt-8 md:justify-start">
       <UButton
         color="color-3"
         label="Buy"

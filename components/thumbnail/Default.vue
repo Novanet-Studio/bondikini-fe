@@ -22,15 +22,27 @@ const swiperThumbsDirection = computed(() =>
   breakpoints.greaterOrEqual('sm').value ? 'vertical' : 'horizontal'
 );
 
+const swiperPrevBtnIcon = computed(() =>
+  breakpoints.greaterOrEqual('sm').value
+    ? 'i-ph-caret-up-bold'
+    : 'i-ph-caret-left-bold'
+);
+
+const swiperNextBtnIcon = computed(() =>
+  breakpoints.greaterOrEqual('sm').value
+    ? 'i-ph-caret-down-bold'
+    : 'i-ph-caret-right-bold'
+);
+
 const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
 </script>
 
 <template>
-  <div class="md:flex md:flex-row-reverse md:gap-4">
-    <figure>
-      <div class="max-w-3xl md:max-w-16rem">
+  <div class="md:flex md:flex-row md:gap-4">
+    <figure class="md:min-h-full">
+      <div class="max-w-3xl md:max-w-[20rem] md:min-h-full">
         <!-- Gallery-->
-        <div class="relative" @click="$emit('show-lightbox')">
+        <div class="relative md:min-h-full" @click="$emit('show-lightbox')">
           <swiper-container
             class="main-swiper"
             :space-between="10"
@@ -41,9 +53,13 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
             free-mode
             :modules="[Navigation, Thumbs, Mousewheel]"
           >
-            <swiper-slide v-for="image in product.images" :key="image.id">
+            <swiper-slide
+              class="md:min-h-full"
+              v-for="image in product.images"
+              :key="image.id"
+            >
               <img
-                class="rounded-sm"
+                class="rounded-sm md:h-[33rem]"
                 :src="image.url"
                 :alt="image.alternativeText"
               />
@@ -60,10 +76,10 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
     </figure>
     <!-- Thumbnail -->
     <div
-      class="max-w-48 mt-5 md:max-w-24 md:mt-0 px-8 flex justify-center gap-2"
+      class="max-w-48 mt-5 px-8 flex justify-center gap-2 md:max-w-[10rem] md:mt-0 md:flex-col md:justify-start md:items-center md:px-4 md:py-8"
     >
       <UButton
-        icon="i-ph-caret-left-bold"
+        :icon="swiperPrevBtnIcon"
         class="prev-btn"
         :ui="{
           icon: {
@@ -97,7 +113,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
         </swiper-container>
       </div>
       <UButton
-        icon="i-ph-caret-right-bold"
+        :icon="swiperNextBtnIcon"
         :ui="{
           icon: {
             base: 'text-2xl w-6 h-6',
@@ -153,7 +169,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
 }
 
 .swiper-thumbs {
-  @apply h-[160px] w-[350px] box-border px-0 py-[10px] md:w-[300px] md:h-[400px] lg:w-[300px] lg:h-[400px];
+  @apply h-[160px] w-[350px] box-border px-0 py-[10px] md:w-[72px] md:h-[400px] md:py-0 lg:w-[300px] lg:h-[400px];
 }
 
 .swiper-thumbs .swiper-slide-visible,

@@ -5,9 +5,11 @@ const product = inject(injectKeys.productDetail) as Ref<Product>;
 
 <template>
   <div class="my-2">
-    <h4 class="text-xl text-color-6 font-bold mb-3">{{ product?.name }}</h4>
-    <div class="text-color-6 font-bold lg:text-base lg:mb-1">Description</div>
-    <p class="text-sm text-color-5 lg:text-sm">
+    <h4 class="text-xl text-color-6 font-bold mb-3 md:text-2xl">
+      {{ product?.name }}
+    </h4>
+    <div class="text-color-6 font-bold lg:mb-1">Description</div>
+    <p class="text-sm text-color-5 lg:text-base">
       {{ product?.description ?? 'No hay descripcion' }}
     </p>
   </div>
