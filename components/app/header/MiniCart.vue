@@ -20,11 +20,8 @@ onClickOutside(miniCartRef, () => {
 </script>
 
 <template>
-  <div class="relative">
-    <button
-      class="cursor-pointer header-actions__link"
-      @click.prevent="toggleIsOpen"
-    >
+  <div class="mini-cart__wrapper">
+    <button @click.prevent="toggleIsOpen">
       <div class="header-actions__link">
         <UIcon name="i-ph-bag" class="header-actions__icon" />
         <span class="header-actions__indicator-wrapper">
@@ -36,7 +33,7 @@ onClickOutside(miniCartRef, () => {
     <!-- Menu -->
     <transition name="slide-fade">
       <template v-if="isOpen">
-        <div class="mini-cart shadow-xl" ref="miniCartRef">
+        <div class="mini-cart" ref="miniCartRef">
           <div v-if="total > 0">
             <div class="mini-cart__body">
               <app-loader v-if="isLoadingCart" />
@@ -75,12 +72,17 @@ onClickOutside(miniCartRef, () => {
 </template>
 
 <style scoped>
+.mini-cart__wrapper {
+  @apply relative;
+}
 .mini-cart {
-  @apply absolute min-w-[300px] right-0 -left-[178px] z-30 pt-[10px] transition ease-linear rounded-xl;
+  @apply absolute min-w-[16em] -left-44 right-0 z-30 mt-32 transition ease-linear rounded-xl shadow-xl 
+  md:min-w-[18em] md:-left-48 
+  lg:min-w-[20em] lg:-left-32;
 }
 
 .mini-cart__body {
-  @apply min-h-[150px] relative p-5 max-h-[300px] overflow-auto bg-white border border-white border-b-transparent;
+  @apply min-h-[10em] relative p-5 max-h-[20em] overflow-auto bg-white border border-white border-b-transparent;
 }
 
 .mini-cart__footer {
@@ -96,7 +98,7 @@ onClickOutside(miniCartRef, () => {
 }
 
 .mini-cart__empty {
-  @apply min-h-[50px] relative p-5 max-h-[300px] overflow-auto bg-white border border-white border-b-transparent;
+  @apply min-h-[3.5em] relative p-3 overflow-auto bg-white border border-white border-b-transparent;
 }
 
 .mini-cart__wrapper {

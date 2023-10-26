@@ -4,7 +4,7 @@
       <div class="header__container">
         <div class="header__brand">
           <nuxt-link class="header__link" to="/">
-            <img src="/logo.svg" alt="Bondikini Logo" />
+            <nuxt-img src="/logo.png" alt="Bondikini Logo" />
           </nuxt-link>
         </div>
         <div class="header__content">
@@ -17,19 +17,19 @@
 </template>
 
 <style scoped>
-  .header__wrapper {
-    @apply px-6 py-4 bg-white border-b border-color-4 md:px-6;
-  }
+.header__wrapper {
+  @apply py-4 bg-white;
+}
 
-  .header__container {
-    @apply flex items-center justify-between flex-nowrap gap-4 md:gap-0 lg:mx-auto lg:px-24;
-  }
+.header__container {
+  @apply flex items-center justify-between xs:max-md:mx-2 md:max-lg:mx-4 lg:container;
+}
 
-  .header__brand {
-    @apply flex items-center basis-[35%] md:basis-full;
-  }
+.header__link {
+  @apply cursor-pointer;
+}
 
-  .header__link {
-    @apply cursor-pointer;
-  }
+.header__link img {
+  @apply w-24;
+}
 </style>

@@ -4,8 +4,8 @@ const total = computed(() => wishlistStore?.total ?? 0);
 </script>
 
 <template>
-  <NuxtLink class="header-actions__link mx-2 md:mx-4" to="/wishlist">
-    <UIcon name="i-ph-heart text-4xl" class="text-color-3" />
+  <NuxtLink class="header-actions__link" to="/wishlist">
+    <UIcon name="i-ph-heart" class="header-actions__icon" />
     <span class="header-actions__indicator-wrapper" v-if="total">
       <i class="header-actions__indicator">{{ total }}</i>
     </span>

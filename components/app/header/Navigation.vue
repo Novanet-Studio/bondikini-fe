@@ -1,12 +1,12 @@
 <script setup>
-  const isOpen = ref(false);
+const isOpen = ref(false);
 </script>
 
 <template>
   <nav class="navigation">
     <div class="navigation__wrapper">
       <button @click="isOpen = !isOpen" aria-label="Toggle navigation">
-        <div class="i-ph-list text-white text-2xl lg:hidden"></div>
+        <div class="navigation__icon"></div>
       </button>
       <div class="navigation__content" :class="[isOpen ? 'flex' : 'hidden']">
         <app-header-menu />
@@ -16,15 +16,19 @@
 </template>
 
 <style scoped>
-  .navigation {
-    @apply relative flex flex-wrap items-center justify-between px-4 py-2 bg-color-1 md:py-4 lg:px-0 lg:py-0;
-  }
+.navigation {
+  @apply md:flex md:flex-wrap md:items-center md:justify-between bg-color-1;
+}
 
-  .navigation__wrapper {
-    @apply flex flex-col items-center justify-between w-full lg:mx-auto lg:px-36;
-  }
+.navigation__wrapper {
+  @apply flex flex-col  lg:container;
+}
 
-  .navigation__content {
-    @apply w-full text-center justify-center mt-4 flex-[1_0_100%] lg:flex lg:justify-start lg:mt-0;
-  }
+.navigation__icon {
+  @apply i-ph-list  text-white text-2xl mt-2 md:hidden;
+}
+
+.navigation__content {
+  @apply w-full text-center justify-center flex-[1_0_100%] md:flex md:justify-start;
+}
 </style>

@@ -40,7 +40,7 @@ const mainMenu = ref([
 
 <style scoped>
 .menu {
-  @apply flex flex-col mb-2 lg:flex-row lg:mb-0 lg:py-4;
+  @apply flex flex-col mb-2 sm:max-lg:mx-4 md:flex-row md:mb-0 md:py-4;
 }
 
 .menu__item {
@@ -48,6 +48,6 @@ const mainMenu = ref([
 }
 
 .menu__link {
-  @apply block py-[10px] lg:pr-12 pl-0;
+  @apply py-[10px] md:pr-12 pl-0;
 }
 </style>

@@ -5,7 +5,7 @@
         <NuxtLink class="access__link" to="/">
           <img
             class="filter filter-drop-shadow"
-            src="/logo.svg"
+            src="/logo.png"
             alt="Project logo"
           />
         </NuxtLink>

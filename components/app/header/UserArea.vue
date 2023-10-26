@@ -59,7 +59,7 @@ const items = [
     :popper="{ placement: 'bottom-start' }"
     v-else
   >
-    <UIcon name="i-ph-user" class="user-area__icon ml-2" />
+    <UIcon name="i-ph-user" class="user-area__icon" />
     <template #item="{ item }">
       <span class="truncate">{{ item.label }}</span>
       <UIcon
@@ -73,11 +73,11 @@ const items = [
 
 <style scoped>
 .user-area {
-  @apply ml-2 flex flex-nowrap text-left cursor-pointer md:mx-5;
+  @apply flex flex-nowrap text-left cursor-pointer ml-1;
 }
 
 .user-area__links-group {
-  @apply hidden pl-[4px] md:pl-[10px] lg:block;
+  @apply hidden pl-[0.25em] md:pl-[0.625em] lg:block;
 }
 
 .user-area__link {
@@ -89,6 +89,6 @@ const items = [
 }
 
 .user-area__icon {
-  @apply text-4xl text-color-3;
+  @apply text-4xl text-color-3 ml-2;
 }
 </style>
