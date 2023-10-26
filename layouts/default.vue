@@ -9,7 +9,6 @@
         <NuxtPage />
       </main>
       <AppFooter />
-      <!-- <AppNotify /> -->
     </div>
   </div>
 </template>
