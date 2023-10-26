@@ -40,7 +40,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
 <template>
   <div class="md:flex md:flex-row md:gap-4">
     <figure class="md:min-h-full">
-      <div class="max-w-3xl md:max-w-[20rem] md:min-h-full">
+      <div class="max-w-3xl md:max-w-[20rem] md:min-h-full lg:max-w-[30rem]">
         <!-- Gallery-->
         <div class="relative md:min-h-full" @click="$emit('show-lightbox')">
           <swiper-container
@@ -59,7 +59,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
               :key="image.id"
             >
               <img
-                class="rounded-sm md:h-[33rem]"
+                class="rounded-sm md:h-[33rem] lg:min-h-[40rem]"
                 :src="image.url"
                 :alt="image.alternativeText"
               />
@@ -105,7 +105,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
         >
           <swiper-slide v-for="image in product.images" :key="image.id">
             <img
-              class="object-contain rounded-sm h-full"
+              class="object-contain rounded-sm h-full lg:min-w-[19rem]"
               :src="image.url"
               :alt="image.alternativeText"
             />
@@ -169,7 +169,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
 }
 
 .swiper-thumbs {
-  @apply h-[160px] w-[350px] box-border px-0 py-[10px] md:w-[72px] md:h-[400px] md:py-0 lg:w-[300px] lg:h-[400px];
+  @apply h-[160px] w-[350px] box-border px-0 py-[10px] md:w-[72px] md:h-[400px] md:py-0 lg:w-full lg:h-[500px];
 }
 
 .swiper-thumbs .swiper-slide-visible,

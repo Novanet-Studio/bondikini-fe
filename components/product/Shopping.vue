@@ -156,11 +156,11 @@ const handleAddToCart = (isBuyNow = false) => {
 
 <template>
   <div class="mt-4">
-    <div class="mt-2 lg:mt-4" v-if="productHasSize">
-      <div class="font-bold text-color-6">Sizes</div>
+    <div class="mt-2 lg:mt-8" v-if="productHasSize">
+      <div class="font-bold text-color-6 lg:text-xl">Sizes</div>
       <div class="mt-2 flex gap-4">
         <button
-          class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-12 lg:h-12"
+          class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-14 lg:h-14 lg:text-sm"
           :class="
             selectedSize?.talla === size.talla
               ? 'ring-color-3'

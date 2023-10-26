@@ -6,7 +6,7 @@ const showLightbox = ref(false);
 </script>
 
 <template>
-  <section class="container lg:max-w-5xl">
+  <section class="container">
     <h4
       class="font-bold text-lg py-8 pb-2 md:text-2xl text-color-6 border-b-2 border-b-color-1"
     >
