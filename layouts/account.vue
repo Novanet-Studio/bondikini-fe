@@ -21,7 +21,7 @@ provide('sectionTitle', sectionTitle);
                   {{ sectionTitle }}
                 </h1>
               </div>
-              <div class="md:grid md:grid-cols-[25%_1fr] md:gap-6 md:mt-8">
+              <div class="md:grid md:grid-cols-[20rem_1fr] md:gap-6 md:mt-8">
                 <div class="mb-8">
                   <AccountLinks />
                 </div>

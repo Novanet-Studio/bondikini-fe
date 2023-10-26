@@ -21,7 +21,7 @@ const type = computed(() => {
 
 const sectionTitle = inject('sectionTitle') as Ref<string>;
 
-sectionTitle.value = 'Dirección';
+sectionTitle.value = 'Address';
 </script>
 
 <template>
