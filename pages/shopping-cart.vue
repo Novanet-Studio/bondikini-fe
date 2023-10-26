@@ -34,7 +34,7 @@ const loadCartProducts = async () => {
 
 const sectionTitle = inject('sectionTitle') as Ref<string>;
 
-sectionTitle.value = 'Carrito de compras';
+sectionTitle.value = 'Shopping cart';
 
 const columns = [
   {
