@@ -13,26 +13,26 @@ provide('sectionTitle', sectionTitle);
           <section class="account__section">
             <div class="container">
               <div
-                class="relative mt-10 md:mt-18 flex flex-col items-center lg:p-10 lg:mt-4 lg:pt-0"
+                class="relative md:mt-14 flex flex-col lg:mt-4 lg:pt-0 border-b-2 border-b-color-1 py-4"
               >
                 <h1
-                  class="text-xl leading-6 max-w-xs font-800 md:text-3xl md:max-w-[18rem] lg:leading-12 lg:max-w-md"
+                  class="text-xl leading-6 max-w-xs font-bold md:text-3xl md:max-w-[18rem] lg:leading-12 lg:max-w-md text-color-6"
                 >
                   {{ sectionTitle }}
                 </h1>
               </div>
-              <div class="md:grid md:grid-cols-[25%_1fr] md:gap-6 md:mt-12">
+              <div class="md:grid md:grid-cols-[25%_1fr] md:gap-6 md:mt-8">
                 <div class="mb-8">
                   <AccountLinks />
                 </div>
-                <div class="account__content">
+                <div class="container">
                   <NuxtPage />
                 </div>
               </div>
             </div>
           </section>
           <AppFooter />
-          <AppNotify />
+          <UNotifications />
         </div>
       </div>
     </div>
