@@ -17,7 +17,7 @@ defineEmits(['increase', 'descrease']);
 
 <template>
   <div
-    class="max-w-[6.25rem] flex items-center justify-between rounded-full shadow-md lg:px-4 bg-white"
+    class="max-w-[6.25rem] py-2 flex items-center justify-between rounded-full shadow-md lg:px-4 bg-white"
   >
     <button
       class="px-2 disabled:opacity-50"
