@@ -9,7 +9,7 @@
         <h4 class="b-subtitle mt-12">Selecciona el método de pago</h4>
         <PaymentMethods />
         <div class="b-link-wrapper">
-          <NuxtLink class="flex items-center text-xs underline" to="/shipping">
+          <NuxtLink class="flex items-center text-sm underline" to="/shipping">
             <div class="i-ph-arrow-left-light mr-2" />
             Return
           </NuxtLink>

@@ -214,7 +214,7 @@ const loadSquareCard = async () => {
     await card.attach('#card-container');
 
     // @ts-ignore
-    btnRef.value.$ref.addEventListener('click', async () => {
+    btnRef.value.$el.addEventListener('click', async () => {
       const tokenResult = await card.tokenize();
       makePayment(tokenResult);
     });
@@ -232,12 +232,8 @@ const loadSquareCard = async () => {
   }
 };
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await loadSquareCard();
-});
-
-watchEffect(() => {
-  console.log(btnRef.value);
 });
 </script>
 
