@@ -14,7 +14,6 @@ interface CheckBillingResponse {
   country: string;
 }
 
-const { $notify } = useNuxtApp();
 const { SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID } = useRuntimeConfig().public;
 
 const graphql = useStrapiGraphQL();
@@ -78,19 +77,21 @@ const createPayment = async (paymentBody: any, products: Product[]) => {
     });
 
     if (data.value.data.status !== 'COMPLETED') {
-      $notify({
-        group: 'all',
+      useToast().add({
+        icon: 'i-ph-warning',
         title: 'Error',
-        text: 'El pago no fué realizado',
+        description: 'The payment was not made',
+        color: 'red',
       });
       state.isLoading = false;
       return;
     }
 
-    $notify({
-      group: 'all',
-      title: 'Éxito',
-      text: 'El pago se ha realizado con éxito',
+    useToast().add({
+      icon: 'i-ph-check',
+      title: 'Success',
+      description: 'The payment has been made successfully',
+      color: 'green',
     });
 
     const invoiceItems: CartItem[] = cart.cartItems.filter((item) => {
@@ -103,10 +104,11 @@ const createPayment = async (paymentBody: any, products: Product[]) => {
     );
 
     if (!response?.data?.createInvoice?.data?.id) {
-      $notify({
-        group: 'all',
+      useToast().add({
+        icon: 'i-ph-warning',
         title: 'Error',
-        text: 'Hubo un problema al generar la factura',
+        description: 'There was a problem generating the invoice',
+        color: 'red',
       });
       state.isLoading = false;
       return;
@@ -114,10 +116,11 @@ const createPayment = async (paymentBody: any, products: Product[]) => {
 
     await productStore.update();
 
-    $notify({
-      group: 'all',
-      title: 'Éxito',
-      text: 'Su recibo fué creado, puede revisarlo en sus ordenes',
+    useToast().add({
+      icon: 'i-ph-check',
+      title: 'Success',
+      description: 'Your receipt was created, you can review it in your orders',
+      color: 'green',
     });
 
     await invoice.sendVisaEmail(invoiceItems, data.value.data);
@@ -126,10 +129,11 @@ const createPayment = async (paymentBody: any, products: Product[]) => {
   } catch (error) {
     console.log('createPayment: ', error);
     if (error instanceof PaymentReportError) {
-      $notify({
-        group: 'all',
+      useToast().add({
+        icon: 'i-ph-warning',
         title: 'Error',
-        text: 'Hubo un error en el pago, intente de nuevo',
+        description: 'There was an error in the payment, please try again',
+        color: 'red',
       });
       return;
     }
@@ -144,10 +148,12 @@ const makePayment = async (tokenResult: Square.TokenResult) => {
     const idempotencyKey = crypto.randomUUID();
 
     if (tokenResult.status !== 'OK') {
-      $notify({
-        group: 'all',
+      useToast().add({
+        icon: 'i-ph-warning',
         title: 'Error',
-        text: 'Hubo un problema al iniciar proceso de compra, intente de nuevo',
+        description:
+          'There was a problem starting the purchase process, try again',
+        color: 'red',
       });
       return;
     }
@@ -156,10 +162,11 @@ const makePayment = async (tokenResult: Square.TokenResult) => {
 
     if (noStockProducts.length) {
       noStockProducts.forEach((product) => {
-        $notify({
-          group: 'all',
+        useToast().add({
+          icon: 'i-ph-warning',
           title: 'Error',
-          text: `El producto ${product.name} está agotado o superas la cantidad disponible`,
+          description: `Product ${product.name} is out of stock or you exceed the available quantity`,
+          color: 'red',
         });
       });
       return;
@@ -212,10 +219,12 @@ const loadSquareCard = async () => {
       makePayment(tokenResult);
     });
   } catch (error) {
-    $notify({
-      group: 'all',
+    useToast().add({
+      icon: 'i-ph-warning',
       title: 'Error',
-      text: 'Hubo un error el formulario de la tarjeta, por favor, recargue la página',
+      description:
+        'There was an error with the card form, please reload the page',
+      color: 'red',
     });
     console.error('error: ', { error });
   } finally {
@@ -226,10 +235,14 @@ const loadSquareCard = async () => {
 onMounted(async () => {
   await loadSquareCard();
 });
+
+watchEffect(() => {
+  console.log(btnRef.value);
+});
 </script>
 
 <template>
-  <div>
+  <div class="my-12">
     <form id="payment-form">
       <div class="animate-pulse my-8" v-if="isLoadingCard">
         <div class="w-full h-12 bg-gray-200 rounded-md"></div>
@@ -240,13 +253,18 @@ onMounted(async () => {
           By making this purchase you agree to
           <a href="#" class="visa__link">our terms and conditions</a>.
         </p>
-        <app-button
-          :loading="state.isLoading"
+
+        <UButton
           :disabled="state.cardButtonDisabled"
           ref="btnRef"
+          label="Pay"
+          block
+          color="color-3"
         >
-          Pagar
-        </app-button>
+          <template #leading>
+            <AppLoader v-if="state.isLoading" />
+          </template>
+        </UButton>
       </div>
     </form>
     <div id="payment-status-container"></div>
@@ -255,7 +273,7 @@ onMounted(async () => {
 
 <style scoped>
 .visa__terms-wrapper {
-  @apply text-black/20;
+  @apply text-color-5;
 }
 
 .visa__text {
@@ -263,6 +281,6 @@ onMounted(async () => {
 }
 
 .visa__link {
-  @apply text-color-2 font-semibold;
+  @apply text-color-6 font-semibold;
 }
 </style>

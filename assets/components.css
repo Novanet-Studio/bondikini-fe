@@ -41,7 +41,7 @@
   }
 
   .b-subtitle {
-    @apply text-sm text-color-2 mt-0 mb-6 font-bold md:mb-3 lg:text-base;
+    @apply text-sm text-color-6 mt-0 mb-6 md:mb-3 md:text-2xl;
   }
 
   .b-link-wrapper {

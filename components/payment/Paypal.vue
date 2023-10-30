@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { loadScript, type PayPalNamespace } from '@paypal/paypal-js';
 
-const { $notify } = useNuxtApp();
 const { PAYPAL_CLIENT_ID } = useRuntimeConfig().public;
+
+const containerMessage = ref('');
 
 const cart = useCartStore();
 const checkout = useCheckoutStore();
@@ -14,9 +15,6 @@ const tempCartItems = ref(cart.cartItems);
 const loadPaypal = async () => {
   try {
     const $paypal = (await loadScript({
-      // 'client-id': PAYPAL_CLIENT_ID,
-      // 'data-namespace': '$paypal',
-      // 'disable-funding': 'credit,card',
       clientId: PAYPAL_CLIENT_ID,
       currency: 'USD',
       dataNamespace: '$paypal',
@@ -32,10 +30,11 @@ const loadPaypal = async () => {
 
             if (noStockProducts.length) {
               noStockProducts.forEach((product) => {
-                $notify({
-                  group: 'all',
+                useToast().add({
+                  icon: 'i-ph-warning',
                   title: 'Error',
-                  text: `El producto ${product.name} está agotado o superas la cantidad disponible`,
+                  description: `Product ${product.name} is out of stock or you exceed the available quantity`,
+                  color: 'red',
                 });
               });
               return;
@@ -79,51 +78,56 @@ const loadPaypal = async () => {
             }),
           onApprove: async (_, actions) => {
             try {
-              const container = document.getElementById('paypal-container');
               const result = await actions.order?.capture();
-              container!.innerHTML = '';
-              container!.innerHTML = `<h4 class="text-center">Por favor, espere</h4>`;
+              containerMessage.value = 'Please, wait...';
 
               if (result?.status !== 'COMPLETED') {
-                $notify({
-                  group: 'all',
-                  title: 'Un error ha ocurrido',
-                  text: 'Hubo un error al aprovar el pago',
+                useToast().add({
+                  icon: 'i-ph-warning',
+                  title: 'Error',
+                  description: 'There was an error approving the payment',
+                  color: 'red',
                 });
                 return;
               }
 
-              $notify({
-                group: 'all',
-                title: '¡Proceso exitoso!',
-                text: 'El pago se ha realizado con éxito',
+              useToast().add({
+                icon: 'i-ph-check',
+                title: 'Success',
+                description: 'The payment has been made successfully',
+                color: 'green',
               });
 
               await invoice.createPaypalInvoice(result, tempCartItems.value);
               await productStore.update();
-              $notify({
-                group: 'all',
-                title: 'Recibo creado',
-                text: 'Se encuentra disponible en sus ordenes',
+
+              useToast().add({
+                icon: 'i-ph-check',
+                title: 'Receipt created',
+                description: 'It is available on your order',
+                color: 'green',
               });
 
               await invoice.sendPaypalEmail(result, tempCartItems.value);
             } catch (error) {
-              $notify({
-                group: 'all',
-                title: 'Pagos paypal',
-                text: `Hubo un error al procesar el pago!`,
+              useToast().add({
+                icon: 'i-ph-warning',
+                title: 'Error',
+                description: 'There was an error processing the payment!',
+                color: 'red',
               });
             }
           },
           onError: () => {
-            const container = document.getElementById('paypal-container');
-            $notify({
-              group: 'all',
-              title: 'Pagos paypal',
-              text: `Hubo un error, no se puede procesar el pago en estos momentos!`,
-            }),
-              (container!.innerHTML = `<h4 class="text-center">Hubo un error!</h4>`);
+            useToast().add({
+              icon: 'i-ph-warning',
+              title: 'Error',
+              description:
+                'There was an error, the payment cannot be processed at this time',
+              color: 'red',
+            });
+
+            containerMessage.value = 'An error occurred!';
           },
         })
         .render(paypalRef.value);
@@ -139,5 +143,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="paypalRef" id="paypal-container"></div>
+  <div
+    class="my-12"
+    ref="paypalRef"
+    id="paypal-container"
+    v-if="!containerMessage"
+  ></div>
+  <div v-else>
+    <h4 class="text-center text-lg text-color-5">{{ containerMessage }}</h4>
+  </div>
 </template>

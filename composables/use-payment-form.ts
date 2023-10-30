@@ -1,13 +1,12 @@
-import { useForm } from 'vee-validate';
-import { object, string, minLength } from 'valibot';
-import { toTypedSchema } from '@vee-validate/valibot';
+import { object, string, minLength, any, type Output } from 'valibot';
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 import { PaymentReportError, SendInvoiceEmailError } from '~/errors';
 
 type Form = {
   name: string;
   lastName: string;
   date: string;
-  // amountPayed: string;
+  amount: string;
   confirmation: string;
 };
 
@@ -21,9 +20,11 @@ interface Params {
 }
 
 interface UsePaymentForm {
+  schema: any;
+  state: any;
   isSending: Ref<boolean>;
   hasError: Ref<boolean>;
-  submit: () => void;
+  submit: (event: FormSubmitEvent<FormData>) => Promise<void>;
 }
 
 export default function usePaymentForm({
@@ -38,43 +39,61 @@ export default function usePaymentForm({
   const isSending = useState('isSending', () => false);
   const hasError = useState('hasError', () => false);
 
-  const { $notify } = useNuxtApp();
   const cart = useCartStore();
   const invoice = useInvoiceStore();
   const productStore = useProductStore();
 
-  const schema = toTypedSchema(
-    object({
-      name: string([minLength(1, 'Este campo es requerido')]),
-      lastName: string([minLength(1, 'Este campo es requerido')]),
-      date: string([minLength(1, 'Este campo es requerido')]),
-      // amountPayed: string([
-      //   minLength(1, 'Este campo es requerido'),
-      //   equal(equalAmountTo, 'La cantidad no es igual al monto especificado'),
-      // ]),
-      confirmation: string([minLength(1, 'Este campo es requerido')]),
-    })
-  );
-
-  const { handleSubmit, errors } = useForm<Form>({
-    initialValues: {
-      name: '',
-      lastName: '',
-      date: '',
-      confirmation: '',
-    },
-    validationSchema: schema,
+  const state = reactive({
+    name: '',
+    lastName: '',
+    date: '',
+    amount: '',
+    confirmation: '',
   });
 
-  const submit = handleSubmit(async (data) => {
+  const schema = object({
+    name: string([minLength(1, 'Este campo es requerido')]),
+    lastName: string([minLength(1, 'Este campo es requerido')]),
+    date: string([minLength(1, 'Este campo es requerido')]),
+    amount: string(),
+    confirmation: string([minLength(1, 'Este campo es requerido')]),
+  });
+
+  type FormData = Output<typeof schema>;
+
+  // const schema = toTypedSchema(
+  //   object({
+  //     name: string([minLength(1, 'Este campo es requerido')]),
+  //     lastName: string([minLength(1, 'Este campo es requerido')]),
+  //     date: string([minLength(1, 'Este campo es requerido')]),
+  //     // amountPayed: string([
+  //     //   minLength(1, 'Este campo es requerido'),
+  //     //   equal(equalAmountTo, 'La cantidad no es igual al monto especificado'),
+  //     // ]),
+  //     confirmation: string([minLength(1, 'Este campo es requerido')]),
+  //   })
+  // );
+
+  // const { handleSubmit, errors } = useForm<Form>({
+  //   initialValues: {
+  //     name: '',
+  //     lastName: '',
+  //     date: '',
+  //     confirmation: '',
+  //   },
+  //   validationSchema: schema,
+  // });
+
+  async function submit({ data }: FormSubmitEvent<FormData>) {
     try {
       isSending.value = true;
 
       if (payment.validation(data)) {
-        $notify({
-          group: 'all',
-          title: 'Error!',
-          text: payment.message,
+        useToast().add({
+          icon: 'i-ph-warning',
+          title: 'Error',
+          description: payment.message,
+          color: 'red',
         });
         return;
       }
@@ -92,41 +111,41 @@ export default function usePaymentForm({
       await invoice.createInvoiceReport(paymentData, invoiceItems, method);
       await productStore.update();
 
-      $notify({
-        group: 'all',
-        title: 'Éxito',
-        text: 'La orden se ha generado, se encuentra pendiente en aprobación',
+      useToast().add({
+        icon: 'i-ph-check',
+        title: 'Success',
+        description: 'The order has been generated, it is pending approval',
+        color: 'green',
       });
 
       await invoice.sendEmail(invoiceItems, paymentData);
     } catch (error) {
       if (error instanceof PaymentReportError) {
-        $notify({
-          group: 'all',
+        useToast().add({
+          icon: 'i-ph-warning',
           title: 'Error',
-          text: '¡Hubo un error al reportar tu pago!',
+          description: 'There was an error reporting your payment',
+          color: 'red',
         });
       }
 
       if (error instanceof SendInvoiceEmailError) {
-        $notify({
-          group: 'all',
+        useToast().add({
+          icon: 'i-ph-warning',
           title: 'Error',
-          text: '¡Hubo un error al enviar el email!',
+          description: 'There was an error sending email',
+          color: 'red',
         });
       }
     } finally {
       isSending.value = false;
     }
-  });
-
-  watch(errors, () => {
-    hasError.value = Object.values(errors.value).some((k) => k);
-  });
+  }
 
   return {
     isSending,
+    state,
+    schema,
     submit,
-    hasError,
   };
 }

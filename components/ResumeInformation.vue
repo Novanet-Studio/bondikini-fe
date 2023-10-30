@@ -11,7 +11,7 @@ const checkout = useCheckoutStore();
           {{ checkout.email }}
         </p>
       </div>
-      <NuxtLink to="/checkout" class="resume__link">Cambiar</NuxtLink>
+      <NuxtLink to="/checkout" class="resume__link">Change</NuxtLink>
     </figure>
     <hr class="my-4" />
     <figure class="resume__content">
@@ -21,7 +21,7 @@ const checkout = useCheckoutStore();
           {{ checkout.fullAddress }}
         </p>
       </div>
-      <NuxtLink to="/checkout" class="resume__link">Cambiar</NuxtLink>
+      <NuxtLink to="/checkout" class="resume__link">Change</NuxtLink>
     </figure>
   </div>
 </template>
