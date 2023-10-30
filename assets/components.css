@@ -25,7 +25,7 @@
   }
 
   .b-title {
-    @apply text-sm font-bold text-black md:text-xl;
+    @apply font-bold text-black md:text-xl lg:text-2xl;
   }
 
   .b-content {

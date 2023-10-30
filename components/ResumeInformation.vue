@@ -11,7 +11,7 @@ const checkout = useCheckoutStore();
           {{ checkout.email }}
         </p>
       </div>
-      <nuxt-link to="/checkout" class="resume__link">Cambiar</nuxt-link>
+      <NuxtLink to="/checkout" class="resume__link">Cambiar</NuxtLink>
     </figure>
     <hr class="my-4" />
     <figure class="resume__content">
@@ -21,7 +21,7 @@ const checkout = useCheckoutStore();
           {{ checkout.fullAddress }}
         </p>
       </div>
-      <nuxt-link to="/checkout" class="resume__link">Cambiar</nuxt-link>
+      <NuxtLink to="/checkout" class="resume__link">Cambiar</NuxtLink>
     </figure>
   </div>
 </template>
@@ -36,11 +36,11 @@ const checkout = useCheckoutStore();
 }
 
 .resume__wrapper {
-  @apply md:w-full md:flex md:flex-row;
+  @apply md:w-full md:flex md:flex-row md:gap-4;
 }
 
 .resume__item-title {
-  @apply basis-[100%] text-black font-bold text-sm max-w-[40rem] md:flex-initial md:max-w-[18rem];
+  @apply basis-[100%] text-black font-bold text-sm max-w-[40rem] md:flex-initial md:max-w-[20rem];
 }
 
 .resume__contact {
@@ -48,10 +48,10 @@ const checkout = useCheckoutStore();
 }
 
 .resume__address {
-  @apply mt-0 mb-0 basis-[100%] text-sm;
+  @apply mt-0 mb-0 basis-[100%] text-sm md:flex-initial;
 }
 
 .resume__link {
-  @apply text-xs self-center text-color-2 font-bold underline max-w-[40rem] text-right;
+  @apply text-xs self-center text-color-5 font-bold underline max-w-[40rem] text-right;
 }
 </style>

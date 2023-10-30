@@ -5,27 +5,30 @@ definePageMeta({
 </script>
 
 <template>
-  <section class="block mt-20 container mb-15">
+  <section class="block mt-20 container mb-20">
     <header class="b-header">
-      <h1 class="b-title">Informacion de envio</h1>
+      <h1 class="b-title">Shipment information</h1>
     </header>
     <div class="b-content">
       <div class="b-left md:mt-8">
-        <resume-information />
+        <ResumeInformation />
         <div class="b-link-wrapper">
-          <nuxt-link to="/checkout" class="flex items-center text-sm">
+          <NuxtLink to="/checkout" class="flex items-center text-sm">
             <div class="i-ph-arrow-left-light mr-2" />
-            Regresar
-          </nuxt-link>
-          <nuxt-link to="/payment" class="ps-btn">
-            <app-button class="px-8" @click="$router.push('/payment')">
-              Continuar con el pago
-            </app-button>
-          </nuxt-link>
+            Return
+          </NuxtLink>
+          <NuxtLink to="/payment" class="ps-btn">
+            <UButton
+              class="px-8 rounded-full"
+              label="Continue with payment"
+              color="color-3"
+              @click="$router.push('/payment')"
+            />
+          </NuxtLink>
         </div>
       </div>
       <div class="b-right">
-        <app-order-summary :shipping="false" />
+        <AppOrderSummary :shipping="false" />
       </div>
     </div>
   </section>
