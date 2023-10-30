@@ -69,7 +69,7 @@ watchEffect(() => {
 
 <style scoped>
 .slider__image {
-  @apply w-full h-[30rem] object-center object-cover;
+  @apply w-full;
 }
 
 :global(:root) {

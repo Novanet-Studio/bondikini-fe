@@ -37,23 +37,7 @@ const appConfig = useAppConfig();
   --swiper-navigation-color: #161824;
 }
 
-.banner {
-  @apply mb-8;
-}
-
-.banner__wrapper {
-  @apply flex flex-col flex-nowrap lg:flex-row;
-}
-
-.banner__left {
-  @apply w-[340px] min-h-[200px] h-full mb-4 md:w-full lg:max-w-[calc(100%-390px)] lg:w-full;
-}
-
 .banner__slider {
-  @apply w-full relative;
-}
-
-.banner__slider-image {
-  @apply block w-full h-full bg-center bg-cover md:h-96 lg:w-full lg:h-96;
+  @apply w-full;
 }
 </style>
