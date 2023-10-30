@@ -24,22 +24,27 @@ const mode = computed<string>(() => {
 </script>
 
 <template>
-  <div
-    class="w-full relative flex justify-between items-center shadow overflow-hidden rounded-lg"
-    :class="classes"
-  >
-    <div>
-      <h3
-        class="font-300 py-6 px-6 md:text-xl md:-mb-1 lg:mb-0 lg:text-4xl lg:max-w-[75%] lg:pl-20 lg:py-24"
-        :class="mode"
-      >
-        <slot />
-      </h3>
-    </div>
+  <div :class="classes">
+    <h3 :class="mode">
+      <slot />
+    </h3>
+
     <PalmTree
-      :height="220"
-      class="hidden absolute bottom-0 right-24 md:block"
+      :width="640"
+      :height="538"
       :class="variant === 'primary' ? 'fill-white' : 'fill-color-5'"
     />
   </div>
 </template>
+
+<style scoped>
+.default__message {
+  @apply w-full relative flex justify-between items-center shadow overflow-hidden rounded-lg mt-10;
+}
+.default__message h3 {
+  @apply py-6 px-6 md:text-xl md:-mb-1 lg:mb-0 lg:text-4xl lg:pl-20 lg:py-24;
+}
+.default__message svg {
+  @apply absolute top-0 right-0 opacity-20;
+}
+</style>

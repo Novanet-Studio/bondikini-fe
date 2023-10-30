@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer components {
+  .header-actions__link {
+    @apply flex relative transition ease-linear;
+  }
+
+  .header-actions__icon {
+    @apply text-4xl md:text-[2.45rem] text-color-3;
+  }
+
+  .header-actions__indicator-wrapper {
+    @apply absolute bottom-0 -right-[3px] flex justify-center items-center w-[20px] h-[20px] text-white bg-color-3 rounded-full;
+  }
+
+  .header-actions__indicator {
+    @apply text-xs leading-4 font-medium not-italic;
+  }
+
+  .header__wrapper {
+    @apply py-4 bg-white;
+  }
+
+  .header__container {
+    @apply flex items-center justify-between xs:max-md:mx-2 md:max-lg:mx-4 lg:container;
+  }
+
+  .header__link {
+    @apply cursor-pointer;
+  }
+
+  .header__link img {
+    @apply w-24;
+  }
+}
+
+@layer base {
+  .default {
+    @apply flex relative;
+  }
+
+  .default__wrapper {
+    @apply flex-auto flex flex-col min-h-screen max-w-full transition ease-[cubic-bezier(0.4,0,0.2,1)];
+  }
+
+  .default__main {
+    @apply transition ease-linear w-full mx-auto md:px-0;
+  }
+
+  .default__content {
+    @apply xs:max-md:mx-2 md:max-lg:mx-4 lg:container;
+  }
+
+  .default__back {
+    @apply py-4 bg-color-4 px-16 text-xs text-color-5 font-bold flex justify-center md:text-sm lg:justify-center lg:py-8;
+  }
+
+  .default__back button {
+    @apply flex items-center gap-1 lg:ml-16;
+  }
+
+  .default__back span {
+    @apply i-ph-arrow-left inline-block;
+  }
+
+  .default__categories-header {
+    @apply flex items-center justify-between mt-8;
+  }
+
+  .default__categories-header h3 {
+    @apply text-xl ml-5 text-color-6 font-bold lg:text-3xl;
+  }
+
+  .default__categories-header button {
+    @apply block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:px-4 md:py-2 md:rounded-full lg:transition lg:ease-linear lg:hover:bg-color-3/10;
+  }
+
+  .default__categories-grid {
+    @apply grid place-items-center place-content-center gap-4 mt-4 grid-cols-2 md:max-w-3xl md:mx-auto lg:mx-0 lg:grid-cols-4;
+  }
+
+  .default__categories-grid img {
+    @apply w-20 h-20 rounded-full object-cover ring-[3px] ring-offset-2 ring-offset-white md:w-32 md:h-32 lg:w-36 lg:h-36;
+  }
+
+  .default__categories-grid span {
+    @apply text-xs font-bold md:text-sm lg:text-base lg:block lg:mt-4;
+  }
+}

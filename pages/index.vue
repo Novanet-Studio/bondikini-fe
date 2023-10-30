@@ -12,65 +12,51 @@ const {
 </script>
 
 <template>
-  <div class="w-full">
-    <AppBanner />
-    <section class="container">
-      <AppMessage class="mt-10">
-        Discover our diverse collection of bikinis, one pieces, and swimwear
-        sets that come with matching cover ups.
-      </AppMessage>
-      <product-loader v-if="isLoading" />
-      <template v-else>
-        <div class="flex items-center justify-between mt-8">
-          <h3 class="text-xl ml-5 text-color-6 font-bold lg:text-3xl">
-            Categorías
-          </h3>
-          <Transition name="slide-fade">
-            <button
-              class="block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:px-4 md:py-2 md:rounded-full lg:transition lg:ease-linear lg:hover:bg-color-3/10"
-              @click="removeFilters"
-              v-if="!!categoryActive"
-            >
-              Remover filtro
-            </button>
-          </Transition>
-        </div>
-        <div
-          class="grid place-items-center place-content-center gap-4 mt-4 grid-cols-2 md:max-w-3xl md:mx-auto lg:mx-none lg:grid-cols-4"
-        >
-          <button
-            v-for="category in categories"
-            :key="category.id"
-            @click="filterByCategory(category.id)"
-          >
-            <NuxtImg
-              class="w-20 h-20 rounded-full object-cover ring-[3px] ring-offset-2 ring-offset-white md:w-30 md:h-30 lg:w-36 lg:h-36"
-              :class="
-                category.id === categoryActive ? 'ring-color-3' : 'ring-color-4'
-              "
-              :src="category.products[0].images[0].url"
-            />
-            <span
-              class="text-xs font-bold md:text-sm lg:text-base lg:block lg:mt-4"
-              >{{ category.name }}</span
-            >
+  <AppBanner />
+  <div class="default__content">
+    <AppMessage class="default__message">
+      Discover our diverse collection of bikinis, one pieces, and swimwear sets
+      that come with matching cover ups.
+    </AppMessage>
+    <product-loader v-if="isLoading" />
+    <template v-else>
+      <div class="default__categories-header">
+        <h3>Categorías</h3>
+        <Transition name="slide-fade">
+          <button @click="removeFilters" v-if="!!categoryActive">
+            Remover filtro
           </button>
-        </div>
-        <TransitionGroup name="list" tag="div">
-          <ProductLanding
-            v-for="category in categoriesResult"
-            :key="category.id"
-            :category="category"
-            :filtered="!!categoryActive"
+        </Transition>
+      </div>
+      <div class="default__categories-grid">
+        <button
+          v-for="category in categories"
+          :key="category.id"
+          @click="filterByCategory(category.id)"
+        >
+          <NuxtImg
+            :class="
+              category.id === categoryActive ? 'ring-color-3' : 'ring-color-4'
+            "
+            :src="category.products[0].images[0].url"
           />
-        </TransitionGroup>
+          <span>{{ category.name }}</span>
+        </button>
+      </div>
+      <TransitionGroup name="list" tag="div">
+        <ProductLanding
+          v-for="category in categoriesResult"
+          :key="category.id"
+          :category="category"
+          :filtered="!!categoryActive"
+        />
+      </TransitionGroup>
 
-        <AppMessage class="my-16 lg:mt-24" variant="secondary">
-          Bondikini was made with the woman in mind who is comfortable in her
-          own skin who wants quality pieces providing the latest styles with a
-          touch of elegance.
-        </AppMessage>
-      </template>
-    </section>
+      <AppMessage class="default__message" variant="secondary">
+        Bondikini was made with the woman in mind who is comfortable in her own
+        skin who wants quality pieces providing the latest styles with a touch
+        of elegance.
+      </AppMessage>
+    </template>
   </div>
 </template>

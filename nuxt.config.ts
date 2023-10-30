@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/components.css'],
+  css: ['~/assets/default.css'],
 
   pwa: {
     meta: {
