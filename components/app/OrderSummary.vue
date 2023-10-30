@@ -13,11 +13,11 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <div v-if="cart.cartItems?.length">
-    <h3 class="order-summary__title" v-if="!shipping">Tu Orden</h3>
+    <h3 class="order-summary__title" v-if="!shipping">Your order</h3>
     <div class="order-summary__content">
       <figure class="order-summary__figure">
         <figcaption class="order-summary__figcaption">
-          <strong class="order-summary__strong-text">Producto</strong>
+          <strong class="order-summary__strong-text">Product</strong>
           <strong class="order-summary__strong-text">total</strong>
         </figcaption>
       </figure>
@@ -48,15 +48,15 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .order-summary__title {
-  @apply font-bold mb-3 text-color-2 text-sm lg:text-base;
+  @apply font-bold mb-3 text-color-6 text-sm lg:text-base;
 }
 
 .order-summary__content {
-  @apply px-6 py-8 mb-3 rounded-3xl shadow-md border border-color-7;
+  @apply px-6 py-8 mb-3 bg-color-2 rounded-3xl shadow-md;
 }
 
 .order-summary__figure {
-  @apply mb-6 pb-6 border-b-2 border-b-white/60;
+  @apply mb-6 pb-6 border-b border-b-[#707070];
 }
 
 .order-summary__figcaption {
@@ -64,7 +64,7 @@ withDefaults(defineProps<Props>(), {
 }
 
 .order-summary__strong-text {
-  @apply text-sm text-color-2 font-bold;
+  @apply text-color-6 font-bold;
 }
 
 .order-summary__link {
@@ -72,6 +72,6 @@ withDefaults(defineProps<Props>(), {
 }
 
 .order-summary__price {
-  @apply text-xs text-black/10;
+  @apply text-xs text-color-5;
 }
 </style>

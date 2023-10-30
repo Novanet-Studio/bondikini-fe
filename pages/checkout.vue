@@ -7,14 +7,14 @@ definePageMeta({
 <template>
   <section class="checkout">
     <header class="checkout__header">
-      <h4 class="checkout__title">Informacion de facturación</h4>
+      <h4 class="checkout__title">Checkout information</h4>
     </header>
     <div class="checkout__content">
       <div class="checkout__main">
-        <checkout-information-form />
+        <CheckoutInformationForm />
       </div>
       <div class="checkout__aside">
-        <app-order-summary />
+        <AppOrderSummary />
       </div>
     </div>
   </section>
@@ -22,19 +22,19 @@ definePageMeta({
 
 <style scoped>
 .checkout {
-  @apply w-full py-10 px-3 container;
+  @apply py-10 px-3 container;
 }
 
 .checkout__header {
-  @apply mb-12 text-center md:pt-10;
+  @apply relative flex flex-col border-b-color-1 py-4 md:mt-14 lg:mt-4 lg:pt-0 border-b-2;
 }
 
 .checkout__title {
-  @apply text-sm font-bold text-black md:text-xl lg:text-2xl;
+  @apply text-xl leading-6 max-w-xs font-bold md:text-3xl  lg:leading-10 lg:max-w-md text-color-6;
 }
 
 .checkout__content {
-  @apply flex flex-col-reverse gap-8 md:flex-row md:gap-4 lg:gap-8;
+  @apply flex flex-col-reverse gap-8 md:flex-row md:gap-4 lg:gap-8 md:mt-12;
 }
 
 .checkout__main {
@@ -42,6 +42,6 @@ definePageMeta({
 }
 
 .checkout__aside {
-  @apply flex-[0_0_100%] md:flex-[0_0_35%] lg:flex-[0_0_30%];
+  @apply mt-6 flex-[0_0_100%] md:flex-[0_0_35%] lg:flex-[0_0_30%] md:mt-0;
 }
 </style>
