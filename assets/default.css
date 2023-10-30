@@ -35,7 +35,13 @@
   .header__link img {
     @apply w-24;
   }
+<<<<<<< HEAD
 
+=======
+}
+
+@layer base {
+>>>>>>> e85384b (styles: general fixes)
   .default {
     @apply flex relative;
   }
