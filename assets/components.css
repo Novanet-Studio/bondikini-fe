@@ -21,15 +21,15 @@
   }
 
   .b-header {
-    @apply text-center pb-8 md:pb-14;
+    @apply relative md:mt-14 flex flex-col lg:mt-4 lg:pt-0 border-b-2 border-b-color-1 py-4;
   }
 
   .b-title {
-    @apply font-bold text-black md:text-xl lg:text-2xl;
+    @apply text-xl leading-6 max-w-xs font-bold md:text-3xl md:max-w-[18rem] lg:leading-10 lg:max-w-md text-color-6;
   }
 
   .b-content {
-    @apply flex flex-col-reverse gap-8 md:flex-row lg:gap-12;
+    @apply flex flex-col-reverse gap-8 md:flex-row lg:gap-12 mt-16;
   }
 
   .b-left {

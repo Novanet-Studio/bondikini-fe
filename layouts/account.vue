@@ -12,12 +12,8 @@ provide('sectionTitle', sectionTitle);
           <AppHeader />
           <section class="account__section">
             <div class="container">
-              <div
-                class="relative md:mt-14 flex flex-col lg:mt-4 lg:pt-0 border-b-2 border-b-color-1 py-4"
-              >
-                <h1
-                  class="text-xl leading-6 max-w-xs font-bold md:text-3xl md:max-w-[18rem] lg:leading-12 lg:max-w-md text-color-6"
-                >
+              <div class="b-header">
+                <h1 class="b-title">
                   {{ sectionTitle }}
                 </h1>
               </div>

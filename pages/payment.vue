@@ -1,5 +1,5 @@
 <template>
-  <div class="block mt-20 container mb-15">
+  <div class="mt-20 container mb-20">
     <header class="b-header">
       <h1 class="b-title">Payment method</h1>
     </header>
