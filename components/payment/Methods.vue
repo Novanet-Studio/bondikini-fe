@@ -24,7 +24,20 @@ const items = [
 </script>
 
 <template>
-  <UTabs :items="items" class="w-full">
+  <UTabs
+    :items="items"
+    class="w-full"
+    :ui="{
+      list: {
+        background: 'bg-[#E6E7E8]',
+        marker: { background: 'bg-color-1' },
+        tab: {
+          active: 'text-[#F6F5F4]',
+          inactive: 'text-color-5',
+        },
+      },
+    }"
+  >
     <template #squareup>
       <LazyPaymentVisa />
     </template>
