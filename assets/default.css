@@ -35,9 +35,7 @@
   .header__link img {
     @apply w-24;
   }
-}
 
-@layer base {
   .default {
     @apply flex relative;
   }
