@@ -18,7 +18,7 @@ const icons: { [key: string]: string } = {
       <ul class="widgets__list">
         <li v-for="(item, index) in widgets" :key="index" class="widgets__item">
           <a class="widgets__link" :href="item.link" target="_blank">
-            <div :class="icons[item.icon]" class="text-3xl text-color-3" />
+            <div :class="icons[item.icon]" class="widgets__icon" />
           </a>
         </li>
       </ul>
@@ -45,5 +45,9 @@ const icons: { [key: string]: string } = {
 
 .widgets__link {
   @apply w-[3.6875rem] h-[4.375rem] rounded-b-full bg-color-1 p-4 flex items-center;
+}
+
+.widgets__icon {
+  @apply text-3xl text-color-3;
 }
 </style>
