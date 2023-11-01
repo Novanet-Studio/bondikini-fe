@@ -101,7 +101,7 @@ function handleRemoveProductFromCart(id: string) {
 
 <style scoped>
 .mini-cart__wrapper {
-  @apply relative;
+  @apply relative pt-2;
 }
 .mini-cart {
   @apply p-4;
