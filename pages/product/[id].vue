@@ -3,13 +3,6 @@ import strapiMapper from 'smapper';
 import { injectKeys } from '~/config/constants';
 import { GetProductById } from '~/graphql/queries';
 
-definePageMeta({
-  pageTransition: {
-    name: 'page',
-  },
-});
-
-const { $notify } = useNuxtApp();
 const graphql = useStrapiGraphQL();
 const route = useRoute();
 
@@ -17,9 +10,11 @@ const id = route.params.id as string;
 const isLoading = ref(false);
 const product = ref<Product>();
 
-const loadProductById = async () => {
+const load = async () => {
   try {
     isLoading.value = true;
+
+    console.log('trying something here...');
 
     const { data } = await graphql<ProductRequest>(GetProductById, {
       id,
@@ -27,10 +22,12 @@ const loadProductById = async () => {
 
     product.value = strapiMapper(data.products.data[0]);
   } catch (error) {
-    $notify({
-      group: 'all',
+    console.log(error);
+    useToast().add({
+      icon: 'i-ph-warnin-duotone',
       title: 'Error',
-      text: 'Hubo un problema al intentar cargar el producto',
+      description: 'An error occurred while loading the product',
+      color: 'red',
     });
   } finally {
     isLoading.value = false;
@@ -39,16 +36,16 @@ const loadProductById = async () => {
 
 provide(injectKeys.productDetail, product as Ref<Product>);
 
-onMounted(() => {
-  loadProductById();
+onMounted(async () => {
+  await load();
 });
 </script>
 
 <template>
   <div class="wrapper">
-    <transition name="page">
-      <product-detail v-if="product" />
-    </transition>
+    <Transition name="page">
+      <ProductDetail v-if="product" />
+    </Transition>
   </div>
 </template>
 

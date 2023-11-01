@@ -15,6 +15,7 @@ async function handleAddToCart() {
     id: props.product.id,
     quantity: 1,
     price: props.product.price,
+    size: '',
   };
 
   if (props.product.size_stock?.length) {
@@ -24,7 +25,9 @@ async function handleAddToCart() {
       description: 'You must select a size',
       color: 'orange',
     });
-    router.push(`/product/${props.product.id}`);
+    setTimeout(() => {
+      router.push(`/product/${props.product.id}`);
+    }, 500);
     return;
   }
 
@@ -79,7 +82,12 @@ provide(injectKeys.product, props.product);
       <h5 class="text-center text-xl text-color-3 font-bold">
         {{ product.name }}
       </h5>
-      <UButton icon="i-ph-shopping-bag" size="lg">Buy</UButton>
+      <UButton
+        icon="i-ph-shopping-bag"
+        size="lg"
+        label="Buy"
+        @click="handleAddToCart"
+      />
     </section>
   </UCard>
 </template>
