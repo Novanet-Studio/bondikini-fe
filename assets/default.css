@@ -35,6 +35,35 @@
   .header__link img {
     @apply w-24;
   }
+
+  .b-header {
+    @apply relative md:mt-14 flex flex-col lg:mt-4 lg:pt-0 border-b-2 border-b-color-1 py-4;
+  }
+
+  .b-title {
+    @apply text-xl leading-6 max-w-xs font-bold md:text-3xl md:max-w-[18rem] lg:leading-10 lg:max-w-md text-color-6;
+  }
+
+  .b-content {
+    @apply flex flex-col-reverse gap-8 md:flex-row lg:gap-12 mt-16;
+  }
+
+  .b-left {
+    @apply flex-[0_0_100%] md:flex-[0_0_60%];
+  }
+
+  .b-right {
+    @apply flex-[0_0_100%] md:flex-[0_0_35%];
+  }
+
+  .b-subtitle {
+    @apply text-sm text-color-6 mt-0 mb-6 md:mb-3 md:text-2xl;
+  }
+
+  .b-link-wrapper {
+    @apply flex justify-between items-center;
+  }
+
   .default {
     @apply flex relative;
   }
