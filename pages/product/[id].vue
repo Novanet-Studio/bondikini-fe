@@ -14,8 +14,6 @@ const load = async () => {
   try {
     isLoading.value = true;
 
-    console.log('trying something here...');
-
     const { data } = await graphql<ProductRequest>(GetProductById, {
       id,
     });
