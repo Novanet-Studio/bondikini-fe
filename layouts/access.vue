@@ -11,7 +11,6 @@
         </NuxtLink>
       </header>
       <NuxtPage />
-      <AppNotify />
     </div>
     <div class="mt-20"><AppFooterCopyright /></div>
   </div>

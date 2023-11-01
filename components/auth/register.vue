@@ -69,7 +69,7 @@ const submit = async (event: FormSubmitEvent<FormData>) => {
       event.data.email
     )) as Ref<Record<any, any>>;
 
-    if (!response.value?.data?.id) {
+    if (!response.value?.id) {
       useToast().add({
         icon: 'i-ph-x-circle-duotone',
         title: 'Error',
@@ -81,7 +81,7 @@ const submit = async (event: FormSubmitEvent<FormData>) => {
       return;
     }
 
-    const customerId = response.value.data.id;
+    const customerId = response.value.id;
     const { confirmPassword: _, ...body } = event.data;
 
     await auth.register({
