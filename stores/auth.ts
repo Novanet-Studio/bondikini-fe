@@ -1,3 +1,4 @@
+import services from '~/services';
 import config from '~/config/config.json';
 import { LoginQuery, RegisterQuery } from '~/graphql/mutations';
 import type { StrapiUser } from '@nuxtjs/strapi/dist/runtime/types';
@@ -84,20 +85,20 @@ export const useAuthStore = defineStore(
     }
 
     async function createCustomer(user: string, email: string) {
-      const idempotencyKey = crypto.randomUUID();
-      const data = {
-        idempotencyKey,
-        givenName: user,
-        emailAddress: email,
-      };
+      try {
+        const idempotencyKey = crypto.randomUUID();
+        const data = {
+          idempotencyKey,
+          givenName: user,
+          emailAddress: email,
+        };
 
-      // TODO: apply new tem-services API
-      // const { data: result } = await useFetch('/api/create-customer', {
-      //   method: 'post',
-      //   body: data,
-      // });
+        const { data: result } = await services.createCustomer(data);
 
-      return {};
+        return result;
+      } catch (error) {
+        throw new Error('Failed to create customer');
+      }
     }
 
     function logout() {

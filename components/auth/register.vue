@@ -64,36 +64,34 @@ const submit = async (event: FormSubmitEvent<FormData>) => {
     isLoading.value = true;
     isDisabled.value = true;
 
-    console.log(event.data);
+    const response = (await auth.createCustomer(
+      event.data.username,
+      event.data.email
+    )) as Ref<Record<any, any>>;
 
-    // const response = (await auth.createCustomer(
-    //   event.data.username,
-    //   event.data.email
-    // )) as Ref<Record<any, any>>;
+    if (!response.value?.data?.id) {
+      useToast().add({
+        icon: 'i-ph-x-circle-duotone',
+        title: 'Error',
+        description:
+          'An error has occurred while registering, please try again',
+        color: 'red',
+      });
+      resetState();
+      return;
+    }
 
-    // if (!response.value?.data?.id) {
-    //   useToast().add({
-    //     icon: 'i-ph-x-circle-duotone',
-    //     title: 'Error',
-    //     description:
-    //       'An error has occurred while registering, please try again',
-    //     color: 'red',
-    //   });
-    //   resetState();
-    //   return;
-    // }
+    const customerId = response.value.data.id;
+    const { confirmPassword: _, ...body } = event.data;
 
-    // const customerId = response.value.data.id;
-    // const { confirmPassword: _, ...body } = event.data;
+    await auth.register({
+      customerId,
+      ...body,
+    });
 
-    // await auth.register({
-    //   customerId,
-    //   ...body,
-    // });
-
-    // setTimeout(() => {
-    //   router.push('/');
-    // }, REDIRECT_DELAY);
+    setTimeout(() => {
+      router.push('/');
+    }, REDIRECT_DELAY);
   } catch (error) {
     console.log(error);
     useToast().add({
