@@ -4,7 +4,7 @@
       <div class="header__container">
         <div class="header__brand">
           <nuxt-link class="header__link" to="/">
-            <nuxt-img src="/logo.png" alt="Bondikini Logo" />
+            <img src="/logo.png" alt="Bondikini Logo" />
           </nuxt-link>
         </div>
         <div class="header__content">
