@@ -46,8 +46,8 @@ const items = [
     </div>
 
     <div class="user-area__links-group">
-      <NuxtLink to="/auth/login" class="user-area__link">Ingresar</NuxtLink>
-      <NuxtLink to="/auth/register" class="user-area__link">Registro</NuxtLink>
+      <NuxtLink to="/auth/login" class="user-area__link">Login</NuxtLink>
+      <NuxtLink to="/auth/register" class="user-area__link">Sign up</NuxtLink>
     </div>
   </div>
   <UDropdown

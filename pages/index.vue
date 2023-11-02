@@ -21,10 +21,10 @@ const {
     <product-loader v-if="isLoading" />
     <template v-else>
       <div class="default__categories-header">
-        <h3>Categorías</h3>
+        <h3>Categories</h3>
         <Transition name="slide-fade">
           <button @click="removeFilters" v-if="!!categoryActive">
-            Remover filtro
+            Remove filter
           </button>
         </Transition>
       </div>

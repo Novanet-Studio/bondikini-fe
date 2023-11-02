@@ -129,7 +129,7 @@ watchEffect(() => {
     >
       <UForm ref="formRef" :schema="formSchema" :state="state" @submit="submit">
         <header class="flex justify-center mb-6">
-          <h5 class="font-bold text-lg">Sign in to your account</h5>
+          <h5 class="font-bold text-lg">Create your account</h5>
         </header>
 
         <UFormGroup class="mb-4" label="User" name="user">

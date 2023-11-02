@@ -18,15 +18,16 @@ onMounted(() => {
   isLogin.value = false;
 });
 </script>
+n
 
 <template>
   <section>
     <ul class="auth__links">
       <li class="auth__link" :class="[isLogin && 'auth__link--active']">
-        <nuxt-link to="/auth/login">Iniciar Sesión</nuxt-link>
+        <nuxt-link to="/auth/login">Login</nuxt-link>
       </li>
       <li class="auth__link" :class="[!isLogin && 'auth__link--active']">
-        <nuxt-link to="/auth/register">Registrarse</nuxt-link>
+        <nuxt-link to="/auth/register">Sign up</nuxt-link>
       </li>
     </ul>
     <div class="auth__content">
