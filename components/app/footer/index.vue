@@ -7,6 +7,6 @@
 
 <style scoped>
 .footer {
-  @apply pt-0 lg:pt-20;
+  @apply pt-10 lg:pt-20;
 }
 </style>

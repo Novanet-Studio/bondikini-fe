@@ -22,7 +22,9 @@
 
 <style scoped>
 .contact {
-  @apply container mt-14 md:mt-24;
+  @apply mt-14 
+  xs:max-md:mx-2 md:max-lg:mx-4
+  lg:container;
 }
 
 .contact__header {
@@ -30,6 +32,6 @@
 }
 
 .contact__touch {
-  @apply grid gap-12 grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-[1fr_30%] lg:gap-24;
+  @apply grid gap-12 grid-cols-1 lg:grid-cols-[1fr_30%] lg:gap-24;
 }
 </style>

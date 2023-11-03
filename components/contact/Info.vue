@@ -21,7 +21,7 @@ const icons: { [key: string]: string } = {
       <span
         class="w-[3rem] h-[3.5594rem] rounded-b-full bg-color-2 p-3 flex items-center justify-center shadow-md"
       >
-        <UIcon :name="icons[item.icon]" class="text-5xl text-color-3" />
+        <UIcon :name="icons[item.icon]" class="text-4xl text-color-3" />
       </span>
       <p class="text-xl text-color-5">{{ item.text }}</p>
     </div>

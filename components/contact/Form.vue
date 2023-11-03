@@ -47,7 +47,7 @@ const submit = (event: FormSubmitEvent<FormData>) => {
 </script>
 
 <template>
-  <div class="w-full bg-color-4 px-14 p-16 mt-12 md:px-24 shadow-md">
+  <div class="form">
     <UForm
       :schema="formSchema"
       :state="state"
@@ -138,6 +138,10 @@ const submit = (event: FormSubmitEvent<FormData>) => {
 <style scoped>
 .title {
   @apply font-bold mb-4 text-color-2  text-left md:text-lg md:mb-8 lg:text-2xl;
+}
+
+.form {
+  @apply w-full bg-color-4 px-14 p-16 mt-12 md:px-24 shadow-md;
 }
 
 .form__title {

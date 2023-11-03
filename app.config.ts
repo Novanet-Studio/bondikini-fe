@@ -11,25 +11,25 @@ export default defineAppConfig({
       site: 'bondikini.com',
     },
     widgets: [
-      // {
-      //   link: 'https://wa.me/message/XTA7RUDHZKT4C1',
-      //   icon: 'whatsapp',
-      //   text: '+58 424-154-8330',
-      // },
+      /* {
+        link: 'https://wa.me/message/XTA7RUDHZKT4C1',
+        icon: 'whatsapp',
+        text: '+58 424-154-8330',
+      },
       {
-        // link: 'https://www.facebook.com/bondikini',
+        link: 'https://www.facebook.com/bondikini',
         icon: 'phone',
         text: '+1 754-2528080',
-      },
+      }, */
       {
-        link: 'mailto:bondikini@gmail.com',
+        link: 'mailto:contact@bondikini.com',
         icon: 'email',
-        text: 'bondikini',
+        text: 'contact@bondikini.com',
       },
       {
-        link: 'https://www.instagram.com/bondikini',
+        link: 'https://instagram.com/bondikiniswim',
         icon: 'instagram',
-        text: '@bondikini',
+        text: '@bondikiniswim',
       },
     ],
   },
