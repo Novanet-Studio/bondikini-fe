@@ -68,7 +68,7 @@ const addItemToCart = async (payload: CartItem) => {
   useToast().add({
     icon: 'i-ph-check',
     title: 'Success!',
-    description: `${product.value.name} has been added to wishlist`,
+    description: `${product.value.name} has been added to the cart`,
     color: 'green',
   });
 };
