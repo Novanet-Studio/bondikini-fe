@@ -17,6 +17,14 @@ async function createCustomer(payload: CreateCustomerPayload) {
   });
 }
 
+async function generatePayment(payload: any) {
+  return useFetch(`${url}/api/payment`, {
+    method: 'post',
+    body: payload,
+  });
+}
+
 export default {
   createCustomer,
+  generatePayment,
 };

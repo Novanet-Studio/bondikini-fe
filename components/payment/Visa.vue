@@ -2,6 +2,7 @@
 import { GetAddressByIdAndType } from '~/graphql/queries';
 import { AddressType } from '~/config/constants';
 import { PaymentReportError } from '~/errors';
+import services from '~/services';
 
 interface State {
   card: Square.Card | null;
@@ -71,12 +72,11 @@ const checkBilling = async (): Promise<CheckBillingResponse> => {
 
 const createPayment = async (paymentBody: any, products: Product[]) => {
   try {
-    const { data } = await useFetch<any>('/api/payment', {
-      method: 'post',
-      body: paymentBody,
-    });
+    const { data } = (await services.generatePayment(paymentBody)) as {
+      data: Ref<any>;
+    };
 
-    if (data.value.data.status !== 'COMPLETED') {
+    if (data.value.status !== 'COMPLETED') {
       useToast().add({
         icon: 'i-ph-warning',
         title: 'Error',
