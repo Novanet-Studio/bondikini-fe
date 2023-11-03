@@ -7,6 +7,6 @@ definePageMeta({
 
 <template>
   <section class="ml-2 w-full">
-    <invoices-detail />
+    <!-- <invoices-detail /> -->
   </section>
 </template>

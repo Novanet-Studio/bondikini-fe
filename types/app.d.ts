@@ -128,6 +128,7 @@ interface InvoiceAtributes {
   payment_id: string;
   order_id: string;
   user: User;
+  fullName: string;
   shipment_address: AddressDetail;
   payment_method: string;
   payment_info: InvoicePaymentInfo[];

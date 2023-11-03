@@ -121,5 +121,11 @@ const submit = async (event: FormSubmitEvent<FormData>) => {
         </div>
       </UForm>
     </UCard>
+
+    <section class="flex justify-center mt-12">
+      <NuxtLink class="text-sm underline md:text-base" to="/forgot-password">
+        Have you forgotten your password?
+      </NuxtLink>
+    </section>
   </UContainer>
 </template>

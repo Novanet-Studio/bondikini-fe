@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
-import { object, string, minLength, regex } from 'valibot';
-import { toTypedSchema } from '@vee-validate/valibot';
+import { object, string, minLength, regex, type Output } from 'valibot';
 import { PASSWORD_REGEX } from '@/config/constants';
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 
-type Form = {
-  password: string;
-  passwordConfirmation: string;
-};
+type FormData = Output<typeof schema>;
 
 definePageMeta({
   layout: 'access',
@@ -19,31 +15,26 @@ const route = useRoute();
 const router = useRouter();
 const isLoading = ref(false);
 const isDisabled = ref(false);
-const { resetPassword } = useStrapiAuth();
-const { $notify } = useNuxtApp();
 const showPasswords = ref(false);
 
-const schema = toTypedSchema(
-  object({
-    password: string([
-      minLength(1, 'Este campo es requerido'),
-      regex(
-        PASSWORD_REGEX,
-        'Debe ser igual o mayor a 8 carácteres, una letra mayúscula, una minúscula, un número y un carácter especial'
-      ),
-    ]),
-    passwordConfirmation: string([minLength(1, 'Este campo es requerido')]),
-  })
-);
+const { resetPassword } = useStrapiAuth();
 
-const { handleSubmit, defineInputBinds, setFieldError } = useForm<Form>({
-  validationSchema: schema,
+const state = reactive({
+  password: '',
+  passwordConfirmation: '',
 });
 
-const password = defineInputBinds('password');
-const passwordConfirmation = defineInputBinds('passwordConfirmation');
+const formRef = ref();
 
-const submit = handleSubmit(async (data) => {
+const schema = object({
+  password: string([
+    minLength(1, 'Field is required'),
+    regex(PASSWORD_REGEX, 'Password not meet requirements'),
+  ]),
+  passwordConfirmation: string([minLength(1, 'Field is required')]),
+});
+
+const submit = async ({ data }: FormSubmitEvent<FormData>) => {
   try {
     isLoading.value = true;
     isDisabled.value = true;
@@ -54,38 +45,45 @@ const submit = handleSubmit(async (data) => {
       passwordConfirmation: data.passwordConfirmation,
     });
 
-    $notify({
-      group: 'all',
-      title: 'Se reestableció su contraseña',
-      text: 'Por favor, inicie sesión',
+    useToast().add({
+      icon: 'i-ph-check',
+      title: 'Your password has been reset',
+      description: 'Please log in',
+      color: 'green',
     });
 
     // remove email saved in session storage
-    sessionStorage.removeItem('cms.forgot');
+    sessionStorage.removeItem('bon_forgot');
 
     setTimeout(() => {
       router.push('/auth/login');
     }, REDIRECT_DELAY);
   } catch (error) {
-    $notify({
-      group: 'all',
-      title: 'Error!',
-      text: 'Hubo un problema al reestablecer su contraseña',
+    useToast().add({
+      icon: 'i-ph-warning-duotone',
+      title: 'Error',
+      description: 'There was a problem resetting your password',
+      color: 'red',
     });
   } finally {
     isLoading.value = false;
     isDisabled.value = false;
   }
-});
+};
 
 watchEffect(() => {
   if (
-    passwordConfirmation.value.value &&
-    password.value.value &&
-    passwordConfirmation.value.value?.length >= 8 &&
-    password.value.value !== passwordConfirmation.value.value
+    state.password &&
+    state.passwordConfirmation &&
+    state.passwordConfirmation.length >= 8 &&
+    state.password !== state.passwordConfirmation
   ) {
-    setFieldError('passwordConfirmation', 'Las contraseñas no coinciden');
+    formRef.value.setErrors(
+      formRef.value.getErrors().concat({
+        message: 'Passwords do not match',
+        path: 'passwordConfirmation',
+      })
+    );
   }
 });
 
@@ -97,36 +95,69 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="container mt-12">
-    <form class="auth-form">
-      <div class="auth-form__wrapper">
-        <h5 class="auth-form__title font-bold">Reestablece tu contraseña</h5>
-        <p class="text-xs text-balance text-black/50 mb-4">
-          Reestablezca su contraseña para poder ingresar a su cuenta nuevamente.
-        </p>
-        <app-input
-          name="password"
-          placeholder="Nueva contraseña"
-          :type="showPasswords ? 'text' : 'password'"
-          :icon-left="showPasswords ? 'i-ph-lock-open' : 'i-ph-lock-light'"
-        />
-        <app-input
+  <UContainer>
+    <UCard
+      class="max-w-md mx-auto bg-color-4 shadow-xl border-none ring-0 ring-transparent px-4"
+    >
+      <UForm ref="form" :schema="schema" :state="state" @submit="submit">
+        <header class="flex flex-col justify-center mb-4">
+          <h5 class="font-bold text-lg mb-2">Reset your password</h5>
+          <span class="text-xs text-balance text-black/50">
+            Reset your password so you can log into your account again.
+          </span>
+        </header>
+
+        <UFormGroup class="mb-4" label="Password" name="password">
+          <UInput
+            icon="i-ph-lock-duotone"
+            :type="showPasswords ? 'text' : 'password'"
+            size="lg"
+            v-model="state.password"
+          />
+          <template #hint>
+            <UPopover :ui="{ width: 'w-64', base: 'p-4' }">
+              <UButton
+                color="gray"
+                icon="i-ph-question-duotone"
+                variant="link"
+              />
+              <template #panel>
+                <span class="max-w-xs p-2">
+                  Password must be equal or greater than 8 characters, contain
+                  at least one uppercase letter, one lowercase letter, one
+                  number and one special character
+                </span>
+              </template>
+            </UPopover>
+          </template>
+        </UFormGroup>
+
+        <UFormGroup
+          class="mb-4"
+          label="Confirm password"
           name="passwordConfirmation"
-          placeholder="Confirme nueva contraseña"
-          :type="showPasswords ? 'text' : 'password'"
-          :icon-left="showPasswords ? 'i-ph-lock-open' : 'i-ph-lock-light'"
-        />
-        <app-checkbox label="Mostrar contraseñas" v-model="showPasswords" />
-        <div class="auth-form__footer !mb-0">
-          <app-button
-            @click="submit"
-            :loading="isLoading"
-            :disabled="isDisabled"
-          >
-            Enviar
-          </app-button>
+        >
+          <UInput
+            icon="i-ph-lock-duotone"
+            :type="showPasswords ? 'text' : 'password'"
+            size="lg"
+            v-model="state.passwordConfirmation"
+          />
+        </UFormGroup>
+
+        <div class="mt-8 flex justify-center">
+          <UButton
+            type="submit"
+            size="lg"
+            color="color-3"
+            :disabled="isDisabled || isLoading"
+            >Send
+            <template #leading>
+              <AppLoader v-if="isLoading" />
+            </template>
+          </UButton>
         </div>
-      </div>
-    </form>
-  </section>
+      </UForm>
+    </UCard>
+  </UContainer>
 </template>

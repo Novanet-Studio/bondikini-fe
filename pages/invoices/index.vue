@@ -9,40 +9,31 @@ const sectionTitle = inject('sectionTitle') as Ref<string>;
 sectionTitle.value = 'Purchase orders';
 
 const invoice = useInvoiceStore();
+const router = useRouter();
 
-const people = [
-  {
-    id: 1,
-    bill: 'Lindsay Walton',
-    date: '00/00/00',
-    amount: '1',
-    status: 'Paid',
-  },
-  {
-    id: 2,
-    bill: 'Courtney Henry',
-    date: '00/00/00',
-    amount: '1',
-    status: 'Pending',
-  },
-  {
-    id: 3,
-    bill: 'Tom Cook',
-    date: '00/00/00',
-    amount: '1',
-    status: 'Paid',
-  },
-];
+const userInvoices = computed(() => {
+  return invoice.invoices.map((invoice) => ({
+    id: invoice.id,
+    bill: invoice.fullName,
+    amount: invoice.amount,
+    date: new Date(invoice?.createdAt ?? '').toLocaleDateString('en-US'),
+    status: invoice.paid ? 'Paid' : 'Pending',
+  }));
+});
 
-function select(row: typeof people) {
-  console.log(row);
+function select(row: Invoice) {
+  router.push(`/invoices/${row.id}`);
 }
+
+onMounted(async () => {
+  await invoice.fetchInvoices(String(useAuthStore().user.id));
+});
 </script>
 
 <template>
   <section class="invoices">
     <UTable
-      :rows="people"
+      :rows="userInvoices"
       @select="select"
       :ui="{
         thead: '[&>tr]:!bg-color-2  [&>tr]:!text-color-5',

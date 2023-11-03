@@ -1,11 +1,6 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
-import { object, string, minLength, email } from 'valibot';
-import { toTypedSchema } from '@vee-validate/valibot';
-
-type Form = {
-  email: string;
-};
+import { object, string, minLength, email, type Output } from 'valibot';
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 
 definePageMeta({
   layout: 'access',
@@ -14,23 +9,24 @@ definePageMeta({
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const { forgotPassword } = useStrapiAuth();
-const { $notify } = useNuxtApp();
 const router = useRouter();
 
-const schema = toTypedSchema(
-  object({
-    email: string([
-      minLength(1, 'Este campo es requerido'),
-      email('Formato de correo invalido'),
-    ]),
-  })
-);
-
-const { handleSubmit } = useForm<Form>({
-  validationSchema: schema,
+const state = reactive({
+  email: '',
 });
 
-const submit = handleSubmit(async (data) => {
+const formSchema = object({
+  email: string([email(), minLength(1, 'Field is required')]),
+});
+
+type FormData = Output<typeof formSchema>;
+
+const resetState = () => {
+  isLoading.value = false;
+  isDisabled.value = false;
+};
+
+const submit = async ({ data }: FormSubmitEvent<FormData>) => {
   try {
     isLoading.value = true;
     isDisabled.value = true;
@@ -39,12 +35,13 @@ const submit = handleSubmit(async (data) => {
       email: data.email,
     });
 
-    sessionStorage.setItem('cms.forgot', btoa(data.email));
+    sessionStorage.setItem('bon_forgot', btoa(data.email));
 
-    $notify({
-      group: 'all',
-      title: 'Link enviado',
-      text: 'Te enviamos un correo para restablecer tu contraseña',
+    useToast().add({
+      icon: 'i-ph-check',
+      title: 'Link sent',
+      description: 'We send you an email to reset your password',
+      color: 'green',
     });
 
     setTimeout(() => {
@@ -52,68 +49,59 @@ const submit = handleSubmit(async (data) => {
     }, 1000);
   } catch (error) {
     console.log(error);
-    $notify({
-      group: 'all',
+    useToast().add({
+      icon: 'i-ph-warning-duotone',
       title: 'Error',
-      text: 'Hubo un problema al intentar enviar el correo',
+      description: 'An error occurred while sending email',
+      color: 'red',
     });
   } finally {
-    isLoading.value = false;
-    isDisabled.value = false;
+    resetState();
   }
-});
+};
 </script>
 
 <template>
-  <section>
-    <div class="auth__content">
-      <form class="auth-form">
-        <div class="auth-form__wrapper">
-          <h5 class="auth-form__title">¿Olvidaste tu contraseña?</h5>
-          <p class="text-xs text-balance text-black/50 mb-4">
-            Ingrese su correo electrónico y le enviaremos un enlace para
-            regresar a su cuenta.
-          </p>
-          <app-input name="email" placeholder="john@doe.com">
-            <template #left>
-              <div class="i-ph-envelope-light text-[20px] text-gray-400" />
+  <UContainer>
+    <UCard
+      class="max-w-md mx-auto bg-color-4 shadow-xl border-none ring-0 ring-transparent px-4"
+    >
+      <UForm :schema="formSchema" :state="state" @submit="submit">
+        <header class="flex flex-col justify-center mb-4">
+          <h5 class="font-bold text-lg mb-2">Did you forget your password?</h5>
+          <span class="text-xs text-balance text-black/50">
+            Enter your email and we will send you a link to return to your
+            account.
+          </span>
+        </header>
+
+        <UFormGroup class="mb-4" label="Email" name="email">
+          <UInput
+            icon="i-ph-envelope-duotone"
+            size="lg"
+            v-model="state.email"
+          />
+        </UFormGroup>
+
+        <div class="mt-8 flex justify-center">
+          <UButton
+            type="submit"
+            size="lg"
+            color="color-3"
+            :disabled="isDisabled || isLoading"
+            >Send link
+            <template #leading>
+              <AppLoader v-if="isLoading" />
             </template>
-          </app-input>
-          <div class="auth-form__footer !mb-0">
-            <app-button
-              @click="submit"
-              :loading="isLoading"
-              :disabled="isDisabled"
-            >
-              Enviar link
-            </app-button>
-          </div>
-
-          <div class="flex mt-4 justify-center">
-            <nuxt-link class="text-xs underline text-color-2" to="/auth/login"
-              >Atrás para iniciar sesión</nuxt-link
-            >
-          </div>
+          </UButton>
         </div>
-      </form>
-    </div>
-  </section>
+      </UForm>
+    </UCard>
+
+    <section class="flex justify-center mt-12">
+      <NuxtLink class="text-sm underline md:text-base" to="/auth/login">
+        Go back to log in
+      </NuxtLink>
+    </section>
+  </UContainer>
 </template>
-
-<style scoped>
-.auth__links {
-  @apply p-4 flex justify-center;
-}
-
-.auth__link {
-  @apply text-base font-bold first:mr-8 md:text-2xl;
-}
-
-.auth__link--active {
-  @apply text-color-3;
-}
-
-.auth__content {
-  @apply mt-4 container;
-}
-</style>

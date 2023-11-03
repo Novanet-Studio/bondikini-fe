@@ -22,7 +22,6 @@ export default function useCategory(params?: Params): Result {
   const isLoading = useState<boolean>('isCategoriesLoading', () => false);
 
   const graphql = useStrapiGraphQL();
-  const { $notify } = useNuxtApp();
 
   const getCategories = async () => {
     try {
