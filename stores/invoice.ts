@@ -6,6 +6,7 @@ import { PaymentReportError, SendInvoiceEmailError } from '~/errors';
 
 import type { OrderResponseBody } from '@paypal/paypal-js';
 import type { Payment } from 'square';
+import services from '~/services';
 
 const PAGE_LIMIT = 10;
 const DEFAULT_PAGE = 1;
@@ -393,16 +394,9 @@ export const useInvoiceStore = defineStore(
           tableData: emailProducts,
         });
 
-        // TODO: apply new tem-services API
         await Promise.all([
-          // useFetch('/api/send-receipt-email', {
-          //   method: 'post',
-          //   body: receipt,
-          // }),
-          // useFetch('/api/send-merchant-email', {
-          //   method: 'post',
-          //   body: merchant,
-          // }),
+          services.sendReceiptEmail(receipt),
+          services.sendMerchantEmail(merchant),
         ]);
 
         useToast().add({
@@ -445,17 +439,10 @@ export const useInvoiceStore = defineStore(
           tableData: emailProducts,
         });
 
-        // TODO: apply new tem-services API
-        // await Promise.all([
-        //   useFetch('/api/send-receipt-email', {
-        //     method: 'post',
-        //     body: receipt,
-        //   }),
-        //   useFetch('/api/send-merchant-email', {
-        //     method: 'post',
-        //     body: merchant,
-        //   }),
-        // ]);
+        await Promise.all([
+          services.sendReceiptEmail(receipt),
+          services.sendMerchantEmail(merchant),
+        ]);
 
         useToast().add({
           icon: 'i-ph-check',
@@ -498,17 +485,10 @@ export const useInvoiceStore = defineStore(
           customer: payment.note,
         });
 
-        // TODO: apply new tem-services API
-        // await Promise.all([
-        //   useFetch('/api/send-receipt-email', {
-        //     method: 'post',
-        //     body: receipt,
-        //   }),
-        //   useFetch('/api/send-merchant-email', {
-        //     method: 'post',
-        //     body: merchant,
-        //   }),
-        // ]);
+        await Promise.all([
+          services.sendReceiptEmail(receipt),
+          services.sendMerchantEmail(merchant),
+        ]);
 
         useToast().add({
           icon: 'i-ph-check',
