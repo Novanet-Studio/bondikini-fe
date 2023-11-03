@@ -54,7 +54,10 @@ const items = [
     :items="items"
     :ui="{
       rounded: 'ring-0 ring-transparent',
-      item: { disabled: 'cursor-text select-text' },
+      item: {
+        disabled: 'cursor-text select-text',
+        active: 'bg-color-2 text-color-5',
+      },
     }"
     :popper="{ placement: 'bottom-start' }"
     v-else
