@@ -1,3 +1,5 @@
+import { merchantTemplateConfig, receiptTemplateConfig } from '~/config/email';
+
 const {
   public: {
     services: { url },
@@ -24,7 +26,29 @@ async function generatePayment(payload: any) {
   });
 }
 
+async function sendReceiptEmail(payload: any) {
+  return useFetch(`${url}/api/receipt-email`, {
+    method: 'post',
+    body: {
+      ...payload,
+      email: receiptTemplateConfig(),
+    },
+  });
+}
+
+async function sendMerchantEmail(payload: any) {
+  return useFetch(`${url}/api/merchant-email`, {
+    method: 'post',
+    body: {
+      ...payload,
+      email: merchantTemplateConfig(),
+    },
+  });
+}
+
 export default {
   createCustomer,
   generatePayment,
+  sendReceiptEmail,
+  sendMerchantEmail,
 };
