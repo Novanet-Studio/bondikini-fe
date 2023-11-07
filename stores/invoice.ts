@@ -242,7 +242,6 @@ export const useInvoiceStore = defineStore(
       products: CartItem[]
     ) {
       try {
-        console.log({ payment });
         const productList = productsCart.cartProducts;
         const productsFiltered: ProductBuyed[] = [];
 

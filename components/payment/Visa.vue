@@ -98,10 +98,7 @@ const createPayment = async (paymentBody: any, products: Product[]) => {
       return products.find((product) => product.id === item.id);
     });
 
-    const response = await invoice.createVisaInvoice(
-      data.value.data,
-      invoiceItems
-    );
+    const response = await invoice.createVisaInvoice(data.value, invoiceItems);
 
     if (!response?.data?.createInvoice?.data?.id) {
       useToast().add({
@@ -123,9 +120,7 @@ const createPayment = async (paymentBody: any, products: Product[]) => {
       color: 'green',
     });
 
-    await invoice.sendVisaEmail(invoiceItems, data.value.data);
-
-    console.log('email sent');
+    await invoice.sendVisaEmail(invoiceItems, data.value);
   } catch (error) {
     console.log('createPayment: ', error);
     if (error instanceof PaymentReportError) {
