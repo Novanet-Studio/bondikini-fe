@@ -19,7 +19,7 @@ const {
       that come with matching cover ups.
     </AppMessage>
     <product-loader v-if="isLoading" />
-    <template v-else>
+    <div id="parent" v-else>
       <div class="default__categories-header">
         <h3>Categories</h3>
         <Transition name="slide-fade">
@@ -49,6 +49,7 @@ const {
           :key="category.id"
           :category="category"
           :filtered="!!categoryActive"
+          @filter="filterByCategory(category.id, '#parent')"
         />
       </TransitionGroup>
 
@@ -57,6 +58,6 @@ const {
         skin who wants quality pieces providing the latest styles with a touch
         of elegance.
       </AppMessage>
-    </template>
+    </div>
   </div>
 </template>

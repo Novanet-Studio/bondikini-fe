@@ -4,6 +4,11 @@ type Props = {
   filtered: boolean;
 };
 
+type Emits = {
+  (e: 'filter'): void;
+};
+
+defineEmits<Emits>();
 const props = defineProps<Props>();
 const productStore = useProductStore();
 const products = ref<Product[] | null>(null);
@@ -21,6 +26,13 @@ onMounted(async () => {
         <h3 class="landing__title">
           {{ category.name }}
         </h3>
+        <UButton
+          color="color-5"
+          variant="link"
+          @click="$emit('filter')"
+          v-if="!filtered"
+          label="see all"
+        />
       </div>
       <div class="landing__content">
         <AppSlider

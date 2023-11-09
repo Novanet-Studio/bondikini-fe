@@ -52,11 +52,19 @@ export default function useCategory(params?: Params): Result {
     }
   };
 
-  const filterByCategory = (categoryId: string) => {
+  const filterByCategory = (categoryId: string, selector = '') => {
     categoryActive.value = categoryId;
     categoriesResult.value = categories.value.filter(
       (category) => category.id === categoryId
     );
+
+    if (!selector) return;
+
+    setTimeout(() => {
+      document.querySelector(selector)?.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }, 1000);
   };
 
   const removeFilters = () => {
