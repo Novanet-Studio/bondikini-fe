@@ -59,7 +59,6 @@ provide(injectKeys.product, props.product);
 
 <template>
   <UCard
-    class="mx-4"
     :ui="{
       background: 'bg-color-4',
       divide: 'divide-none',
@@ -69,7 +68,7 @@ provide(injectKeys.product, props.product);
     }"
   >
     <template #header>
-      <div class="h-72 w-full relative">
+      <div class="category__item">
         <ProductThumbnailImage />
         <span
           class="absolute top-0 right-4 w-[3.6875rem] h-[4.375rem] rounded-b-full bg-color-3 p-4 flex items-center justify-center text-lg text-color-2"
@@ -91,3 +90,9 @@ provide(injectKeys.product, props.product);
     </section>
   </UCard>
 </template>
+
+<style scoped>
+.category__item {
+  @apply h-72 relative;
+}
+</style>
