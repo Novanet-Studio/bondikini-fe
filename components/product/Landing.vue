@@ -28,35 +28,14 @@ onMounted(async () => {
         <h3 class="category__title">
           {{ category.name }}
         </h3>
-        <UButton
-          color="color-5"
-          variant="link"
-          @click="$emit('filter')"
-          v-if="!filtered"
-          label="see all"
-          size="lg"
-        />
       </div>
       <div class="category__content">
         <div v-if="products.length && !filtered">
-          <UButton
-            icon="i-ph-caret-left"
-            class="category__button category__button--left disable:opacity-60"
-            size="xl"
-            :class="`prev-${category.id}`"
-            color="color-5"
-            variant="link"
-          />
           <swiper-container
             :modules="[Autoplay, Navigation, Pagination]"
-            class="category__swiper"
             :space-between="10"
             :slides-per-view="2"
-            :pagination="true"
-            :navigation="{
-              prevEl: `.prev-${category.id}`,
-              nextEl: `.next-${category.id}`,
-            }"
+            navigation="true"
             :breakpoints="{
               '375': {
                 slidesPerView: 2,
@@ -89,14 +68,6 @@ onMounted(async () => {
               <ProductDefault :product="product" />
             </swiper-slide>
           </swiper-container>
-          <UButton
-            icon="i-ph-caret-right"
-            color="color-5"
-            variant="link"
-            size="xl"
-            class="category__button category__button--right disable:opacity-60"
-            :class="`prev-${category.id}`"
-          />
         </div>
 
         <div class="category__filtered" v-if="filtered">
@@ -115,35 +86,24 @@ onMounted(async () => {
 .category {
   @apply mt-6;
 }
-
 .category__header {
   @apply flex flex-nowrap justify-between items-center py-4 border-b-2 border-b-color-1;
 }
-
 .category__title {
   @apply mb-0 text-xl inline-block lg:text-3xl font-extrabold text-color-6;
 }
-
 .category__content {
   @apply relative pt-6;
 }
-
 .category__button {
   @apply block top-[50%] absolute;
 }
-
 .category__button--right {
   @apply right-0;
 }
-
 .category__button--left {
   @apply left-0;
 }
-
-.category__swiper {
-  @apply flex w-[80%] md:w-[90%];
-}
-
 .category__filtered {
   @apply grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4;
 }
@@ -151,5 +111,19 @@ onMounted(async () => {
 swiper-container::part(bullet-active) {
   --swiper-pagination-color: rgba(0, 0, 0, 0.7);
   --swiper-pagination-color: #ddabac;
+}
+
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  --swiper-navigation-size: 1.8rem;
+  padding: 0.5em;
+  border-radius: 50%;
+  width: 1.4em;
+  height: 1.4em;
+}
+
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  background-color: black;
 }
 </style>

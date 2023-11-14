@@ -39,27 +39,23 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
 
 <template>
   <div class="md:flex md:flex-row md:gap-4">
-    <figure class="md:min-h-full">
+    <figure class="md:h-full">
       <div class="max-w-3xl md:max-w-[20rem] md:min-h-full lg:max-w-[30rem]">
         <!-- Gallery-->
         <div class="relative md:min-h-full" @click="$emit('show-lightbox')">
           <swiper-container
-            class="main-swiper"
-            :space-between="10"
-            navigation
-            autoplay
-            pagination
+            class="swiper-main"
             thumbs-swiper=".swiper-thumbs"
             free-mode
             :modules="[Navigation, Thumbs, Mousewheel]"
           >
             <swiper-slide
-              class="md:min-h-full"
+              class="md:h-full"
               v-for="image in product.images"
               :key="image.id"
             >
-              <img
-                class="rounded-sm md:h-[33rem] lg:min-h-[40rem]"
+              <nuxt-img
+                class="swiper-main__image"
                 :src="image.url"
                 :alt="image.alternativeText"
               />
@@ -94,7 +90,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
           class="swiper-thumbs"
           @swiper="setThumbsSwiper"
           :modules="[FreeMode, Navigation]"
-          :space-between="10"
+          :space-between="3"
           :slides-per-view="3"
           :navigation="{
             prevEl: '.prev-btn',
@@ -104,8 +100,8 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
           :direction="swiperThumbsDirection"
         >
           <swiper-slide v-for="image in product.images" :key="image.id">
-            <img
-              class="object-contain rounded-sm h-full lg:min-w-[19rem]"
+            <nuxt-img
+              class="swiper-thumb-image"
               :src="image.url"
               :alt="image.alternativeText"
             />
@@ -128,50 +124,18 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
 </template>
 
 <style scoped>
-.swiper {
-  width: 100%;
-  height: 100%;
+.swiper-main {
+  @apply w-full;
 }
 
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.swiper {
-  width: 100%;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.swiper-slide {
-  background-size: cover;
-  background-position: center;
-}
-
-.main-swiper {
-  /* height: 80%; */
-  width: 100%;
+.swiper-main__image {
+  @apply object-contain;
 }
 
 .swiper-thumbs {
-  @apply h-[160px] w-[350px] box-border px-0 py-[10px] md:w-[72px] md:h-[400px] md:py-0 lg:w-full lg:h-[500px];
+  @apply w-full h-[10em] w-[21.875em] px-0 py-[0.625em]
+   md:w-[4.5em] md:h-[25em] md:py-0 lg:w-full lg:h-[31.25em];
 }
-
 .swiper-thumbs .swiper-slide-visible,
 .swiper-thumbs .swiper-slide-next,
 .swiper-thumbs .swiper-slide-active {
@@ -182,10 +146,7 @@ const setThumbsSwiper = (swiper: any) => (thumbsSwiper.value = swiper);
   @apply opacity-100;
 }
 
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.swiper-thumb-image {
+  @apply object-cover w-full h-full lg:min-w-[19rem];
 }
 </style>

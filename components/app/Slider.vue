@@ -69,7 +69,7 @@ watchEffect(() => {
 }
 
 :global(:root) {
-  --swiper-navigation-color: #161824;
+  --swiper-navigation-color: white;
 }
 
 :deep(.swiper-button-prev),
@@ -78,12 +78,7 @@ watchEffect(() => {
 }
 
 :root {
-  --swiper-navigation-color: #161824;
-  --swiper-pagination-color: #161824;
-}
-
-swiper-container::part(button-prev),
-swiper-container::part(button-next) {
-  --swiper-navigation-size: 1.5rem;
+  --swiper-navigation-color: white;
+  --swiper-pagination-color: white;
 }
 </style>
