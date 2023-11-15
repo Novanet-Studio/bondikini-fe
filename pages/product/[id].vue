@@ -40,7 +40,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="product-wrapper">
+  <div class="product">
     <Transition name="page">
       <ProductDetail v-if="product" />
     </Transition>
@@ -48,7 +48,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.product-wrapper {
+.product {
   @apply lg:container;
 }
 </style>

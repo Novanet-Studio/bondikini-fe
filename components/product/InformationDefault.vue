@@ -1,6 +1,12 @@
 <template>
-  <div class="px-4 pb-8 md:py-8">
+  <div class="product__information-wrapper">
     <ProductInformation />
     <ProductShopping />
   </div>
 </template>
+
+<style scoped>
+.product__information-wrapper {
+  @apply px-4 pb-8;
+}
+</style>
