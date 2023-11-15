@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import strapiMapper from 'smapper';
+import { GetProductById } from '~/graphql/queries';
+
+const graphql = useStrapiGraphQL();
+
 definePageMeta({
   layout: 'account',
 });
@@ -33,6 +38,7 @@ const products = computed(
   () =>
     productStore.wishlistItems?.map((product) => ({
       id: product!.id,
+      name: product?.name,
       product: {
         url: product!.images[0].url,
       },
@@ -43,7 +49,40 @@ const products = computed(
     }))
 );
 
-function handleRemoveProductFromWishList(row: any) {
+async function handleAddToCart(product: Product) {
+  const item = {
+    id: product.id,
+    quantity: 1,
+    price: product.price,
+  };
+
+  cartStore.addProductToCart(item as CartItem);
+
+  const itemsList = cartStore.cartItems.map((item) =>
+    graphql<ProductRequest>(GetProductById, { id: item.id })
+  );
+
+  const itemsResult = await Promise.all(itemsList);
+
+  const temp: Product[] = [];
+
+  strapiMapper<any[]>(itemsResult).forEach((item) => {
+    temp.push(item.products[0]);
+  });
+
+  productStore.addCartProducts(temp);
+
+  useToast().add({
+    icon: 'i-ph-check',
+    title: 'Success!',
+    description: `"${product.name}" has been added to the cart`,
+    color: 'green',
+  });
+
+  handleRemoveItemFromWishlist(product);
+}
+
+function handleRemoveItemFromWishlist(row: any) {
   wishlist.removeItem(row);
   wishlist.load();
 }
@@ -86,12 +125,16 @@ onMounted(() => {
         />
       </template>
       <template #actions-data="{ row }">
-        <UButton icon="i-ph-shopping-bag" :ui="{ rounded: 'rounded-full' }" />
+        <UButton
+          icon="i-ph-shopping-bag"
+          :ui="{ rounded: 'rounded-full' }"
+          @click="handleAddToCart(row)"
+        />
         <UButton
           color="red"
           variant="ghost"
           icon="i-ph-x"
-          @click="handleRemoveProductFromWishList(row)"
+          @click="handleRemoveItemFromWishlist(row)"
         />
       </template>
       <template #loading-state>
