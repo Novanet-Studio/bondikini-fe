@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+definePageMeta({
+  middleware: 'authentication',
+});
+</script>
+
 <template>
   <div class="mt-20 container mb-20">
     <header class="b-header">
