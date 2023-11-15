@@ -23,7 +23,8 @@ const showLightbox = ref(false);
   @apply mx-4 lg:container;
 }
 .product-detail {
-  @apply flex flex-col bg-color-4 shadow-xl md:flex-row mb-8 py-4;
+  @apply flex flex-col bg-color-4 shadow-xl mb-8 py-4
+  md:flex-row md:pl-4;
 }
 .product-category-name {
   @apply font-bold text-lg py-8 pb-2 md:text-2xl text-color-6 border-b-2 border-b-color-1;
