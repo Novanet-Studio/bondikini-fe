@@ -153,20 +153,6 @@ const makePayment = async (tokenResult: Square.TokenResult) => {
       return;
     }
 
-    const [validProducts, noStockProducts] = await productStore.checkStock();
-
-    if (noStockProducts.length) {
-      noStockProducts.forEach((product) => {
-        useToast().add({
-          icon: 'i-ph-warning',
-          title: 'Error',
-          description: `Product ${product.name} is out of stock or you exceed the available quantity`,
-          color: 'red',
-        });
-      });
-      return;
-    }
-
     const payment = {
       idempotencyKey,
       locationId: SQUARE_LOCATION_ID,
@@ -191,7 +177,7 @@ const makePayment = async (tokenResult: Square.TokenResult) => {
 
     const billing = await checkBilling();
     payment.billingAddress = billing;
-    await createPayment(payment, validProducts);
+    await createPayment(payment, cart.cartItems as unknown as Product[]);
   } catch (err) {
     console.log(err);
   } finally {

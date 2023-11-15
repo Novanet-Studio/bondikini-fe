@@ -24,26 +24,8 @@ const loadPaypal = async () => {
     if ($paypal.Buttons) {
       await $paypal
         .Buttons({
-          async onClick() {
-            const [validProducts, noStockProducts] =
-              await productStore.checkStock();
-
-            if (noStockProducts.length) {
-              noStockProducts.forEach((product) => {
-                useToast().add({
-                  icon: 'i-ph-warning',
-                  title: 'Error',
-                  description: `Product ${product.name} is out of stock or you exceed the available quantity`,
-                  color: 'red',
-                });
-              });
-              return;
-            }
-
-            const invoiceItems: CartItem[] = cart.cartItems.filter((item) => {
-              return validProducts.find((product) => product.id === item.id);
-            });
-
+          onClick() {
+            const invoiceItems: CartItem[] = cart.cartItems;
             tempCartItems.value = invoiceItems;
           },
           createOrder: (_, actions) =>
