@@ -25,29 +25,28 @@ const columns = [
     label: 'Amount',
   },
   {
-    key: 'total',
-    label: 'Total',
-  },
-  {
     key: 'actions',
   },
 ];
 
 const products = computed(
   () =>
-    productStore.cartProducts?.map((product) => ({
+    productStore.wishlistItems?.map((product) => ({
       id: product!.id,
       product: {
         url: product!.images[0].url,
       },
       price: product!.price,
-      amount: cartStore.cartItems.find((item) => item.id === product!.id)!
-        .quantity,
-      total:
-        product!.price *
-        cartStore.cartItems.find((item) => item.id === product!.id)!.quantity,
+      amount:
+        cartStore.cartItems.find((item) => item.id === product!.id)?.quantity ||
+        0,
     }))
 );
+
+function handleRemoveProductFromWishList(row: any) {
+  wishlist.removeItem(row);
+  wishlist.load();
+}
 
 onMounted(() => {
   wishlist.load();
@@ -88,7 +87,12 @@ onMounted(() => {
       </template>
       <template #actions-data="{ row }">
         <UButton icon="i-ph-shopping-bag" :ui="{ rounded: 'rounded-full' }" />
-        <UButton color="red" variant="ghost" icon="i-ph-x" />
+        <UButton
+          color="red"
+          variant="ghost"
+          icon="i-ph-x"
+          @click="handleRemoveProductFromWishList(row)"
+        />
       </template>
       <template #loading-state>
         <div class="flex flex-col items-center justify-center mt-12">
