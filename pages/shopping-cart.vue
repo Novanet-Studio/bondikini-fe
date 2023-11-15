@@ -73,6 +73,13 @@ const products = computed(
     }))
 );
 
+function handleRemoveProductFromCart(item: CartItem) {
+  const cartItem = cart.cartItems.find(
+    (element) => element.id === item.id
+  ) as CartItem;
+  cart.removeProductFromCart(cartItem);
+}
+
 onMounted(() => {
   loadCartProducts();
 });
@@ -111,7 +118,12 @@ onMounted(() => {
         />
       </template>
       <template #actions-data="{ row }">
-        <UButton color="red" variant="ghost" icon="i-ph-x" />
+        <UButton
+          color="red"
+          variant="ghost"
+          icon="i-ph-x"
+          @click="handleRemoveProductFromCart(row)"
+        />
       </template>
       <template #loading-state>
         <div class="flex flex-col items-center justify-center mt-12">
