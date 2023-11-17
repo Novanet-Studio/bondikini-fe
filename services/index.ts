@@ -31,7 +31,7 @@ async function sendReceiptEmail(payload: any) {
     method: 'post',
     body: {
       ...payload,
-      email: receiptTemplateConfig(),
+      config: receiptTemplateConfig(),
     },
   });
 }
@@ -41,7 +41,7 @@ async function sendMerchantEmail(payload: any) {
     method: 'post',
     body: {
       ...payload,
-      email: merchantTemplateConfig(),
+      config: merchantTemplateConfig(),
     },
   });
 }
