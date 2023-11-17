@@ -58,12 +58,12 @@ export function merchantTemplateConfig() {
     template: {
       preview: 'Bondikini - New order',
       theme: {
-        primary: '#000000',
-        primaryTop: '#292929',
-        secondary: '#707070',
-        secondaryInfo: '#ffffff',
+        primary: '#643130',
+        primaryTop: '#643130',
+        secondary: '#672f2e',
+        secondaryInfo: '#fff',
         foreground: '#efeef1',
-        info: '#acb5cb',
+        info: '#fff',
       },
       header: {
         icon: {
