@@ -68,6 +68,12 @@ export const useWishlistStore = defineStore(
       items.value?.splice(index, 1);
     }
 
+    function $reset() {
+      items.value = [];
+      total.value = 0;
+      loading.value = false;
+    }
+
     return {
       items,
       total,
@@ -76,6 +82,7 @@ export const useWishlistStore = defineStore(
       initWishList,
       addItem,
       removeItem,
+      $reset,
     };
   },
   {
