@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 const items = [
-  {
-    slot: 'squareup',
-    label: 'Square Up',
-  },
+  // {
+  //   slot: 'squareup',
+  //   label: 'Square Up',
+  // },
   {
     slot: 'paypal',
     label: 'Paypal',
   },
-  {
-    slot: 'trans-bofa',
-    label: 'Trans BoFa',
-  },
-  {
-    slot: 'venmo',
-    label: 'Venmo',
-  },
+  // {
+  //   slot: 'trans-bofa',
+  //   label: 'Trans BoFa',
+  // },
+  // {
+  //   slot: 'venmo',
+  //   label: 'Venmo',
+  // },
   {
     slot: 'zelle',
     label: 'Zelle',
@@ -38,18 +38,18 @@ const items = [
       },
     }"
   >
-    <template #squareup>
+    <!-- <template #squareup>
       <LazyPaymentVisa />
-    </template>
+    </template> -->
     <template #paypal>
       <LazyPaymentPaypal />
     </template>
-    <template #trans-bofa>
+    <!-- <template #trans-bofa>
       <LazyPaymentTransBofa />
-    </template>
-    <template #venmo>
+    </template> -->
+    <!-- <template #venmo>
       <LazyPaymentVenmo />
-    </template>
+    </template> -->
     <template #zelle>
       <LazyPaymentZelle />
     </template>
