@@ -1,0 +1,14 @@
+mutation restoreProduct($id: ID!, $data: ProductInput!) {
+  restoreProduct(id: $id, data: $data) {
+    data {
+      id
+      attributes {
+        name
+        size_stock {
+          talla
+          inventario
+        }
+      }
+    }
+  }
+}
