@@ -92,7 +92,7 @@
     @apply i-ph-arrow-left inline-block;
   }
 
-  .default__categories-header {
+  /* .default__categories-header {
     @apply flex items-center justify-between mt-8;
   }
 
@@ -114,5 +114,5 @@
 
   .default__categories-grid span {
     @apply text-xs font-bold md:text-sm lg:text-base lg:block lg:mt-4;
-  }
+  } */
 }
