@@ -24,6 +24,9 @@ const loadPaypal = async () => {
     if ($paypal.Buttons) {
       await $paypal
         .Buttons({
+          style: {
+            disableMaxWidth: true,
+          },
           onClick() {
             const invoiceItems: CartItem[] = cart.cartItems;
             tempCartItems.value = invoiceItems;

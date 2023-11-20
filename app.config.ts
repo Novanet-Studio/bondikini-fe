@@ -2,6 +2,9 @@ export default defineAppConfig({
   ui: {
     primary: 'color-1',
     gray: 'color-5',
+    notifications: {
+      position: 'top-0 bottom-auto',
+    },
   },
   header: {
     logo: 'logo.png',

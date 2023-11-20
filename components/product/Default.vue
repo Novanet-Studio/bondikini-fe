@@ -1,57 +1,22 @@
 <script lang="ts" setup>
-import mapper from 'smapper';
 import { injectKeys } from '~/config/constants';
-import { GetProductById } from '~/graphql/queries';
 
 const props = defineProps<{ product: Product }>();
 
-const cart = useCartStore();
-const router = useRouter();
-const graphql = useStrapiGraphQL();
-const pruductStore = useProductStore();
+const productStore = useProductStore();
+const globalStore = useGlobalStore();
 
-async function handleAddToCart() {
-  const newProduct = {
-    id: props.product.id,
-    quantity: 1,
-    price: props.product.price,
-    size: '',
-  };
+const { showProductQuickView } = storeToRefs(globalStore);
 
-  if (props.product.size_stock?.length) {
-    useToast().add({
-      icon: 'i-ph-warning-duotone',
-      title: 'Warning',
-      description: 'You must select a size',
-      color: 'orange',
-    });
-    setTimeout(() => {
-      router.push(`/product/${props.product.id}`);
-    }, 500);
-    return;
-  }
+const hasStock = computed(
+  () =>
+    props.product.size_stock!.reduce((acc, curr) => acc + curr.inventario, 0) >
+    0
+);
 
-  cart.addProductToCart(newProduct);
-
-  const itemsList = cart.cartItems.map((item) => {
-    return graphql<ProductRequest>(GetProductById, { id: item.id });
-  });
-
-  const itemsResult = await Promise.all(itemsList);
-
-  const temp: any[] = [];
-
-  mapper<any[]>(itemsResult).map((item) => {
-    temp.push(item.products[0]);
-  });
-
-  pruductStore.addCartProducts(temp);
-
-  useToast().add({
-    icon: 'i-ph-check',
-    title: 'Success!',
-    description: `Product ${newProduct.id} has been added to the cart!`,
-  });
+function handleBuyAction() {
+  productStore.product = props.product;
+  showProductQuickView.value = true;
 }
 
 provide(injectKeys.product, props.product);
@@ -75,6 +40,13 @@ provide(injectKeys.product, props.product);
         >
           ${{ product.price }}
         </span>
+
+        <span
+          class="absolute top-0 left-0 w-full h-full bg-black/50 p-4 flex items-center justify-center text-2xl text-color-2"
+          v-if="!hasStock"
+        >
+          No stock
+        </span>
       </div>
     </template>
     <section class="flex flex-col items-center justify-center gap-4">
@@ -85,7 +57,8 @@ provide(injectKeys.product, props.product);
         icon="i-ph-shopping-bag"
         size="lg"
         label="Buy"
-        @click="handleAddToCart"
+        :disabled="!hasStock"
+        @click="handleBuyAction"
       />
     </section>
   </UCard>

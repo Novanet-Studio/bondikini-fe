@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import strapiMapper from 'smapper';
-import { GetProductById } from '~/graphql/queries';
-
-const graphql = useStrapiGraphQL();
-
 definePageMeta({
   layout: 'account',
 });
 
 const wishlist = useWishlistStore();
+const globalStore = useGlobalStore();
 const productStore = useProductStore();
 const cartStore = useCartStore();
+const selected = ref<Product | null>(null);
+
+const { showProductQuickView, isContinueShopping } = storeToRefs(globalStore);
 
 const sectionTitle = inject('sectionTitle') as Ref<string>;
 
@@ -37,6 +36,7 @@ const columns = [
 const products = computed(
   () =>
     productStore.wishlistItems?.map((product) => ({
+      ...product,
       id: product!.id,
       name: product?.name,
       product: {
@@ -50,42 +50,27 @@ const products = computed(
 );
 
 async function handleAddToCart(product: Product) {
-  const item = {
-    id: product.id,
-    quantity: 1,
-    price: product.price,
-  };
-
-  cartStore.addProductToCart(item as CartItem);
-
-  const itemsList = cartStore.cartItems.map((item) =>
-    graphql<ProductRequest>(GetProductById, { id: item.id })
-  );
-
-  const itemsResult = await Promise.all(itemsList);
-
-  const temp: Product[] = [];
-
-  strapiMapper<any[]>(itemsResult).forEach((item) => {
-    temp.push(item.products[0]);
-  });
-
-  productStore.addCartProducts(temp);
-
-  useToast().add({
-    icon: 'i-ph-check',
-    title: 'Success!',
-    description: `"${product.name}" has been added to the cart`,
-    color: 'green',
-  });
-
-  handleRemoveItemFromWishlist(product);
+  productStore.product = product;
+  selected.value = product;
+  showProductQuickView.value = true;
 }
 
 function handleRemoveItemFromWishlist(row: any) {
   wishlist.removeItem(row);
   wishlist.load();
 }
+
+watch(isContinueShopping, (value) => {
+  if (value) {
+    handleRemoveItemFromWishlist(selected.value);
+    showProductQuickView.value = false;
+
+    setTimeout(() => {
+      selected.value = null;
+      productStore.product = null;
+    }, 1000);
+  }
+});
 
 onMounted(() => {
   wishlist.load();

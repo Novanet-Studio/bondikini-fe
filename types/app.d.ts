@@ -169,7 +169,10 @@ interface CartItem {
   id: string;
   quantity: number;
   price: number;
-  size: string;
+  sizeData: {
+    id: string;
+    size: string;
+  };
 }
 
 interface ShippingInfo {
