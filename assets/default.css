@@ -91,28 +91,4 @@
   .default__back span {
     @apply i-ph-arrow-left inline-block;
   }
-
-  /* .default__categories-header {
-    @apply flex items-center justify-between mt-8;
-  }
-
-  .default__categories-header h3 {
-    @apply text-xl ml-5 text-color-6 font-bold lg:text-3xl;
-  }
-
-  .default__categories-header button {
-    @apply block text-xs border border-color-3 px-2 py-1 rounded-xl text-color-3 md:px-4 md:py-2 md:rounded-full lg:transition lg:ease-linear lg:hover:bg-color-3/10;
-  }
-
-  .default__categories-grid {
-    @apply grid place-items-center place-content-center gap-4 mt-4 grid-cols-2 md:max-w-3xl md:mx-auto lg:mx-0 lg:grid-cols-4;
-  }
-
-  .default__categories-grid img {
-    @apply w-20 h-20 rounded-full object-cover ring-[3px] ring-offset-2 ring-offset-white md:w-32 md:h-32 lg:w-36 lg:h-36;
-  }
-
-  .default__categories-grid span {
-    @apply text-xs font-bold md:text-sm lg:text-base lg:block lg:mt-4;
-  } */
 }
