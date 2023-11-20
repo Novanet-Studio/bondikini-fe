@@ -1,6 +1,7 @@
 import strapiMapper from 'smapper';
 import config from '~/config/config.json';
 import { UpdateProduct } from '~/graphql/mutations';
+import { RestoreProduct } from '~/graphql/mutations';
 import { GetProductById, GetProductsByCategoryId } from '~/graphql/queries';
 
 export const useProductStore = defineStore(
@@ -10,6 +11,12 @@ export const useProductStore = defineStore(
     const products = ref<Product[] | null>([]);
     const cartProducts = ref<Partial<Product[]> | null>([]);
     const wishlistItems = ref<Partial<Product[]> | null>([]);
+    const beforeUpdate = ref<
+      {
+        id: string;
+        size_stock: SizeStock[];
+      }[]
+    >([]);
     const loading = ref(false);
     const cartStore = useCartStore();
     const graphql = useStrapiGraphQL();
@@ -52,54 +59,49 @@ export const useProductStore = defineStore(
       cartProducts.value = product;
     }
 
-    async function checkStock() {
-      const validProducts: Product[] = [];
-      const noStockProducts: Product[] = [];
-      const temp = await getProductsFromCart();
+    async function update() {
+      try {
+        const products = await getProductsFromCart();
 
-      // Crea una function que verifique si hay stock de cada producto
-      temp.forEach((product) => {
-        const item = cartStore.cartItems.find((item) => item.id === product.id);
-        const found = product.size_stock?.find(
-          (stock) => stock.talla === item?.size
+        // Save for rollback
+        beforeUpdate.value = products.map((product) => ({
+          id: product.id,
+          size_stock: product.size_stock!,
+        }));
+
+        const items = cartStore.cartItems.map((item) => ({
+          id: item.id,
+          item: {
+            id: item.sizeData.id,
+            quantity: item.quantity,
+          },
+        }));
+
+        const result = await Promise.all(
+          items.map(({ id, item }) =>
+            graphql(UpdateProduct, { id, data: { item } })
+          )
         );
 
-        if (found!.inventario > 0 && item!.quantity < found!.inventario) {
-          validProducts.push(product);
-        } else {
-          noStockProducts.push(product);
-        }
-      });
-
-      return [validProducts, noStockProducts];
+        return result;
+      } catch (error) {
+        console.log('from update -> ', error);
+      }
     }
 
-    async function update() {
-      const temp = await getProductsFromCart();
+    async function rollback() {
+      const items = beforeUpdate.value.map(({ id, size_stock }) => ({
+        id,
+        size_stock,
+      }));
 
-      const products = temp.map((product) => {
-        const item = cartStore.cartItems.find((item) => item.id === product.id);
+      const result = await Promise.all(
+        items.map(({ id, size_stock }) =>
+          graphql(RestoreProduct, { id, data: { size_stock } })
+        )
+      );
 
-        return {
-          ...product,
-          size_stock: product.size_stock?.map((productStock) => ({
-            ...productStock,
-            inventario:
-              item!.size === productStock.talla
-                ? productStock.inventario - item!.quantity
-                : productStock.inventario,
-          })) as SizeStock[],
-        };
-      });
-
-      products.forEach(async (product) => {
-        await graphql(UpdateProduct, {
-          id: product.id,
-          data: {
-            size_stock: product.size_stock,
-          },
-        });
-      });
+      return result;
     }
 
     function clear() {
@@ -122,12 +124,12 @@ export const useProductStore = defineStore(
       product,
       products,
       cartProducts,
-      checkStock,
       wishlistItems,
       loading,
       getByCategory,
       addCartProducts,
       update,
+      rollback,
       clear,
       $reset,
     };

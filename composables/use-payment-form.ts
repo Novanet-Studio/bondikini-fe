@@ -61,29 +61,6 @@ export default function usePaymentForm({
 
   type FormData = Output<typeof schema>;
 
-  // const schema = toTypedSchema(
-  //   object({
-  //     name: string([minLength(1, 'Este campo es requerido')]),
-  //     lastName: string([minLength(1, 'Este campo es requerido')]),
-  //     date: string([minLength(1, 'Este campo es requerido')]),
-  //     // amountPayed: string([
-  //     //   minLength(1, 'Este campo es requerido'),
-  //     //   equal(equalAmountTo, 'La cantidad no es igual al monto especificado'),
-  //     // ]),
-  //     confirmation: string([minLength(1, 'Este campo es requerido')]),
-  //   })
-  // );
-
-  // const { handleSubmit, errors } = useForm<Form>({
-  //   initialValues: {
-  //     name: '',
-  //     lastName: '',
-  //     date: '',
-  //     confirmation: '',
-  //   },
-  //   validationSchema: schema,
-  // });
-
   async function submit({ data }: FormSubmitEvent<FormData>) {
     try {
       isSending.value = true;
@@ -108,8 +85,8 @@ export default function usePaymentForm({
       };
 
       const invoiceItems = cart.cartItems;
-      await invoice.createInvoiceReport(paymentData, invoiceItems, method);
       await productStore.update();
+      await invoice.createInvoiceReport(paymentData, invoiceItems, method);
 
       useToast().add({
         icon: 'i-ph-check',
@@ -137,6 +114,8 @@ export default function usePaymentForm({
           color: 'red',
         });
       }
+
+      productStore.rollback();
     } finally {
       isSending.value = false;
     }

@@ -115,7 +115,10 @@ const handleAddToCart = (isBuyNow = false) => {
     id: product.value.id,
     quantity: quantity.value,
     price: product.value.price,
-    size: selectedSize.value?.talla as string,
+    sizeData: {
+      id: selectedSize.value!.id,
+      size: selectedSize.value!.talla,
+    },
   };
 
   if (productHasSize.value && !selectedSize.value) {
