@@ -28,6 +28,13 @@ onMounted(async () => {
         <h3 class="category__title">
           {{ category.name }}
         </h3>
+        <UButton
+          class="!text-color-1 !text-lg hover:!text-color-1-800"
+          variant="link"
+          @click="$emit('filter')"
+          v-if="!filtered"
+          label="See all"
+        />
       </div>
       <div class="category__content">
         <div v-if="products.length && !filtered">
