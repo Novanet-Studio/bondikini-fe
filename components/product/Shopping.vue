@@ -31,15 +31,19 @@ const productHasStock = computed(
 
 const isQuantityGreaterThanTen = computed(() => {
   const existItem = cart.cartItems.find((item) => item.id === product.value.id);
-  return existItem?.id && quantity.value + existItem.quantity > 10;
+  const existItemQuantity = existItem?.quantity || 0;
+  const totalQuantity = quantity.value + existItemQuantity;
+
+  return totalQuantity > 10;
 });
 
 const isQuantityGreaterThanStock = computed(() => {
   const existItem = cart.cartItems.find((item) => item.id === product.value.id);
-  return (
-    existItem?.id &&
-    quantity.value + existItem.quantity > selectedSize.value!.inventario
-  );
+  const existItemQuantity = existItem?.quantity || 0;
+  const stock = selectedSize.value?.inventario || 0;
+  const totalQuantity = quantity.value + existItemQuantity;
+
+  return totalQuantity > stock;
 });
 
 const handleIncreaseQuantity = () => quantity.value++;
@@ -155,6 +159,12 @@ const handleAddToCart = (isBuyNow = false) => {
 
   if (isBuyNow) goToCheckout();
 };
+
+onMounted(async () => {
+  if (product.value.id) {
+    await productStore.getById(product.value.id);
+  }
+});
 </script>
 
 <template>

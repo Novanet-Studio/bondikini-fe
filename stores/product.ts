@@ -1,7 +1,6 @@
 import strapiMapper from 'smapper';
 import config from '~/config/config.json';
 import { UpdateProduct } from '~/graphql/mutations';
-import { RestoreProduct } from '~/graphql/mutations';
 import { GetProductById, GetProductsByCategoryId } from '~/graphql/queries';
 
 export const useProductStore = defineStore(
@@ -14,6 +13,15 @@ export const useProductStore = defineStore(
     const loading = ref(false);
     const cartStore = useCartStore();
     const graphql = useStrapiGraphQL();
+
+    async function getById(id: string) {
+      const response = await graphql<ProductRequest>(GetProductById, { id });
+      const result = strapiMapper<Product>(response.data.products.data[0]);
+
+      product.value = result;
+
+      return result;
+    }
 
     async function getProductsFromCart() {
       const temp: Product[] = [];
@@ -41,7 +49,11 @@ export const useProductStore = defineStore(
           id: categoryId,
         });
 
-        return strapiMapper<Product[]>(data.products.data);
+        const result = strapiMapper<Product[]>(data.products.data);
+
+        products.value = result;
+
+        return result;
       } catch (error) {
         return null;
       } finally {
@@ -99,6 +111,7 @@ export const useProductStore = defineStore(
       cartProducts,
       wishlistItems,
       loading,
+      getById,
       getByCategory,
       addCartProducts,
       update,
