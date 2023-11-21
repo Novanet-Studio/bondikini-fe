@@ -20,6 +20,29 @@ const pageTo = computed(() =>
   Math.min(page.value * pageCount.value, pageTotal.value)
 );
 
+const columns = [
+  {
+    key: 'id',
+    label: '#',
+  },
+  {
+    key: 'bill',
+    label: 'Bill',
+  },
+  {
+    key: 'amount',
+    label: 'Amount',
+  },
+  {
+    key: 'date',
+    label: 'Date',
+  },
+  {
+    key: 'status',
+    label: 'Status',
+  },
+];
+
 function select(row: Invoice) {
   invoice.invoice = row;
   router.push(`/invoices/${row.id}`);
@@ -51,6 +74,7 @@ const { data: invoices, pending } = await useLazyAsyncData<FetchInvoicesReturn>(
 const userInvoices = computed(
   () =>
     invoices.value.data?.map((invoice) => ({
+      ...invoice,
       id: invoice.id,
       bill: invoice.fullName,
       amount: invoice.amount,
@@ -72,6 +96,7 @@ watchEffect(() => {
   <section class="invoices">
     <UTable
       :rows="userInvoices"
+      :columns="columns"
       @select="select"
       :ui="{
         thead: '[&>tr]:!bg-color-2  [&>tr]:!text-color-5',
