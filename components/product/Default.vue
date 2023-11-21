@@ -10,6 +10,12 @@ const router = useRouter();
 const graphql = useStrapiGraphQL();
 const pruductStore = useProductStore();
 
+const hasStock = computed(
+  () =>
+    props.product.size_stock!.reduce((acc, curr) => acc + curr.inventario, 0) >
+    0
+);
+
 async function handleAddToCart() {
   const newProduct = {
     id: props.product.id,
@@ -75,6 +81,13 @@ provide(injectKeys.product, props.product);
         >
           ${{ product.price }}
         </span>
+
+        <span
+          class="absolute top-0 left-0 w-full h-full bg-black/50 p-4 flex items-center justify-center text-2xl text-color-2"
+          v-if="!hasStock"
+        >
+          No stock
+        </span>
       </div>
     </template>
     <section class="flex flex-col items-center justify-center gap-4">
@@ -85,6 +98,7 @@ provide(injectKeys.product, props.product);
         icon="i-ph-shopping-bag"
         size="lg"
         label="Buy"
+        :disabled="!hasStock"
         @click="handleAddToCart"
       />
     </section>
