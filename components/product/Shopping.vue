@@ -179,7 +179,7 @@ onMounted(async () => {
             :popper="{ placement: 'top' }"
           >
             <button
-              class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-14 lg:h-14 lg:text-sm"
+              class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] ring-transparent shadow-md lg:w-14 lg:h-14 lg:text-sm"
               :class="[size.inventario ? '' : 'opacity-60 cursor-default']"
               @click="selectedSize = size"
             >
