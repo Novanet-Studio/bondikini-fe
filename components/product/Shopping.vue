@@ -172,19 +172,34 @@ onMounted(async () => {
     <div class="mt-2 lg:mt-8" v-if="productHasSize">
       <div class="font-bold text-color-6 lg:text-xl">Sizes</div>
       <div class="mt-2 flex gap-4">
-        <button
-          class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-14 lg:h-14 lg:text-sm"
-          :class="
-            selectedSize?.talla === size.talla
-              ? 'ring-color-3'
-              : 'ring-transparent'
-          "
-          v-for="(size, index) in product?.size_stock"
-          :key="index"
-          @click="selectedSize = size"
-        >
-          {{ size.talla }}
-        </button>
+        <template v-for="size in product?.size_stock" :key="size.id">
+          <UTooltip
+            v-if="!size.inventario"
+            :text="`No stock for '${size.talla}' size`"
+            :popper="{ placement: 'top' }"
+          >
+            <button
+              class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-14 lg:h-14 lg:text-sm"
+              :class="[size.inventario ? '' : 'opacity-60 cursor-default']"
+              @click="selectedSize = size"
+            >
+              {{ size.talla }}
+            </button>
+          </UTooltip>
+          <button
+            v-else
+            class="w-10 h-10 rounded-full bg-color-1 text-color-3 text-xs font-bold ring-1 ring-offset-2 ring-offset-[#ecedee] shadow-md lg:w-14 lg:h-14 lg:text-sm"
+            :class="[
+              selectedSize?.talla === size.talla
+                ? 'ring-color-3'
+                : 'ring-transparent',
+              size.inventario ? '' : 'opacity-60 cursor-default',
+            ]"
+            @click="selectedSize = size"
+          >
+            {{ size.talla }}
+          </button>
+        </template>
       </div>
     </div>
 
