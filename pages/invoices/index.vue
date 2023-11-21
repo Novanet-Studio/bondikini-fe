@@ -21,6 +21,7 @@ const pageTo = computed(() =>
 );
 
 function select(row: Invoice) {
+  invoice.invoice = row;
   router.push(`/invoices/${row.id}`);
 }
 
