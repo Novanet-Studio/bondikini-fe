@@ -11,12 +11,6 @@ export const useProductStore = defineStore(
     const products = ref<Product[] | null>([]);
     const cartProducts = ref<Partial<Product[]> | null>([]);
     const wishlistItems = ref<Partial<Product[]> | null>([]);
-    const beforeUpdate = ref<
-      {
-        id: string;
-        size_stock: SizeStock[];
-      }[]
-    >([]);
     const loading = ref(false);
     const cartStore = useCartStore();
     const graphql = useStrapiGraphQL();
@@ -63,12 +57,6 @@ export const useProductStore = defineStore(
       try {
         const products = await getProductsFromCart();
 
-        // Save for rollback
-        beforeUpdate.value = products.map((product) => ({
-          id: product.id,
-          size_stock: product.size_stock!,
-        }));
-
         const items = cartStore.cartItems.map((item) => ({
           id: item.id,
           item: {
@@ -87,21 +75,6 @@ export const useProductStore = defineStore(
       } catch (error) {
         console.log('from update -> ', error);
       }
-    }
-
-    async function rollback() {
-      const items = beforeUpdate.value.map(({ id, size_stock }) => ({
-        id,
-        size_stock,
-      }));
-
-      const result = await Promise.all(
-        items.map(({ id, size_stock }) =>
-          graphql(RestoreProduct, { id, data: { size_stock } })
-        )
-      );
-
-      return result;
     }
 
     function clear() {
@@ -129,7 +102,6 @@ export const useProductStore = defineStore(
       getByCategory,
       addCartProducts,
       update,
-      rollback,
       clear,
       $reset,
     };

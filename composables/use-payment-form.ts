@@ -114,8 +114,6 @@ export default function usePaymentForm({
           color: 'red',
         });
       }
-
-      productStore.rollback();
     } finally {
       isSending.value = false;
     }
