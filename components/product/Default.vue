@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import mapper from 'smapper';
 import { injectKeys } from '~/config/constants';
-import { GetProductById } from '~/graphql/queries';
 
 const props = defineProps<{ product: Product }>();
 
-const cart = useCartStore();
-const router = useRouter();
-const graphql = useStrapiGraphQL();
-const pruductStore = useProductStore();
+const productStore = useProductStore();
+const globalStore = useGlobalStore();
+
+const { showProductQuickView } = storeToRefs(globalStore);
 
 const hasStock = computed(
   () =>
@@ -16,48 +14,9 @@ const hasStock = computed(
     0
 );
 
-async function handleAddToCart() {
-  const newProduct = {
-    id: props.product.id,
-    quantity: 1,
-    price: props.product.price,
-    size: '',
-  };
-
-  if (props.product.size_stock?.length) {
-    useToast().add({
-      icon: 'i-ph-warning-duotone',
-      title: 'Warning',
-      description: 'You must select a size',
-      color: 'orange',
-    });
-    setTimeout(() => {
-      router.push(`/product/${props.product.id}`);
-    }, 500);
-    return;
-  }
-
-  cart.addProductToCart(newProduct);
-
-  const itemsList = cart.cartItems.map((item) => {
-    return graphql<ProductRequest>(GetProductById, { id: item.id });
-  });
-
-  const itemsResult = await Promise.all(itemsList);
-
-  const temp: any[] = [];
-
-  mapper<any[]>(itemsResult).map((item) => {
-    temp.push(item.products[0]);
-  });
-
-  pruductStore.addCartProducts(temp);
-
-  useToast().add({
-    icon: 'i-ph-check',
-    title: 'Success!',
-    description: `Product ${newProduct.id} has been added to the cart!`,
-  });
+function handleBuyAction() {
+  productStore.product = props.product;
+  showProductQuickView.value = true;
 }
 
 provide(injectKeys.product, props.product);
@@ -99,7 +58,7 @@ provide(injectKeys.product, props.product);
         size="lg"
         label="Buy"
         :disabled="!hasStock"
-        @click="handleAddToCart"
+        @click="handleBuyAction"
       />
     </section>
   </UCard>

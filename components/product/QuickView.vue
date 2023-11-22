@@ -11,6 +11,13 @@ const actions = ref(null);
 
 const product = computed(() => productStore.product);
 
+function closeQuickView() {
+  showProductQuickView.value = false;
+  setTimeout(() => {
+    productStore.product = null;
+  }, 1000);
+}
+
 provide(injectKeys.productDetail, product);
 </script>
 
@@ -32,7 +39,7 @@ provide(injectKeys.productDetail, product);
             variant="ghost"
             icon="i-heroicons-x-mark-20-solid"
             class="-my-1"
-            @click="showProductQuickView = false"
+            @click="closeQuickView"
           />
         </div>
       </template>
@@ -44,7 +51,7 @@ provide(injectKeys.productDetail, product);
             :placeholder="[208, 232, 10]"
             sizes="sm:0.625em md:13.125em"
             fit="outside"
-            class="h-60 w-full object-cover"
+            class="h-72 w-full object-cover"
           />
         </NuxtLink>
 
