@@ -2,8 +2,14 @@
 import { Navigation } from 'swiper/modules';
 import 'swiper/element/css/navigation';
 
+type Slider = {
+  image: string;
+  title: string;
+  description: string;
+};
+
 interface Props {
-  items: string[] | Product[];
+  items: string[] | Product[] | Slider[];
   slidesPerView?: number;
   spaceBetween?: number;
   centeredSlides?: boolean;
@@ -18,14 +24,21 @@ const props = withDefaults(defineProps<Props>(), {
 
 const renderImages = ref(false);
 const images = ref<string[]>([]);
+const sliders = ref<Slider[]>();
 const products = ref<Product[]>();
 
 watchEffect(() => {
   const isString = typeof props!.items[0] === 'string';
+  const isSlider = (props?.items[0] as Slider)?.image;
 
   if (isString) {
     renderImages.value = true;
     images.value = props.items as string[];
+    return;
+  }
+
+  if (isSlider) {
+    sliders.value = props.items as Slider[];
     return;
   }
 
@@ -51,6 +64,19 @@ watchEffect(() => {
         </div>
       </swiper-slide>
     </template>
+
+    <template v-else-if="sliders.lenght > 0">
+      <swiper-slide v-for="(image, index) in images" :key="index">
+        <div>
+          <img
+            class="slider__image"
+            :src="slider.image"
+            alt="Products of the brand"
+          />
+        </div>
+      </swiper-slide>
+    </template>
+
     <template v-else>
       <swiper-slide
         v-for="item in products"

@@ -46,13 +46,13 @@ export default defineAppConfig({
         image: '/img/home/bondikini-women-swimwear-1.webp',
         title: 'Bondikini is a swimwear brand',
         description:
-          'that draws inspiration from the iconic Bondi beach in Sydney, Australia. Our designs are breathtaking, artistic, and fun while also staying classically on trend.',
+          'We draw inspiration from the iconic Bondi beach in Sydney',
       },
       {
         image: '/img/home/bondikini-women-swimwear-2.webp',
-        title: 'Bondikini is a swimwear brand',
+        title: 'Our designs',
         description:
-          'that draws inspiration from the iconic Bondi beach in Sydney, Australia. Our designs are breathtaking, artistic, and fun while also staying classically on trend.',
+          'Are breathtaking, artistic, and fun while also staying classically on trend.',
       },
     ],
   },
