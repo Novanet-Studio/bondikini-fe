@@ -73,7 +73,7 @@ export const useProductStore = defineStore(
           (stock) => stock.talla === item?.sizeData.size
         );
 
-        if (found!.inventario > 0 && item!.quantity < found!.inventario) {
+        if (found!.inventario > 0 && item!.quantity <= found!.inventario) {
           validProducts.push(product);
         } else {
           noStockProducts.push(product);
