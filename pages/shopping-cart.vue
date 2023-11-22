@@ -14,6 +14,7 @@ const product = useProductStore();
 // const discount = ref('');
 
 const loadCartProducts = async () => {
+  let temp: any[] = [];
   const itemsId = cart.cartItems.map((item) => item.id);
 
   if (!itemsId.length) return;
@@ -27,9 +28,13 @@ const loadCartProducts = async () => {
     graphql<ProductRequest>(GetProductById, { id })
   );
 
-  const [response] = await Promise.all(productPromises);
+  const response = await Promise.all(productPromises);
 
-  product.cartProducts = strapiMapper(response.data.products.data) as Product[];
+  response.forEach((product) => {
+    temp.push(product.data.products.data[0]);
+  });
+
+  product.cartProducts = strapiMapper(temp) as Product[];
 };
 
 const sectionTitle = inject('sectionTitle') as Ref<string>;
@@ -40,6 +45,10 @@ const columns = [
   {
     key: 'product',
     label: 'Product',
+  },
+  {
+    key: 'size',
+    label: 'Size',
   },
   {
     key: 'price',
@@ -61,10 +70,13 @@ const columns = [
 const products = computed(
   () =>
     product.cartProducts?.map((product) => ({
+      ...product,
       id: product!.id,
       product: {
         url: product!.images[0].url,
       },
+      sizeData: cart.cartItems.find((item) => item.id === product!.id)
+        ?.sizeData,
       price: product!.price,
       amount: cart.cartItems.find((item) => item.id === product!.id)!.quantity,
       total:
@@ -110,11 +122,29 @@ onMounted(() => {
           :src="row.product.url"
         />
       </template>
+      <template #size-data="{ row }">
+        <span
+          v-if="
+            row.size_stock?.find((stock) => stock.id === row.sizeData.id)
+              .inventario > row.amount
+          "
+          >{{ row.sizeData.size }}</span
+        >
+        <UTooltip text="No stock available" v-else>
+          <span class="text-red-500 font-semibold">{{
+            row.sizeData.size
+          }}</span>
+        </UTooltip>
+      </template>
       <template #amount-data="{ row }">
         <CustomQuantity
-          :v-model="row.amount"
+          v-model="row.amount"
           @increase="cart.increaseCartItemQuantity(row.id)"
           @descrease="cart.decreaseCartItemQuantity(row.id)"
+          :disabled="
+            row.size_stock?.find((stock) => stock.id === row.sizeData.id)
+              .inventario <= row.amount
+          "
         />
       </template>
       <template #actions-data="{ row }">
