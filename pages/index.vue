@@ -61,6 +61,5 @@ const {
         </AppMessage>
       </div>
     </div>
-    <LazyProductQuickView />
   </div>
 </template>

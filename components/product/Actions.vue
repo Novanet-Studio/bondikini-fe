@@ -12,6 +12,7 @@ const graphql = useStrapiGraphQL();
 const cart = useCartStore();
 const wishlist = useWishlistStore();
 const productStore = useProductStore();
+const globalStore = useGlobalStore();
 
 const quantity = ref<number>(1);
 
@@ -46,6 +47,8 @@ const addItemToCart = async (payload: CartItem) => {
     description: `${product.value.name} has been added to the cart`,
     color: 'green',
   });
+
+  globalStore.setIsContinueShopping(true);
 };
 
 const isQuantityGreaterThanTen = computed(() => {

@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import strapiMapper from 'smapper';
-import { GetProductById } from '~/graphql/queries';
+// import strapiMapper from 'smapper';
+// import { GetProductById } from '~/graphql/queries';
 
-const graphql = useStrapiGraphQL();
+// const graphql = useStrapiGraphQL();
 
 definePageMeta({
   layout: 'account',
 });
 
 const wishlist = useWishlistStore();
+const globalStore = useGlobalStore();
 const productStore = useProductStore();
 const cartStore = useCartStore();
+const selected = ref<Product | null>(null);
+
+const { showProductQuickView, isContinueShopping } = storeToRefs(globalStore);
 
 const sectionTitle = inject('sectionTitle') as Ref<string>;
 
@@ -37,6 +41,7 @@ const columns = [
 const products = computed(
   () =>
     productStore.wishlistItems?.map((product) => ({
+      ...product,
       id: product!.id,
       name: product?.name,
       product: {
@@ -50,42 +55,54 @@ const products = computed(
 );
 
 async function handleAddToCart(product: Product) {
-  const item = {
-    id: product.id,
-    quantity: 1,
-    price: product.price,
-  };
+  productStore.product = product;
+  selected.value = product;
+  showProductQuickView.value = true;
+  // const item = {
+  //   id: product.id,
+  //   quantity: 1,
+  //   price: product.price,
+  // };
 
-  cartStore.addProductToCart(item as CartItem);
+  // cartStore.addProductToCart(item as CartItem);
 
-  const itemsList = cartStore.cartItems.map((item) =>
-    graphql<ProductRequest>(GetProductById, { id: item.id })
-  );
+  // const itemsList = cartStore.cartItems.map((item) =>
+  //   graphql<ProductRequest>(GetProductById, { id: item.id })
+  // );
 
-  const itemsResult = await Promise.all(itemsList);
+  // const itemsResult = await Promise.all(itemsList);
 
-  const temp: Product[] = [];
+  // const temp: Product[] = [];
 
-  strapiMapper<any[]>(itemsResult).forEach((item) => {
-    temp.push(item.products[0]);
-  });
+  // strapiMapper<any[]>(itemsResult).forEach((item) => {
+  //   temp.push(item.products[0]);
+  // });
 
-  productStore.addCartProducts(temp);
+  // productStore.addCartProducts(temp);
 
-  useToast().add({
-    icon: 'i-ph-check',
-    title: 'Success!',
-    description: `"${product.name}" has been added to the cart`,
-    color: 'green',
-  });
-
-  handleRemoveItemFromWishlist(product);
+  // useToast().add({
+  //   icon: 'i-ph-check',
+  //   title: 'Success!',
+  //   description: `"${product.name}" has been added to the cart`,
+  //   color: 'green',
+  // });
 }
 
 function handleRemoveItemFromWishlist(row: any) {
   wishlist.removeItem(row);
   wishlist.load();
 }
+
+watch(isContinueShopping, (value) => {
+  console.log('isContinueShopping.value => ', isContinueShopping.value);
+  if (value) {
+    handleRemoveItemFromWishlist(selected.value);
+
+    setTimeout(() => {
+      selected.value = null;
+    }, 1000);
+  }
+});
 
 onMounted(() => {
   wishlist.load();
