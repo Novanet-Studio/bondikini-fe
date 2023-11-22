@@ -113,11 +113,9 @@ const handleAddToCart = (isBuyNow = false) => {
     },
   };
 
-  console.log('item =>', item);
-
   if (!item?.id) return;
 
-  if (!props.size) {
+  if (!props.size?.id) {
     useToast().add({
       icon: 'i-ph-warning',
       title: 'Warning!',
