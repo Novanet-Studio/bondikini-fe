@@ -4,8 +4,10 @@ import { injectKeys } from '~/config/constants';
 const isOpen = ref(true);
 const productStore = useProductStore();
 const size = ref({});
+const actions = ref(null);
 
 const product = computed(() => productStore.product);
+
 provide(injectKeys.productDetail, product);
 </script>
 
@@ -44,12 +46,22 @@ provide(injectKeys.productDetail, product);
           />
         </NuxtLink>
 
-        <!-- <ProductInformationDefault /> -->
-        <ProductInformation :show-title="false" />
-        <ProductSizes v-model="size" />
+        <div class="mt-6">
+          <ProductInformation short-description :show-title="false" />
+        </div>
+        <div class="mt-6">
+          <ProductSizes v-model="size" />
+          <ProductActions ref="actions" :size="size" />
+        </div>
       </div>
       <template #footer>
-        <UButton block color="color-3" size="lg">Continue</UButton>
+        <UButton
+          block
+          color="color-3"
+          size="lg"
+          @click="actions.handleAddToCart(true)"
+          label="Continue"
+        />
       </template>
     </UCard>
   </USlideover>
