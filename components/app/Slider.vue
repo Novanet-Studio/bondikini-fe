@@ -24,8 +24,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const renderImages = ref(false);
 const images = ref<string[]>([]);
-const sliders = ref<Slider[]>();
-const products = ref<Product[]>();
+const sliders = ref<Slider[]>([]);
+const products = ref<Product[]>([]);
 
 watchEffect(() => {
   const isString = typeof props!.items[0] === 'string';
@@ -65,9 +65,15 @@ watchEffect(() => {
       </swiper-slide>
     </template>
 
-    <template v-else-if="sliders.lenght > 0">
-      <swiper-slide v-for="(image, index) in images" :key="index">
-        <div>
+    <template v-else-if="sliders.length">
+      <swiper-slide v-for="(slider, index) in sliders" :key="index">
+        <div class="relative">
+          <h4 class="absolute left-12 top-12 text-2xl font-semibold">
+            {{ slider.title }}
+          </h4>
+          <p class="absolute right-12 bottom-1/2 bg-black/50 text-white p-8">
+            {{ slider.description }}
+          </p>
           <img
             class="slider__image"
             :src="slider.image"

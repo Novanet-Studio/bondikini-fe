@@ -6,7 +6,7 @@ const appConfig = useAppConfig();
   <div class="banner">
     <div class="banner__wrapper">
       <div class="banner__slider">
-        <app-slider :items="appConfig.home.sliders" />
+        <LazyAppSlider :items="appConfig.home.sliders" />
       </div>
     </div>
   </div>
