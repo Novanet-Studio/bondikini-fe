@@ -117,10 +117,24 @@ onMounted(() => {
       }"
     >
       <template #product-data="{ row }">
-        <img
-          class="w-12 h-12 object-cover rounded-full lg:w-20 lg:h-20"
-          :src="row.product.url"
-        />
+        <div class="relative w-12 h-12 rounded-full lg:w-20 lg:h-20">
+          <img
+            class="w-12 h-12 object-cover rounded-full lg:w-20 lg:h-20"
+            :src="row.product.url"
+          />
+
+          <div
+            class="absolute inset-0 flex rounded-full items-center justify-center bg-black/50"
+            v-if="
+              row.size_stock?.find((stock) => stock.id === row.sizeData.id)
+                .inventario < 1
+            "
+          >
+            <UTooltip text="No stock available">
+              <UIcon name="i-ph-warning" class="text-xl text-white" />
+            </UTooltip>
+          </div>
+        </div>
       </template>
       <template #size-data="{ row }">
         <span
@@ -130,11 +144,19 @@ onMounted(() => {
           "
           >{{ row.sizeData.size }}</span
         >
-        <UTooltip text="No stock available" v-else>
-          <span class="text-red-500 font-semibold">{{
-            row.sizeData.size
-          }}</span>
-        </UTooltip>
+        <span class="text-red-500 font-semibold" v-else>{{
+          row.sizeData.size
+        }}</span>
+      </template>
+      <template #price-data="{ row }">
+        <span
+          v-if="
+            row.size_stock?.find((stock) => stock.id === row.sizeData.id)
+              .inventario > row.amount
+          "
+          >{{ row.price }}</span
+        >
+        <span class="text-red-500 font-semibold" v-else>{{ row.price }}</span>
       </template>
       <template #amount-data="{ row }">
         <CustomQuantity
@@ -146,6 +168,16 @@ onMounted(() => {
               .inventario <= row.amount
           "
         />
+      </template>
+      <template #total-data="{ row }">
+        <span
+          v-if="
+            row.size_stock?.find((stock) => stock.id === row.sizeData.id)
+              .inventario > row.amount
+          "
+          >{{ row.total }}</span
+        >
+        <span class="text-red-500 font-semibold" v-else>{{ row.total }}</span>
       </template>
       <template #actions-data="{ row }">
         <UButton
