@@ -10,7 +10,8 @@ type User = StrapiUser & {
 export const useAuthStore = defineStore(
   config.store.auth,
   () => {
-    const { setToken } = useStrapiAuth();
+    const strapiToken = useStrapiToken();
+    const { setToken, fetchUser } = useStrapiAuth();
     const graphql = useStrapiGraphQL();
 
     const cart = useCartStore();
@@ -84,6 +85,16 @@ export const useAuthStore = defineStore(
       return true;
     }
 
+    async function refresh() {
+      const userData = await fetchUser();
+
+      if (!userData.value.id) return;
+
+      token.value = strapiToken.value;
+      authenticated.value = true;
+      Object.assign(user, userData.value);
+    }
+
     async function createCustomer(user: string, email: string) {
       try {
         const idempotencyKey = crypto.randomUUID();
@@ -133,6 +144,7 @@ export const useAuthStore = defineStore(
       createCustomer,
       $reset,
       logout,
+      refresh,
     };
   },
   { persist: true }
