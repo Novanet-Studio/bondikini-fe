@@ -1,9 +1,4 @@
 <script setup lang="ts">
-// import strapiMapper from 'smapper';
-// import { GetProductById } from '~/graphql/queries';
-
-// const graphql = useStrapiGraphQL();
-
 definePageMeta({
   layout: 'account',
 });
@@ -58,34 +53,6 @@ async function handleAddToCart(product: Product) {
   productStore.product = product;
   selected.value = product;
   showProductQuickView.value = true;
-  // const item = {
-  //   id: product.id,
-  //   quantity: 1,
-  //   price: product.price,
-  // };
-
-  // cartStore.addProductToCart(item as CartItem);
-
-  // const itemsList = cartStore.cartItems.map((item) =>
-  //   graphql<ProductRequest>(GetProductById, { id: item.id })
-  // );
-
-  // const itemsResult = await Promise.all(itemsList);
-
-  // const temp: Product[] = [];
-
-  // strapiMapper<any[]>(itemsResult).forEach((item) => {
-  //   temp.push(item.products[0]);
-  // });
-
-  // productStore.addCartProducts(temp);
-
-  // useToast().add({
-  //   icon: 'i-ph-check',
-  //   title: 'Success!',
-  //   description: `"${product.name}" has been added to the cart`,
-  //   color: 'green',
-  // });
 }
 
 function handleRemoveItemFromWishlist(row: any) {
