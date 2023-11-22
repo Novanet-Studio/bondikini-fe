@@ -3,14 +3,19 @@ const token = useStrapiToken();
 const authStore = useAuthStore();
 const wishListStore = useWishlistStore();
 const cartStore = useCartStore();
+const globalStore = useGlobalStore();
 const router = useRouter();
 const { setToken, fetchUser } = useStrapiAuth();
+
+const { showProductQuickView } = storeToRefs(globalStore);
 
 onMounted(async () => {
   if (!token.value && authStore.token) {
     setToken(authStore.token);
     await fetchUser();
+    return;
   }
+
   if (
     (!token.value && !authStore.token && wishListStore.items.length) ||
     cartStore.cartItems.length
@@ -21,15 +26,20 @@ onMounted(async () => {
       description: 'Your session has expired. Please login again',
       color: 'orange',
     });
-    authStore.logout();
+    authStore.logout(false);
+    showProductQuickView.value = false;
     router.push('/auth/login');
+    return;
   }
+
   if (
     (!token.value && !authStore.token && !wishListStore.items.length) ||
     !cartStore.cartItems.length
   ) {
+    showProductQuickView.value = false;
     wishListStore.$reset();
     cartStore.$reset();
+    return;
   }
 });
 </script>

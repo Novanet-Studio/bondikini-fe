@@ -101,7 +101,7 @@ export const useAuthStore = defineStore(
       }
     }
 
-    function logout() {
+    function logout(alert = true) {
       $reset();
       cart.$reset();
       product.$reset();
@@ -109,6 +109,8 @@ export const useAuthStore = defineStore(
         path: '/',
         force: true,
       });
+
+      if (!alert) return;
 
       useToast().add({
         icon: 'i-ph-check',
