@@ -80,6 +80,7 @@ function handleRemoveProductFromCart(id: string) {
               <figure class="grid grid-cols-2 gap-2">
                 <UButton
                   label="See cart"
+                  class="justify-center"
                   variant="outline"
                   @click="$router.push('/shopping-cart')"
                 />
