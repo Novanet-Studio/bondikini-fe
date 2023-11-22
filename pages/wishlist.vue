@@ -61,12 +61,13 @@ function handleRemoveItemFromWishlist(row: any) {
 }
 
 watch(isContinueShopping, (value) => {
-  console.log('isContinueShopping.value => ', isContinueShopping.value);
   if (value) {
     handleRemoveItemFromWishlist(selected.value);
+    showProductQuickView.value = false;
 
     setTimeout(() => {
       selected.value = null;
+      productStore.product = null;
     }, 1000);
   }
 });

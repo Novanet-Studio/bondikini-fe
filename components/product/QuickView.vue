@@ -13,9 +13,6 @@ const product = computed(() => productStore.product);
 
 function closeQuickView() {
   showProductQuickView.value = false;
-  setTimeout(() => {
-    productStore.product = null;
-  }, 1000);
 }
 
 provide(injectKeys.productDetail, product);
@@ -32,7 +29,7 @@ provide(injectKeys.productDetail, product);
       <template #header>
         <div class="flex items-center justify-between">
           <h3 class="font-bold text-lg md:text-2xl text-color-6">
-            {{ product.name }}
+            {{ product?.name }}
           </h3>
           <UButton
             color="gray"

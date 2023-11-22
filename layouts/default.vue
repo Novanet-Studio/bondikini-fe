@@ -10,37 +10,40 @@ const { setToken, fetchUser } = useStrapiAuth();
 const { showProductQuickView } = storeToRefs(globalStore);
 
 onMounted(async () => {
-  if (!token.value && authStore.token) {
-    setToken(authStore.token);
-    await fetchUser();
-    return;
-  }
-
-  if (
-    (!token.value && !authStore.token && wishListStore.items.length) ||
-    cartStore.cartItems.length
-  ) {
-    useToast().add({
-      icon: 'i-ph-warning',
-      title: 'Session expired',
-      description: 'Your session has expired. Please login again',
-      color: 'orange',
-    });
-    authStore.logout(false);
-    showProductQuickView.value = false;
-    router.push('/auth/login');
-    return;
-  }
-
-  if (
-    (!token.value && !authStore.token && !wishListStore.items.length) ||
-    !cartStore.cartItems.length
-  ) {
-    showProductQuickView.value = false;
-    wishListStore.$reset();
-    cartStore.$reset();
-    return;
-  }
+  // if (!token.value && authStore.token) {
+  //   setToken(authStore.token);
+  //   await fetchUser();
+  //   return;
+  // }
+  // if (token.value && !authStore.token) {
+  //   authStore.token = token.value;
+  //   await fetchUser();
+  //   return;
+  // }
+  // if (
+  //   (!token.value && !authStore.token && wishListStore.items.length) ||
+  //   cartStore.cartItems.length
+  // ) {
+  //   useToast().add({
+  //     icon: 'i-ph-warning',
+  //     title: 'Session expired',
+  //     description: 'Your session has expired. Please login again',
+  //     color: 'orange',
+  //   });
+  //   authStore.logout(false);
+  //   showProductQuickView.value = false;
+  //   router.push('/auth/login');
+  //   return;
+  // }
+  // if (
+  //   (!token.value && !authStore.token && !wishListStore.items.length) ||
+  //   !cartStore.cartItems.length
+  // ) {
+  //   showProductQuickView.value = false;
+  //   wishListStore.$reset();
+  //   cartStore.$reset();
+  //   return;
+  // }
 });
 </script>
 
