@@ -88,7 +88,9 @@ onMounted(async () => {
 });
 
 watchEffect(() => {
-  console.log(invoices.value);
+  if (invoices.value.meta?.pagination?.total) {
+    pageTotal.value = invoices.value.meta.pagination.total;
+  }
 });
 </script>
 
