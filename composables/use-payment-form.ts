@@ -52,11 +52,11 @@ export default function usePaymentForm({
   });
 
   const schema = object({
-    name: string([minLength(1, 'Este campo es requerido')]),
-    lastName: string([minLength(1, 'Este campo es requerido')]),
-    date: string([minLength(1, 'Este campo es requerido')]),
+    name: string([minLength(1, 'Field is required')]),
+    lastName: string([minLength(1, 'Field is required')]),
+    date: string([minLength(1, 'Field is required')]),
     amount: string(),
-    confirmation: string([minLength(1, 'Este campo es requerido')]),
+    confirmation: string([minLength(1, 'Field is required')]),
   });
 
   type FormData = Output<typeof schema>;
@@ -72,6 +72,28 @@ export default function usePaymentForm({
           description: payment.message,
           color: 'red',
         });
+        return;
+      }
+
+      const [validProducts, noStockProducts] = await productStore.checkStock();
+
+      if (noStockProducts.length) {
+        noStockProducts.forEach((product) => {
+          useToast().add({
+            icon: 'i-ph-warning',
+            title: 'Error',
+            description: `The product ${product.name} is out of stock or you exceed the available quantity`,
+            color: 'red',
+          });
+        });
+
+        useToast().add({
+          icon: 'i-ph-info',
+          title: 'Help',
+          description: `Please go to the cart and remove the products that are out of stock or exceed the available quantity`,
+          color: 'blue',
+        });
+
         return;
       }
 
