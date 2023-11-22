@@ -14,7 +14,7 @@ const router = useRouter();
 // Pagination
 const page = ref(1);
 const pageCount = ref(5);
-const pageTotal = ref(10);
+const pageTotal = ref(0);
 const pageFrom = computed(() => (page.value - 1) * pageCount.value);
 const pageTo = computed(() =>
   Math.min(page.value * pageCount.value, pageTotal.value)
@@ -122,7 +122,10 @@ watchEffect(() => {
       </template>
     </UTable>
 
-    <div class="flex flex-wrap justify-between items-center mt-8">
+    <div
+      class="flex flex-wrap justify-between items-center mt-8"
+      v-if="pageTotal > 0"
+    >
       <div>
         <span class="text-sm leading-5">
           Showing
