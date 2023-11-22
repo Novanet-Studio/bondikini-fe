@@ -56,4 +56,15 @@ export default defineAppConfig({
       },
     ],
   },
+  company: {
+    sliders: [
+      {
+        image: '/img/company/bondikini-women-swimwear-3.webp',
+        title: 'Bondikini is a swimwear brand',
+      },
+      {
+        image: '/img/company/bondikini-women-swimwear-4.webp',
+      },
+    ],
+  },
 });

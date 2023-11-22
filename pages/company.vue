@@ -7,7 +7,10 @@ definePageMeta({
 </script>
 
 <template>
-  <AppSlider :items="appConfig.home.slider" />
+  <LazyAppSlider
+    :items="appConfig.company.sliders"
+    orientation="slider-right"
+  />
   <div class="company">
     <AppMessage class="default__message" variant="secondary">
       Dive into our stunning range of swimsuits, where style meets functionality

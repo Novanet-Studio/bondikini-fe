@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+const appConfig = useAppConfig();
+
 const {
   isLoading,
   categories,
@@ -13,7 +15,7 @@ const {
 
 <template>
   <div>
-    <AppBanner />
+    <LazyAppSlider :items="appConfig.home.sliders" orientation="slider-left" />
     <div class="default__content">
       <AppMessage class="default__message">
         Discover our diverse collection of bikinis, one pieces, and swimwear

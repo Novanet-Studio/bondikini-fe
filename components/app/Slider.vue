@@ -14,6 +14,7 @@ interface Props {
   spaceBetween?: number;
   centeredSlides?: boolean;
   breakpoints?: Record<number, Record<string, unknown>>;
+  orientation?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -60,24 +61,31 @@ watchEffect(() => {
     <template v-if="renderImages">
       <swiper-slide v-for="(image, index) in images" :key="index">
         <div>
-          <img class="slider__image" :src="image" alt="Products of the brand" />
+          <nuxt-img
+            class="slider__image"
+            :src="image"
+            alt="Bondikini Swimwear"
+          />
         </div>
       </swiper-slide>
     </template>
 
     <template v-else-if="sliders.length">
       <swiper-slide v-for="(slider, index) in sliders" :key="index">
-        <div class="relative">
-          <h4 class="absolute left-12 top-12 text-2xl font-semibold">
+        <div class="slider__wrapper">
+          <h1 v-if="slider.title" :class="`slider__title ${orientation}`">
             {{ slider.title }}
-          </h4>
-          <p class="absolute right-12 bottom-1/2 bg-black/50 text-white p-8">
+          </h1>
+          <p
+            v-if="slider.description"
+            :class="`slider__description ${orientation}`"
+          >
             {{ slider.description }}
           </p>
-          <img
+          <nuxt-img
             class="slider__image"
             :src="slider.image"
-            alt="Products of the brand"
+            alt="Bondikini Swimwear"
           />
         </div>
       </swiper-slide>
@@ -96,8 +104,25 @@ watchEffect(() => {
 </template>
 
 <style scoped>
+.slider__wrapper {
+  @apply relative w-full;
+}
 .slider__image {
   @apply w-full;
+}
+.slider__title {
+  @apply absolute top-6 text-xl text-color-3 font-semibold
+  md:text-5xl md:top-1/4;
+}
+.slider__description {
+  @apply absolute bottom-1/4 pr-14 text-black
+  md:text-3xl md:bottom-1/4;
+}
+.slider-left {
+  @apply left-12 md:left-16;
+}
+.slider-right {
+  @apply right-16;
 }
 
 :global(:root) {
