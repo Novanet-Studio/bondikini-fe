@@ -75,25 +75,25 @@ const handleAddItemToWishlist = () => {
     id: product.value.id,
   };
 
-  if (isQuantityGreaterThanStock.value) {
-    useToast().add({
-      icon: 'i-ph-warning',
-      title: 'Warning!',
-      description: 'There is not enough stock',
-      color: 'orange',
-    });
-    return;
-  }
+  // if (isQuantityGreaterThanStock.value) {
+  //   useToast().add({
+  //     icon: 'i-ph-warning',
+  //     title: 'Warning!',
+  //     description: 'There is not enough stock',
+  //     color: 'orange',
+  //   });
+  //   return;
+  // }
 
-  if (isQuantityGreaterThanTen.value) {
-    useToast().add({
-      icon: 'i-ph-warning',
-      title: 'Warning!',
-      description: 'You cannot add more than 10 items',
-      color: 'orange',
-    });
-    return;
-  }
+  // if (isQuantityGreaterThanTen.value) {
+  //   useToast().add({
+  //     icon: 'i-ph-warning',
+  //     title: 'Warning!',
+  //     description: 'You cannot add more than 10 items',
+  //     color: 'orange',
+  //   });
+  //   return;
+  // }
 
   wishlist.addItem(item);
 
