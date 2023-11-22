@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import { injectKeys } from '~/config/constants';
+
+withDefaults(defineProps<{ showTitle?: boolean }>(), {
+  showTitle: true,
+});
 const product = inject(injectKeys.productDetail) as Ref<Product>;
 </script>
 
 <template>
   <div class="product__information">
-    <h4 class="product__name">
+    <h4 class="product__name" v-if="showTitle">
       {{ product?.name }}
     </h4>
     <div class="product__title">Description</div>
