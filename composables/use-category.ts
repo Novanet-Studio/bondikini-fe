@@ -11,7 +11,7 @@ interface Result {
   categoriesResult: Ref<Category[]>;
   categoryActive: Ref<string>;
   isLoading: Ref<boolean>;
-  filterByCategory: (categoryId: string) => void;
+  filterByCategory: (categoryId: string, selector?: string) => void;
   removeFilters: () => void;
 }
 
