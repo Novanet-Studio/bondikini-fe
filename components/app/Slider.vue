@@ -61,11 +61,7 @@ watchEffect(() => {
     <template v-if="renderImages">
       <swiper-slide v-for="(image, index) in images" :key="index">
         <div>
-          <nuxt-img
-            class="slider__image"
-            :src="image"
-            alt="Bondikini Swimwear"
-          />
+          <img class="slider__image" :src="image" alt="Bondikini Swimwear" />
         </div>
       </swiper-slide>
     </template>
@@ -82,7 +78,7 @@ watchEffect(() => {
           >
             {{ slider.description }}
           </p>
-          <nuxt-img
+          <img
             class="slider__image"
             :src="slider.image"
             alt="Bondikini Swimwear"
