@@ -1,8 +1,11 @@
 <script setup>
 import { injectKeys } from '~/config/constants';
 
-const isOpen = ref(true);
 const productStore = useProductStore();
+const globalStore = useGlobalStore();
+
+const { showProductQuickView } = storeToRefs(globalStore);
+
 const size = ref({});
 const actions = ref(null);
 
@@ -12,8 +15,7 @@ provide(injectKeys.productDetail, product);
 </script>
 
 <template>
-  <UButton @click="isOpen = !isOpen">Open</UButton>
-  <USlideover v-model="isOpen" prevent-close>
+  <USlideover v-model="showProductQuickView" prevent-close>
     <UCard
       class="flex flex-col flex-1 divide-y-0 divide-none"
       :ui="{
@@ -30,7 +32,7 @@ provide(injectKeys.productDetail, product);
             variant="ghost"
             icon="i-heroicons-x-mark-20-solid"
             class="-my-1"
-            @click="isOpen = false"
+            @click="showProductQuickView = false"
           />
         </div>
       </template>
