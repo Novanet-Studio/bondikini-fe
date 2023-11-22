@@ -26,7 +26,7 @@ function handleRemoveProductFromCart(id: string) {
 
 <template>
   <div class="mini-cart__wrapper">
-    <UPopover>
+    <UPopover :ui="{ width: 'min-w-[18.75em] max-w-xs' }">
       <button>
         <div class="header-actions__link">
           <UIcon name="i-ph-bag" class="header-actions__icon" />
@@ -55,7 +55,9 @@ function handleRemoveProductFromCart(id: string) {
                   />
 
                   <div class="relative">
-                    <h6 class="font-bold">{{ product?.name }}</h6>
+                    <h6 class="font-bold truncate max-w-[10.625rem]">
+                      {{ product?.name }}
+                    </h6>
                     <small>
                       {{ getQuantity(product!.id) }} x
                       {{ useGlobalStore().currency }}
@@ -109,7 +111,7 @@ function handleRemoveProductFromCart(id: string) {
 }
 
 .mini-cart__body {
-  @apply relative max-h-[20em] overflow-auto bg-white border border-white border-b-transparent;
+  @apply relative max-h-[20em] overflow-x-hidden bg-white border border-white border-b-transparent w-[18.75rem] max-w-xs;
 }
 
 .mini-cart__footer {
