@@ -3,14 +3,14 @@ import { loadScript, type PayPalNamespace } from '@paypal/paypal-js';
 
 const { PAYPAL_CLIENT_ID } = useRuntimeConfig().public;
 
-const containerMessage = ref('');
-
 const cart = useCartStore();
-const checkout = useCheckoutStore();
 const invoice = useInvoiceStore();
+const checkout = useCheckoutStore();
 const productStore = useProductStore();
+
 const paypalRef = ref();
 const tempCartItems = ref(cart.cartItems);
+const containerMessage = ref('');
 
 const loadPaypal = async () => {
   try {
@@ -27,8 +27,34 @@ const loadPaypal = async () => {
           style: {
             disableMaxWidth: true,
           },
-          onClick() {
-            const invoiceItems: CartItem[] = cart.cartItems;
+          async onClick(data, actions) {
+            const [validProducts, noStockProducts] =
+              await productStore.checkStock();
+
+            if (noStockProducts.length) {
+              noStockProducts.forEach((product) => {
+                useToast().add({
+                  icon: 'i-ph-warning',
+                  title: 'Error',
+                  description: `The product ${product.name} is out of stock or you exceed the available quantity`,
+                  color: 'red',
+                });
+              });
+
+              useToast().add({
+                icon: 'i-ph-info',
+                title: 'Help',
+                description: `Please go to the cart and remove the products that are out of stock or exceed the available quantity`,
+                color: 'blue',
+              });
+
+              return actions.reject();
+            }
+
+            const invoiceItems: CartItem[] = cart.cartItems.filter((item) => {
+              return validProducts.find((product) => product.id === item.id);
+            });
+
             tempCartItems.value = invoiceItems;
           },
           createOrder: (_, actions) =>

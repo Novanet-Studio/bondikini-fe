@@ -61,6 +61,28 @@ export const useProductStore = defineStore(
       }
     }
 
+    async function checkStock() {
+      const validProducts: Product[] = [];
+      const noStockProducts: Product[] = [];
+      const temp = await getProductsFromCart();
+
+      // Crea una function que verifique si hay stock de cada producto
+      temp.forEach((product) => {
+        const item = cartStore.cartItems.find((item) => item.id === product.id);
+        const found = product.size_stock?.find(
+          (stock) => stock.talla === item?.sizeData.size
+        );
+
+        if (found!.inventario > 0 && item!.quantity < found!.inventario) {
+          validProducts.push(product);
+        } else {
+          noStockProducts.push(product);
+        }
+      });
+
+      return [validProducts, noStockProducts];
+    }
+
     function addCartProducts(product: Partial<Product[]>) {
       cartProducts.value = product;
     }
@@ -114,6 +136,7 @@ export const useProductStore = defineStore(
       getById,
       getByCategory,
       addCartProducts,
+      checkStock,
       update,
       clear,
       $reset,
