@@ -9,7 +9,7 @@ definePageMeta({
 <template>
   <LazyAppSlider
     :items="appConfig.company.sliders"
-    orientation="slider-right"
+    orientation="slider-center"
   />
   <div class="company">
     <AppMessage class="default__message" variant="secondary">
@@ -36,12 +36,13 @@ definePageMeta({
 
 <style scoped>
 .company {
-  @apply container mt-16;
+  @apply xs:max-md:mx-2 md:max-lg:mx-4
+  lg:container mt-16;
 }
 .company__description {
   @apply w-full grid gap-4 my-8 md:grid-cols-2 md:mt-16 md:divide-x md:divide-color-2;
 }
 .company__paragraph {
-  @apply text-lg md:p-8 text-[#5A5A5A] md:text-2xl;
+  @apply text-lg md:p-4 text-[#5A5A5A] md:text-2xl;
 }
 </style>

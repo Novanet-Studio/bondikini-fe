@@ -33,24 +33,14 @@ provide(injectKeys.product, props.product);
     }"
   >
     <template #header>
-      <div class="category__item">
+      <div class="product__item">
         <ProductThumbnailImage />
-        <span
-          class="absolute top-0 right-4 w-[3.6875rem] h-[4.375rem] rounded-b-full bg-color-3 p-4 flex items-center justify-center text-lg text-color-2"
-        >
-          ${{ product.price }}
-        </span>
-
-        <span
-          class="absolute top-0 left-0 w-full h-full bg-black/50 p-4 flex items-center justify-center text-2xl text-color-2"
-          v-if="!hasStock"
-        >
-          No stock
-        </span>
+        <span class="product__price"> ${{ product.price }} </span>
+        <span class="product__stock-warning" v-if="!hasStock">No stock </span>
       </div>
     </template>
-    <section class="flex flex-col items-center justify-center gap-4">
-      <h5 class="text-center text-xl text-color-3 font-bold">
+    <div class="product__info-actions">
+      <h5 class="product__title">
         {{ product.name }}
       </h5>
       <UButton
@@ -60,12 +50,24 @@ provide(injectKeys.product, props.product);
         :disabled="!hasStock"
         @click="handleBuyAction"
       />
-    </section>
+    </div>
   </UCard>
 </template>
 
 <style scoped>
-.category__item {
-  @apply h-72 relative;
+.product__item {
+  @apply relative h-72;
+}
+.product__price {
+  @apply absolute top-0 right-4 w-[3.6875rem] h-[4.375rem] rounded-b-full bg-color-3 p-4 flex items-center justify-center text-lg text-color-2;
+}
+.product__stock-warning {
+  @apply absolute top-0 left-0 w-full h-full bg-black/50 p-4 flex items-center justify-center text-2xl text-color-2;
+}
+.product__info-actions {
+  @apply flex flex-col items-center justify-center gap-4;
+}
+.product__title {
+  @apply text-center sm:text-base md:text-lg lg:text-xl text-color-3 font-bold;
 }
 </style>

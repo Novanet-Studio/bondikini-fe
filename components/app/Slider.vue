@@ -108,17 +108,21 @@ watchEffect(() => {
 }
 .slider__title {
   @apply absolute top-6 text-xl text-color-3 font-semibold
-  md:text-5xl md:top-1/4;
+  md:text-4xl lg:text-5xl md:top-1/4;
 }
 .slider__description {
   @apply absolute bottom-1/4 pr-14 text-black
-  md:text-3xl md:bottom-1/4;
+  md:text-3xl md:bottom-1/4 lg:bottom-1/2;
 }
 .slider-left {
   @apply left-12 md:left-16;
 }
 .slider-right {
   @apply right-16;
+}
+
+.slider-center {
+  @apply w-full text-center;
 }
 
 :global(:root) {

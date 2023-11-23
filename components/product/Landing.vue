@@ -67,11 +67,7 @@ onMounted(async () => {
               },
             }"
           >
-            <swiper-slide
-              v-for="product in products"
-              :key="product.id"
-              class="py-10"
-            >
+            <swiper-slide v-for="product in products" :key="product.id">
               <ProductDefault :product="product" />
             </swiper-slide>
           </swiper-container>
