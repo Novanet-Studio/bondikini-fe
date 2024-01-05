@@ -79,19 +79,37 @@ export const useCartStore = defineStore(
       removeFromProductStore(payload);
     }
 
-    function increaseCartItemQuantity(payload: CartItem) {
-      let selectedItem = cartItems.value.find((item) => item.id === payload.id);
+    function increaseCartItemQuantity(id: string) {
+      let selectedItem = cartItems.value.find((item) => item.id === id);
+
+      cartItems.value = cartItems.value.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+          : item
+      );
+
       if (selectedItem) {
-        selectedItem.quantity++;
         total.value++;
         amount.value = calculateAmount(cartItems.value);
       }
     }
 
-    function decreaseCartItemQuantity(payload: CartItem) {
-      let selectedItem = cartItems.value.find((item) => item.id === payload.id);
+    function decreaseCartItemQuantity(id: string) {
+      let selectedItem = cartItems.value.find((item) => item.id === id);
+
+      cartItems.value = cartItems.value.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity > 1 ? item.quantity - 1 : item.quantity,
+            }
+          : item
+      );
+
       if (selectedItem && selectedItem.quantity > 1) {
-        selectedItem.quantity--;
         total.value--;
         amount.value = calculateAmount(cartItems.value);
       }
