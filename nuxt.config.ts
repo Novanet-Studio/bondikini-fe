@@ -21,6 +21,7 @@ export default defineNuxtConfig({
       titleTemplate: (title) => `${title} - TeM`,
       htmlAttrs: {
         lang: 'en',
+        class: 'light',
       },
       link: [
         {
