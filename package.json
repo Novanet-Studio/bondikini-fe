@@ -37,7 +37,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@vee-validate/valibot": "^4.11.8",
     "smapper": "^0.0.9",
-    "square": "^33.1.0",
+    "square": "^34.0.1",
     "swiper": "^11.0.3",
     "valibot": "^0.25.0",
     "vee-validate": "^4.11.8"
