@@ -54,52 +54,8 @@ const items = [
           @forget-click="mode = 'recover'"
           @new-client-click="mode = 'register'"
         />
-        <!-- <div class="p-6" v-if="mode === 'login'">
-          <h5 class="text-center text-xl font-bold">Connect to my account</h5>
-          <p class="text-center mt-4 text-sm">Add your email and password:</p>
-          <div class="mt-6">
-            <UInput
-              v-model="email"
-              label="Email"
-              placeholder="Enter your email"
-              class="mb-4"
-            />
-            <UInput
-              v-model="password"
-              label="Password"
-              type="password"
-              placeholder="Enter your password"
-              class="mb-4"
-            />
-            <UButton
-              class="w-full justify-center"
-              label="Login"
-              color="color-3"
-              @click="$router.push('/checkout')"
-            />
-          </div>
-          <div class="mt-4">
-            <div class="text-sm text-center">
-              New client?
-              <UButton
-                label="Create account"
-                color="black"
-                variant="link"
-                @click="mode = 'register'"
-              />
-            </div>
-            <div class="text-sm text-center">
-              Password forget?
-              <UButton
-                label="Recover password"
-                color="black"
-                variant="link"
-                @click="mode = 'recover'"
-              />
-            </div>
-          </div>
-        </div> -->
-        <div class="p-6" v-if="mode === 'register'">
+        <AuthRegisterNew v-if="mode === 'register'" @login="mode = 'login'" />
+        <!-- <div class="p-6" >
           <h5 class="text-center text-xl font-bold">Create account</h5>
           <p class="text-center mt-4 text-sm">
             Please complete your information:
@@ -142,7 +98,7 @@ const items = [
               />
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="p-6" v-if="mode === 'recover'">
           <h5 class="text-center text-xl font-bold">Recover password</h5>
           <p class="text-center mt-4 text-sm">Enter your email:</p>
