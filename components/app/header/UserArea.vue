@@ -2,6 +2,9 @@
 const auth = useAuthStore();
 const router = useRouter();
 
+// login | register | recover
+const mode = ref('login');
+
 const items = [
   [
     {
@@ -39,16 +42,137 @@ const items = [
 
 <template>
   <div v-if="!auth.authenticated" class="user-area">
-    <div class="user-area__icon-wrapper">
-      <NuxtLink to="/auth/login">
+    <UPopover>
+      <div class="user-area__icon-wrapper">
         <UIcon name="i-ph-user" class="user-area__icon" />
-      </NuxtLink>
-    </div>
-
-    <div class="user-area__links-group">
-      <NuxtLink to="/auth/login" class="user-area__link">Login</NuxtLink>
-      <NuxtLink to="/auth/register" class="user-area__link">Sign up</NuxtLink>
-    </div>
+        <!-- <NuxtLink to="/auth/login">
+        </NuxtLink> -->
+      </div>
+      <template #panel>
+        <AuthLoginNew
+          v-if="mode === 'login'"
+          @forget-click="mode = 'recover'"
+          @new-client-click="mode = 'register'"
+        />
+        <!-- <div class="p-6" v-if="mode === 'login'">
+          <h5 class="text-center text-xl font-bold">Connect to my account</h5>
+          <p class="text-center mt-4 text-sm">Add your email and password:</p>
+          <div class="mt-6">
+            <UInput
+              v-model="email"
+              label="Email"
+              placeholder="Enter your email"
+              class="mb-4"
+            />
+            <UInput
+              v-model="password"
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              class="mb-4"
+            />
+            <UButton
+              class="w-full justify-center"
+              label="Login"
+              color="color-3"
+              @click="$router.push('/checkout')"
+            />
+          </div>
+          <div class="mt-4">
+            <div class="text-sm text-center">
+              New client?
+              <UButton
+                label="Create account"
+                color="black"
+                variant="link"
+                @click="mode = 'register'"
+              />
+            </div>
+            <div class="text-sm text-center">
+              Password forget?
+              <UButton
+                label="Recover password"
+                color="black"
+                variant="link"
+                @click="mode = 'recover'"
+              />
+            </div>
+          </div>
+        </div> -->
+        <div class="p-6" v-if="mode === 'register'">
+          <h5 class="text-center text-xl font-bold">Create account</h5>
+          <p class="text-center mt-4 text-sm">
+            Please complete your information:
+          </p>
+          <div class="mt-6">
+            <UInput label="Name" placeholder="Name" class="mb-4" />
+            <UInput
+              label="Last Name"
+              type="text"
+              placeholder="Last name"
+              class="mb-4"
+            />
+            <UInput
+              label="Email"
+              type="email"
+              placeholder="Email"
+              class="mb-4"
+            />
+            <UInput
+              label="Password"
+              type="password"
+              placeholder="Password"
+              class="mb-4"
+            />
+            <UButton
+              class="w-full justify-center"
+              label="Signup"
+              color="color-3"
+              @click="$router.push('/checkout')"
+            />
+          </div>
+          <div class="mt-4">
+            <div class="text-sm text-center">
+              Already have an account?
+              <UButton
+                label="Enter here"
+                color="black"
+                variant="link"
+                @click="mode = 'login'"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-6" v-if="mode === 'recover'">
+          <h5 class="text-center text-xl font-bold">Recover password</h5>
+          <p class="text-center mt-4 text-sm">Enter your email:</p>
+          <div class="mt-6">
+            <UInput
+              v-model="email"
+              label="Email"
+              placeholder="Enter your email"
+              class="mb-4"
+            />
+            <UButton
+              class="w-full justify-center"
+              label="Recover"
+              color="color-3"
+            />
+          </div>
+          <div class="mt-4">
+            <div class="text-sm text-center">
+              Remember your password?
+              <UButton
+                label="Back to login"
+                color="black"
+                variant="link"
+                @click="mode = 'login'"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+    </UPopover>
   </div>
   <UDropdown
     :items="items"
