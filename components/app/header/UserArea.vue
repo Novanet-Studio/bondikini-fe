@@ -55,51 +55,8 @@ const items = [
           @new-client-click="mode = 'register'"
         />
         <AuthRegisterNew v-if="mode === 'register'" @login="mode = 'login'" />
-        <!-- <div class="p-6" >
-          <h5 class="text-center text-xl font-bold">Create account</h5>
-          <p class="text-center mt-4 text-sm">
-            Please complete your information:
-          </p>
-          <div class="mt-6">
-            <UInput label="Name" placeholder="Name" class="mb-4" />
-            <UInput
-              label="Last Name"
-              type="text"
-              placeholder="Last name"
-              class="mb-4"
-            />
-            <UInput
-              label="Email"
-              type="email"
-              placeholder="Email"
-              class="mb-4"
-            />
-            <UInput
-              label="Password"
-              type="password"
-              placeholder="Password"
-              class="mb-4"
-            />
-            <UButton
-              class="w-full justify-center"
-              label="Signup"
-              color="color-3"
-              @click="$router.push('/checkout')"
-            />
-          </div>
-          <div class="mt-4">
-            <div class="text-sm text-center">
-              Already have an account?
-              <UButton
-                label="Enter here"
-                color="black"
-                variant="link"
-                @click="mode = 'login'"
-              />
-            </div>
-          </div>
-        </div> -->
-        <div class="p-6" v-if="mode === 'recover'">
+        <AuthForgotPassword v-if="mode === 'recover'" @click="mode = 'login'" />
+        <!-- <div class="p-6" v-if="mode === 'recover'">
           <h5 class="text-center text-xl font-bold">Recover password</h5>
           <p class="text-center mt-4 text-sm">Enter your email:</p>
           <div class="mt-6">
@@ -126,7 +83,7 @@ const items = [
               />
             </div>
           </div>
-        </div>
+        </div> -->
       </template>
     </UPopover>
   </div>

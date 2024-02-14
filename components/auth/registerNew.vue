@@ -129,7 +129,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class="lg:px-4">
     <UCard class="max-w-xs mx-auto border-none shadow-none ring-0">
       <UForm ref="formRef" :schema="formSchema" :state="state" @submit="submit">
         <header class="flex justify-center mb-6">

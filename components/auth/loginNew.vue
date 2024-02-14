@@ -65,7 +65,7 @@ const submit = async (event: FormSubmitEvent<FormData>) => {
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class="lg:px-4">
     <UCard class="max-w-sm mx-auto border-none shadow-none ring-0">
       <UForm :schema="formSchema" :state="state" @submit="submit">
         <header class="flex justify-center mb-6">
