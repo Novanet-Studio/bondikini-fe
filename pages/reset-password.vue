@@ -56,7 +56,7 @@ const submit = async ({ data }: FormSubmitEvent<FormData>) => {
     sessionStorage.removeItem('bon_forgot');
 
     setTimeout(() => {
-      router.push('/auth/login');
+      router.push('/');
     }, REDIRECT_DELAY);
   } catch (error) {
     useToast().add({
@@ -89,7 +89,7 @@ watchEffect(() => {
 
 onMounted(() => {
   if (!route.query.code) {
-    return router.push('/auth/login');
+    return router.push('/');
   }
 });
 </script>

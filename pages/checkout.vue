@@ -1,9 +1,3 @@
-<script setup lang="ts">
-definePageMeta({
-  middleware: 'authentication',
-});
-</script>
-
 <template>
   <section class="checkout">
     <header class="checkout__header">

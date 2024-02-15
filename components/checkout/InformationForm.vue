@@ -8,7 +8,7 @@ import {
   type Output,
   email,
 } from 'valibot';
-import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
+import type { FormSubmitEvent } from '#ui/types';
 import { GetAddressByIdAndType } from '~/graphql/queries';
 import countries from '~/data/countries.json';
 import { AddressType } from '~/config/constants';

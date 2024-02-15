@@ -26,7 +26,7 @@ onMounted(async () => {
       color: 'orange',
     });
     showProductQuickView.value = false;
-    router.push('/auth/login');
+    router.push('/');
     return;
   }
 });
