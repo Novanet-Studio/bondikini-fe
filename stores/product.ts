@@ -11,8 +11,14 @@ export const useProductStore = defineStore(
     const cartProducts = ref<Partial<Product[]> | null>([]);
     const wishlistItems = ref<Partial<Product[]> | null>([]);
     const loading = ref(false);
+
+    const {
+      public: { specialToken },
+    } = useRuntimeConfig();
     const cartStore = useCartStore();
+    const authStore = useAuthStore();
     const graphql = useStrapiGraphQL();
+    const client = useStrapiClient();
 
     async function getById(id: string) {
       const response = await graphql<ProductRequest>(GetProductById, { id });
@@ -98,6 +104,24 @@ export const useProductStore = defineStore(
             quantity: item.quantity,
           },
         }));
+
+        if (!authStore?.user?.id) {
+          const result = await Promise.all(
+            items.map(({ id, item }) =>
+              client(`/products/${id}`, {
+                method: 'PUT',
+                body: {
+                  data: { item },
+                },
+                headers: {
+                  Authorization: `Bearer ${specialToken}`,
+                },
+              })
+            )
+          );
+
+          return result;
+        }
 
         const result = await Promise.all(
           items.map(({ id, item }) =>
