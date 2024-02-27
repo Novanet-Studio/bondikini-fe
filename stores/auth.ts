@@ -20,7 +20,7 @@ export const useAuthStore = defineStore(
 
     const token = ref('');
     const user = reactive<User>({
-      id: 0,
+      id: null,
       customerId: '',
     });
 
@@ -88,7 +88,7 @@ export const useAuthStore = defineStore(
     async function refresh() {
       const userData = await fetchUser();
 
-      if (!userData.value.id) return;
+      if (!userData?.value?.id) return;
 
       token.value = strapiToken.value;
       authenticated.value = true;
