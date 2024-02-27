@@ -1,7 +1,11 @@
 import strapiMapper from 'smapper';
 import config from '~/config/config.json';
 import { CreateInvoice } from '~/graphql/mutations';
-import { GetProductById, GetInvoicesByUserId } from '~/graphql/queries';
+import {
+  GetProductById,
+  GetInvoicesByUserId,
+  GetInvoicesByEmail,
+} from '~/graphql/queries';
 import { PaymentReportError, SendInvoiceEmailError } from '~/errors';
 
 import type { OrderResponseBody } from '@paypal/paypal-js';
@@ -57,13 +61,23 @@ export const useInvoiceStore = defineStore(
       const graphql = useStrapiGraphQL();
       const id = Number(userId);
 
+      const byEmail = await graphql<InvoicesRequest>(GetInvoicesByEmail, {
+        email: authStore.user.email,
+        page: options?.page ?? DEFAULT_PAGE,
+        pageSize: options?.pageSize ?? PAGE_LIMIT,
+      });
+
       const response = await graphql<InvoicesRequest>(GetInvoicesByUserId, {
         id,
         page: options?.page ?? DEFAULT_PAGE,
         pageSize: options?.pageSize ?? PAGE_LIMIT,
       });
 
-      if (!response.data.invoices?.data?.length) {
+      const hasInvoices =
+        response.data.invoices?.data?.length &&
+        byEmail.data.invoices?.data?.length;
+
+      if (!hasInvoices) {
         return {
           data: [],
           meta: null,
@@ -71,11 +85,13 @@ export const useInvoiceStore = defineStore(
       }
 
       const mapped = strapiMapper<Invoice[]>(response.data.invoices.data);
+      const mappedByEmail = strapiMapper<Invoice[]>(byEmail.data.invoices.data);
+      const merged = [...mapped, ...mappedByEmail];
 
-      invoices.value = mapped;
+      invoices.value = merged;
 
       return {
-        data: mapped,
+        data: merged,
         meta: response.data.invoices.meta,
       };
     }

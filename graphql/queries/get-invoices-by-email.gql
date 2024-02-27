@@ -1,0 +1,52 @@
+query GetInvoicesByEmail($email: String!, $page: Int, $pageSize: Int) {
+  invoices(
+    filters: { payment_info: { email: { eq: $email } } }
+    pagination: { page: $page, pageSize: $pageSize }
+    sort: "id:asc"
+  ) {
+    data {
+      id
+      attributes {
+        paid
+        amount
+        products {
+          id
+          quantity
+          product {
+            data {
+              id
+            }
+          }
+        }
+        payment_id
+        order_id
+        user {
+          data {
+            id
+          }
+        }
+        shippingAddress
+        fullName
+        cardType
+        cardKind
+        cardLast
+        createdAt
+        payment_method
+        payment_info {
+          name
+          email
+          amount
+          lastname
+          confirmation
+          payment_date
+        }
+      }
+    }
+    meta {
+      pagination {
+        total
+        pageCount
+      }
+    }
+  }
+}
