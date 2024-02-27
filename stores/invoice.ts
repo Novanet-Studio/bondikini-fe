@@ -40,6 +40,11 @@ export const useInvoiceStore = defineStore(
 
     const router = useRouter();
     const graphql = useStrapiGraphQL();
+    const client = useStrapiClient();
+    const {
+      public: { specialToken },
+    } = useRuntimeConfig();
+
     const authStore = useAuthStore();
     const checkout = useCheckoutStore();
     const productsCart = useProductStore();
@@ -227,6 +232,18 @@ export const useInvoiceStore = defineStore(
           payment_method: method,
         };
 
+        if (!authStore?.user?.id) {
+          const result = await client('/invoices', {
+            method: 'POST',
+            body: { data },
+            headers: {
+              Authorization: `Bearer ${specialToken}`,
+            },
+          });
+
+          return result;
+        }
+
         const result = await graphql<CreateInvoiceRequest>(CreateInvoice, {
           invoice: data,
         });
@@ -290,6 +307,18 @@ export const useInvoiceStore = defineStore(
           payment_info: [paymentInfo],
           payment_method: 'squareup',
         };
+
+        if (!authStore?.user?.id) {
+          const result = await client('/invoices', {
+            method: 'POST',
+            body: data,
+            headers: {
+              Authorization: `Bearer ${specialToken}`,
+            },
+          });
+
+          return result;
+        }
 
         const result = await graphql<CreateInvoiceRequest>(CreateInvoice, {
           invoice: data,
